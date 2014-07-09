@@ -1,0 +1,276 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of zgeqrt.f</TITLE>
+</HEAD><BODY>
+<H1>zgeqrt.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+zgeqrt.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>zgeqrt</B> (M, N, NB, A, LDA, T, LDT, WORK, INFO)
+
+<BR>
+
+<I></I><B>ZGEQRT</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine zgeqrt (integerM, integerN, integerNB, complex*16, dimension( lda, * )A, integerLDA, complex*16, dimension( ldt, * )T, integerLDT, complex*16, dimension( * )WORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>ZGEQRT</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZGEQRT computes a blocked QR factorization of a complex M-by-N matrix A
+ using the compact WY representation of Q.  
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The number of rows of the matrix A.  M &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of columns of the matrix A.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NB</I> 
+<P>
+
+<PRE>
+          NB is INTEGER
+          The block size to be used in the blocked QR.  MIN(M,N) &gt;= NB &gt;= 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is COMPLEX*16 array, dimension (LDA,N)
+          On entry, the M-by-N matrix A.
+          On exit, the elements on and above the diagonal of the array
+          contain the min(M,N)-by-N upper trapezoidal matrix R (R is
+          upper triangular if M &gt;= N); the elements below the diagonal
+          are the columns of V.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A.  LDA &gt;= max(1,M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>T</I> 
+<P>
+
+<PRE>
+          T is COMPLEX*16 array, dimension (LDT,MIN(M,N))
+          The upper triangular block reflectors stored in compact form
+          as a sequence of upper triangular blocks.  See below
+          for further details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDT</I> 
+<P>
+
+<PRE>
+          LDT is INTEGER
+          The leading dimension of the array T.  LDT &gt;= NB.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is COMPLEX*16 array, dimension (NB*N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2013 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  The matrix V stores the elementary reflectors H(i) in the i-th column
+  below the diagonal. For example, if M=5 and N=3, the matrix V is
+
+               V = (  1       )
+                   ( v1  1    )
+                   ( v1 v2  1 )
+                   ( v1 v2 v3 )
+                   ( v1 v2 v3 )
+
+  where the vi's represent the vectors which define H(i), which are returned
+  in the matrix A.  The 1's along the diagonal of V are not stored in A.
+
+  Let K=MIN(M,N).  The number of blocks is B = ceiling(K/NB), where each
+  block is of order NB except for the last block, which is of order 
+  IB = K - (B-1)*NB.  For each of the B blocks, a upper triangular block
+  reflector factor is computed: T1, T2, ..., TB.  The NB-by-NB (and IB-by-IB 
+  for the last block) T's are stored in the NB-by-N matrix T as
+
+               T = (T1 T2 ... TB).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 142 of file zgeqrt.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine zgeqrt (integerM, integerN, integerNB, complex*16, dimension( lda, * )A, integerLDA, complex*16, dimension( ldt, * )T, integerLDT, complex*16, dimension( * )WORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:33 GMT, February 12, 2014
+</BODY>
+</HTML>

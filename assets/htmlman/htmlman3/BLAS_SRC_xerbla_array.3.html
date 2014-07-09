@@ -1,0 +1,178 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of xerbla_array.f</TITLE>
+</HEAD><BODY>
+<H1>xerbla_array.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+xerbla_array.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>xerbla_array</B> (SRNAME_ARRAY, SRNAME_LEN, INFO)
+
+<BR>
+
+<I></I><B>XERBLA_ARRAY</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine xerbla_array (<A HREF="/cgi-bin/man/man2html?1+character">character</A>(1), dimension(srname_len)SRNAME_ARRAY, integerSRNAME_LEN, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>XERBLA_ARRAY</B> <B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ XERBLA_ARRAY assists other languages in calling XERBLA, the LAPACK
+ and BLAS error handler.  Rather than taking a Fortran string argument
+ as the function's name, XERBLA_ARRAY takes an array of single
+ characters along with the array's length.  XERBLA_ARRAY then copies
+ up to 32 characters of that array into a Fortran string and passes
+ that to XERBLA.  If called with a non-positive SRNAME_LEN,
+ XERBLA_ARRAY will call XERBLA with a string of all blank characters.
+
+ Say some macro or other device makes XERBLA_ARRAY available to C99
+ by a name lapack_xerbla and with a common Fortran calling convention.
+ Then a C99 program could invoke XERBLA via:
+    {
+      int flen = strlen(__func__);
+      lapack_xerbla(__func__, &amp;flen, &amp;info);
+    }
+
+ Providing XERBLA_ARRAY is not necessary for intercepting LAPACK
+ errors.  XERBLA_ARRAY calls XERBLA.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>SRNAME_ARRAY</I> 
+<P>
+
+<PRE>
+          SRNAME_ARRAY is <A HREF="/cgi-bin/man/man2html?1+CHARACTER">CHARACTER</A>(1) array, dimension (SRNAME_LEN)
+          The name of the routine which called XERBLA_ARRAY.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SRNAME_LEN</I> 
+<P>
+
+<PRE>
+          SRNAME_LEN is INTEGER
+          The length of the name in SRNAME_ARRAY.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          The position of the invalid parameter in the parameter list
+          of the calling routine.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 81 of file BLAS/SRC/xerbla_array.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine xerbla_array (character(1), dimension(srname_len)SRNAME_ARRAY, integerSRNAME_LEN, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:08 GMT, February 12, 2014
+</BODY>
+</HTML>

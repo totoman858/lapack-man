@@ -1,0 +1,231 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dlamch.f</TITLE>
+</HEAD><BODY>
+<H1>dlamch.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dlamch.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+DOUBLE PRECISION function <B>dlamch</B> (CMACH)
+
+<BR>
+
+<I></I><B>DLAMCH</B> 
+
+<BR>
+
+DOUBLE PRECISION function <B>dlamc3</B> (A, B)
+
+<BR>
+
+<I></I><B>DLAMC3</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>DOUBLE PRECISION function dlamc3 (double precisionA, double precisionB)</H3>
+
+<P>
+<P>
+
+<B>DLAMC3</B> <B>Purpose:</B> 
+<P>
+
+<PRE>
+ DLAMC3  is intended to force  A  and  B  to be stored prior to doing
+ the addition of  A  and  B ,  for use in situations where optimizers
+ might hold one of these in a register.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+LAPACK is a software package provided by Univ. of Tennessee, Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd.. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>A</I> 
+<P>
+
+<PRE>
+          A is a DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is a DOUBLE PRECISION
+          The values A and B.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 172 of file dlamch.f.
+<A NAME="lbAG">&nbsp;</A>
+<H3>DOUBLE PRECISION function dlamch (characterCMACH)</H3>
+
+<P>
+<P>
+
+<B>DLAMCH</B> <B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ DLAMCH determines double precision machine parameters.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>CMACH</I> 
+<P>
+
+<PRE>
+          Specifies the value to be returned by DLAMCH:
+          = 'E' or 'e',   DLAMCH := eps
+          = 'S' or 's ,   DLAMCH := sfmin
+          = 'B' or 'b',   DLAMCH := base
+          = 'P' or 'p',   DLAMCH := eps*base
+          = 'N' or 'n',   DLAMCH := t
+          = 'R' or 'r',   DLAMCH := rnd
+          = 'M' or 'm',   DLAMCH := emin
+          = 'U' or 'u',   DLAMCH := rmin
+          = 'L' or 'l',   DLAMCH := emax
+          = 'O' or 'o',   DLAMCH := rmax
+          where
+          eps   = relative machine precision
+          sfmin = safe minimum, such that 1/sfmin does not overflow
+          base  = base of the machine
+          prec  = eps*base
+          t     = number of (base) digits in the mantissa
+          rnd   = 1.0 when rounding occurs in addition, 0.0 otherwise
+          emin  = minimum exponent before (gradual) underflow
+          rmin  = underflow threshold - base**(emin-1)
+          emax  = largest exponent before overflow
+          rmax  = overflow threshold  - (base**emax)*(1-eps)
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 64 of file dlamch.f.
+<A NAME="lbAH">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">DOUBLE PRECISION function dlamc3 (double precisionA, double precisionB)</A><DD>
+<DT><A HREF="#lbAG">DOUBLE PRECISION function dlamch (characterCMACH)</A><DD>
+</DL>
+<DT><A HREF="#lbAH">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:48 GMT, February 12, 2014
+</BODY>
+</HTML>

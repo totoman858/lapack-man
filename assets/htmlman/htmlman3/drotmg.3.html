@@ -1,0 +1,199 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of drotmg.f</TITLE>
+</HEAD><BODY>
+<H1>drotmg.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+drotmg.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>drotmg</B> (DD1, DD2, DX1, DY1, DPARAM)
+
+<BR>
+
+<I></I><B>DROTMG</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine drotmg (double precisionDD1, double precisionDD2, double precisionDX1, double precisionDY1, double precision, <A HREF="/cgi-bin/man/man2html?5+dimension">dimension</A>(5)DPARAM)</H3>
+
+<P>
+<P>
+
+<B>DROTMG</B> <B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+    CONSTRUCT THE MODIFIED GIVENS TRANSFORMATION MATRIX H WHICH ZEROS
+    THE SECOND COMPONENT OF THE 2-VECTOR  (DSQRT(DD1)*DX1,DSQRT(DD2)*&gt;    DY2)**T.
+    WITH <A HREF="/cgi-bin/man/man2html?1+DPARAM">DPARAM</A>(1)=DFLAG, H HAS ONE OF THE FOLLOWING FORMS..
+
+    DFLAG=-1.D0     DFLAG=0.D0        DFLAG=1.D0     DFLAG=-2.D0
+
+      (DH11  DH12)    (1.D0  DH12)    (DH11  1.D0)    (1.D0  0.D0)
+    H=(          )    (          )    (          )    (          )
+      (DH21  DH22),   (DH21  1.D0),   (-1.D0 DH22),   (0.D0  1.D0).
+    LOCATIONS 2-4 OF DPARAM CONTAIN DH11, DH21, DH12, AND DH22
+    RESPECTIVELY. (VALUES OF 1.D0, -1.D0, OR 0.D0 IMPLIED BY THE
+    VALUE OF <A HREF="/cgi-bin/man/man2html?1+DPARAM">DPARAM</A>(1) ARE NOT STORED IN DPARAM.)
+
+    THE VALUES OF GAMSQ AND RGAMSQ SET IN THE DATA STATEMENT MAY BE
+    INEXACT.  THIS IS OK AS THEY ARE ONLY USED FOR TESTING THE SIZE
+    OF DD1 AND DD2.  ALL ACTUAL SCALING OF DATA IS DONE USING GAM.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>DD1</I> 
+<P>
+
+<PRE>
+          DD1 is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DD2</I> 
+<P>
+
+<PRE>
+          DD2 is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DX1</I> 
+<P>
+
+<PRE>
+          DX1 is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DY1</I> 
+<P>
+
+<PRE>
+          DY1 is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DPARAM</I> 
+<P>
+
+<PRE>
+          DPARAM is DOUBLE PRECISION array, dimension 5
+     <A HREF="/cgi-bin/man/man2html?1+DPARAM">DPARAM</A>(1)=DFLAG
+     <A HREF="/cgi-bin/man/man2html?2+DPARAM">DPARAM</A>(2)=DH11
+     <A HREF="/cgi-bin/man/man2html?3+DPARAM">DPARAM</A>(3)=DH21
+     <A HREF="/cgi-bin/man/man2html?4+DPARAM">DPARAM</A>(4)=DH12
+     <A HREF="/cgi-bin/man/man2html?5+DPARAM">DPARAM</A>(5)=DH22
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 91 of file drotmg.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine drotmg (double precisionDD1, double precisionDD2, double precisionDX1, double precisionDY1, double precision, dimension(5)DPARAM)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:05 GMT, February 12, 2014
+</BODY>
+</HTML>

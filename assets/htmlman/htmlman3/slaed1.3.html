@@ -1,0 +1,295 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of slaed1.f</TITLE>
+</HEAD><BODY>
+<H1>slaed1.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+slaed1.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>slaed1</B> (N, D, Q, LDQ, INDXQ, RHO, CUTPNT, WORK, IWORK, INFO)
+
+<BR>
+
+<I></I><B>SLAED1</B> used by sstedc. Computes the updated eigensystem of a diagonal matrix after modification by a rank-one symmetric matrix. Used when the original matrix is tridiagonal. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine slaed1 (integerN, real, dimension( * )D, real, dimension( ldq, * )Q, integerLDQ, integer, dimension( * )INDXQ, realRHO, integerCUTPNT, real, dimension( * )WORK, integer, dimension( * )IWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>SLAED1</B> used by sstedc. Computes the updated eigensystem of a diagonal matrix after modification by a rank-one symmetric matrix. Used when the original matrix is tridiagonal.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ SLAED1 computes the updated eigensystem of a diagonal
+ matrix after modification by a rank-one symmetric matrix.  This
+ routine is used only for the eigenproblem which requires all
+ eigenvalues and eigenvectors of a tridiagonal matrix.  SLAED7 handles
+ the case in which eigenvalues only or eigenvalues and eigenvectors
+ of a full symmetric matrix (which was reduced to tridiagonal form)
+ are desired.
+
+   T = Q(in) ( D(in) + RHO * Z*Z**T ) Q**T(in) = Q(out) * D(out) * Q**T(out)
+
+    where Z = Q**T*u, u is a vector of length N with ones in the
+    CUTPNT and CUTPNT + 1 th elements and zeros elsewhere.
+
+    The eigenvectors of the original matrix are stored in Q, and the
+    eigenvalues are in D.  The algorithm consists of three stages:
+
+       The first stage consists of deflating the size of the problem
+       when there are multiple eigenvalues or if there is a zero in
+       the Z vector.  For each such occurence the dimension of the
+       secular equation problem is reduced by one.  This stage is
+       performed by the routine SLAED2.
+
+       The second stage consists of calculating the updated
+       eigenvalues. This is done by finding the roots of the secular
+       equation via the routine SLAED4 (as called by SLAED3).
+       This routine also calculates the eigenvectors of the current
+       problem.
+
+       The final stage consists of computing the updated eigenvectors
+       directly using the updated eigenvalues.  The eigenvectors for
+       the current problem are multiplied with the eigenvectors from
+       the overall problem.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+         The dimension of the symmetric tridiagonal matrix.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is REAL array, dimension (N)
+         On entry, the eigenvalues of the rank-1-perturbed matrix.
+         On exit, the eigenvalues of the repaired matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Q</I> 
+<P>
+
+<PRE>
+          Q is REAL array, dimension (LDQ,N)
+         On entry, the eigenvectors of the rank-1-perturbed matrix.
+         On exit, the eigenvectors of the repaired tridiagonal matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDQ</I> 
+<P>
+
+<PRE>
+          LDQ is INTEGER
+         The leading dimension of the array Q.  LDQ &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INDXQ</I> 
+<P>
+
+<PRE>
+          INDXQ is INTEGER array, dimension (N)
+         On entry, the permutation which separately sorts the two
+         subproblems in D into ascending order.
+         On exit, the permutation which will reintegrate the
+         subproblems back into sorted order,
+         i.e. D( INDXQ( I = 1, N ) ) will be in ascending order.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RHO</I> 
+<P>
+
+<PRE>
+          RHO is REAL
+         The subdiagonal entry used to create the rank-1 modification.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>CUTPNT</I> 
+<P>
+
+<PRE>
+          CUTPNT is INTEGER
+         The location of the last eigenvalue in the leading sub-matrix.
+         min(1,N) &lt;= CUTPNT &lt;= N/2.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is REAL array, dimension (4*N + N**2)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IWORK</I> 
+<P>
+
+<PRE>
+          IWORK is INTEGER array, dimension (4*N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit.
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value.
+          &gt; 0:  if INFO = 1, an eigenvalue did not converge
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Jeff Rutter, Computer Science Division, University of California at Berkeley, USA 
+<BR>
+
+<BR>&nbsp;Modified&nbsp;by&nbsp;Francoise&nbsp;Tisseur,&nbsp;University&nbsp;of&nbsp;Tennessee&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 163 of file slaed1.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine slaed1 (integerN, real, dimension( * )D, real, dimension( ldq, * )Q, integerLDQ, integer, dimension( * )INDXQ, realRHO, integerCUTPNT, real, dimension( * )WORK, integer, dimension( * )IWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:37 GMT, February 12, 2014
+</BODY>
+</HTML>

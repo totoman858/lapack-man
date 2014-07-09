@@ -1,0 +1,609 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of ssyrfsx.f</TITLE>
+</HEAD><BODY>
+<H1>ssyrfsx.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+ssyrfsx.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>ssyrfsx</B> (UPLO, EQUED, N, NRHS, A, LDA, AF, LDAF, IPIV, S, B, LDB, X, LDX, RCOND, BERR, N_ERR_BNDS, ERR_BNDS_NORM, ERR_BNDS_COMP, NPARAMS, PARAMS, WORK, IWORK, INFO)
+
+<BR>
+
+<I></I><B>SSYRFSX</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine ssyrfsx (characterUPLO, characterEQUED, integerN, integerNRHS, real, dimension( lda, * )A, integerLDA, real, dimension( ldaf, * )AF, integerLDAF, integer, dimension( * )IPIV, real, dimension( * )S, real, dimension( ldb, * )B, integerLDB, real, dimension( ldx, * )X, integerLDX, realRCOND, real, dimension( * )BERR, integerN_ERR_BNDS, real, dimension( nrhs, * )ERR_BNDS_NORM, real, dimension( nrhs, * )ERR_BNDS_COMP, integerNPARAMS, real, dimension( * )PARAMS, real, dimension( * )WORK, integer, dimension( * )IWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>SSYRFSX</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+    SSYRFSX improves the computed solution to a system of linear
+    equations when the coefficient matrix is symmetric indefinite, and
+    provides error bounds and backward error estimates for the
+    solution.  In addition to normwise error bound, the code provides
+    maximum componentwise error bound if possible.  See comments for
+    ERR_BNDS_NORM and ERR_BNDS_COMP for details of the error bounds.
+
+    The original system of linear equations may have been equilibrated
+    before calling this routine, as described by arguments EQUED and S
+    below. In this case, the solution and error bounds returned are
+    for the original unequilibrated system.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+<P>
+
+<PRE>
+     Some optional parameters are bundled in the PARAMS array.  These
+     settings determine how refinement is performed, but often the
+     defaults are acceptable.  If the defaults are acceptable, users
+     can pass NPARAMS = 0 which prevents the source code from accessing
+     the PARAMS argument.
+</PRE>
+
+<P>
+
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>UPLO</I> 
+<P>
+
+<PRE>
+          UPLO is CHARACTER*1
+       = 'U':  Upper triangle of A is stored;
+       = 'L':  Lower triangle of A is stored.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>EQUED</I> 
+<P>
+
+<PRE>
+          EQUED is CHARACTER*1
+     Specifies the form of equilibration that was done to A
+     before calling this routine. This is needed to compute
+     the solution and error bounds correctly.
+       = 'N':  No equilibration
+       = 'Y':  Both row and column equilibration, i.e., A has been
+               replaced by diag(S) * A * diag(S).
+               The right hand side B has been changed accordingly.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+     The order of the matrix A.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NRHS</I> 
+<P>
+
+<PRE>
+          NRHS is INTEGER
+     The number of right hand sides, i.e., the number of columns
+     of the matrices B and X.  NRHS &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is REAL array, dimension (LDA,N)
+     The symmetric matrix A.  If UPLO = 'U', the leading N-by-N
+     upper triangular part of A contains the upper triangular
+     part of the matrix A, and the strictly lower triangular
+     part of A is not referenced.  If UPLO = 'L', the leading
+     N-by-N lower triangular part of A contains the lower
+     triangular part of the matrix A, and the strictly upper
+     triangular part of A is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+     The leading dimension of the array A.  LDA &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>AF</I> 
+<P>
+
+<PRE>
+          AF is REAL array, dimension (LDAF,N)
+     The factored form of the matrix A.  AF contains the block
+     diagonal matrix D and the multipliers used to obtain the
+     factor U or L from the factorization A = U*D*U**T or A =
+     L*D*L**T as computed by SSYTRF.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDAF</I> 
+<P>
+
+<PRE>
+          LDAF is INTEGER
+     The leading dimension of the array AF.  LDAF &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IPIV</I> 
+<P>
+
+<PRE>
+          IPIV is INTEGER array, dimension (N)
+     Details of the interchanges and the block structure of D
+     as determined by SSYTRF.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>S</I> 
+<P>
+
+<PRE>
+          S is REAL array, dimension (N)
+     The scale factors for A.  If EQUED = 'Y', A is multiplied on
+     the left and right by diag(S).  S is an input argument if FACT =
+     'F'; otherwise, S is an output argument.  If FACT = 'F' and EQUED
+     = 'Y', each element of S must be positive.  If S is output, each
+     element of S is a power of the radix. If S is input, each element
+     of S should be a power of the radix to ensure a reliable solution
+     and error estimates. Scaling by powers of the radix does not cause
+     rounding errors unless the result underflows or overflows.
+     Rounding errors during scaling lead to refining with a matrix that
+     is not equivalent to the input matrix, producing error estimates
+     that may not be reliable.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is REAL array, dimension (LDB,NRHS)
+     The right hand side matrix B.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDB</I> 
+<P>
+
+<PRE>
+          LDB is INTEGER
+     The leading dimension of the array B.  LDB &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X</I> 
+<P>
+
+<PRE>
+          X is REAL array, dimension (LDX,NRHS)
+     On entry, the solution matrix X, as computed by SGETRS.
+     On exit, the improved solution matrix X.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDX</I> 
+<P>
+
+<PRE>
+          LDX is INTEGER
+     The leading dimension of the array X.  LDX &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RCOND</I> 
+<P>
+
+<PRE>
+          RCOND is REAL
+     Reciprocal scaled condition number.  This is an estimate of the
+     reciprocal Skeel condition number of the matrix A after
+     equilibration (if done).  If this is less than the machine
+     precision (in particular, if it is zero), the matrix is singular
+     to working precision.  Note that the error may still be small even
+     if this number is very small and the matrix appears ill-
+     conditioned.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>BERR</I> 
+<P>
+
+<PRE>
+          BERR is REAL array, dimension (NRHS)
+     Componentwise relative backward error.  This is the
+     componentwise relative backward error of each solution vector X(j)
+     (i.e., the smallest relative change in any element of A or B that
+     makes X(j) an exact solution).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N_ERR_BNDS</I> 
+<P>
+
+<PRE>
+          N_ERR_BNDS is INTEGER
+     Number of error bounds to return for each right hand side
+     and each type (normwise or componentwise).  See ERR_BNDS_NORM and
+     ERR_BNDS_COMP below.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ERR_BNDS_NORM</I> 
+<P>
+
+<PRE>
+          ERR_BNDS_NORM is REAL array, dimension (NRHS, N_ERR_BNDS)
+     For each right-hand side, this array contains information about
+     various error bounds and condition numbers corresponding to the
+     normwise relative error, which is defined as follows:
+
+     Normwise relative error in the ith solution vector:
+             max_j (abs(XTRUE(j,i) - X(j,i)))
+            ------------------------------
+                  max_j abs(X(j,i))
+
+     The array is indexed by the type of error information as described
+     below. There currently are up to three pieces of information
+     returned.
+
+     The first index in ERR_BNDS_NORM(i,:) corresponds to the ith
+     right-hand side.
+
+     The second index in ERR_BNDS_NORM(:,err) contains the following
+     three fields:
+     err = 1 &quot;Trust/don't trust&quot; boolean. Trust the answer if the
+              reciprocal condition number is less than the threshold
+              <A HREF="/cgi-bin/man/man2html?n+sqrt">sqrt</A>(n) * slamch('Epsilon').
+
+     err = 2 &quot;Guaranteed&quot; error bound: The estimated forward error,
+              almost certainly within a factor of 10 of the true error
+              so long as the next entry is greater than the threshold
+              <A HREF="/cgi-bin/man/man2html?n+sqrt">sqrt</A>(n) * slamch('Epsilon'). This error bound should only
+              be trusted if the previous boolean is true.
+
+     err = 3  Reciprocal condition number: Estimated normwise
+              reciprocal condition number.  Compared with the threshold
+              <A HREF="/cgi-bin/man/man2html?n+sqrt">sqrt</A>(n) * slamch('Epsilon') to determine if the error
+              estimate is &quot;guaranteed&quot;. These reciprocal condition
+              numbers are 1 / (norm(Z^{-1},inf) * norm(Z,inf)) for some
+              appropriately scaled matrix Z.
+              Let Z = S*A, where S scales each row by a power of the
+              radix so all absolute row sums of Z are approximately 1.
+
+     See Lapack Working Note 165 for further details and extra
+     cautions.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ERR_BNDS_COMP</I> 
+<P>
+
+<PRE>
+          ERR_BNDS_COMP is REAL array, dimension (NRHS, N_ERR_BNDS)
+     For each right-hand side, this array contains information about
+     various error bounds and condition numbers corresponding to the
+     componentwise relative error, which is defined as follows:
+
+     Componentwise relative error in the ith solution vector:
+                    abs(XTRUE(j,i) - X(j,i))
+             max_j ----------------------
+                         abs(X(j,i))
+
+     The array is indexed by the right-hand side i (on which the
+     componentwise relative error depends), and the type of error
+     information as described below. There currently are up to three
+     pieces of information returned for each right-hand side. If
+     componentwise accuracy is not requested (<A HREF="/cgi-bin/man/man2html?3+PARAMS">PARAMS</A>(3) = 0.0), then
+     ERR_BNDS_COMP is not accessed.  If N_ERR_BNDS .LT. 3, then at most
+     the first (:,N_ERR_BNDS) entries are returned.
+
+     The first index in ERR_BNDS_COMP(i,:) corresponds to the ith
+     right-hand side.
+
+     The second index in ERR_BNDS_COMP(:,err) contains the following
+     three fields:
+     err = 1 &quot;Trust/don't trust&quot; boolean. Trust the answer if the
+              reciprocal condition number is less than the threshold
+              <A HREF="/cgi-bin/man/man2html?n+sqrt">sqrt</A>(n) * slamch('Epsilon').
+
+     err = 2 &quot;Guaranteed&quot; error bound: The estimated forward error,
+              almost certainly within a factor of 10 of the true error
+              so long as the next entry is greater than the threshold
+              <A HREF="/cgi-bin/man/man2html?n+sqrt">sqrt</A>(n) * slamch('Epsilon'). This error bound should only
+              be trusted if the previous boolean is true.
+
+     err = 3  Reciprocal condition number: Estimated componentwise
+              reciprocal condition number.  Compared with the threshold
+              <A HREF="/cgi-bin/man/man2html?n+sqrt">sqrt</A>(n) * slamch('Epsilon') to determine if the error
+              estimate is &quot;guaranteed&quot;. These reciprocal condition
+              numbers are 1 / (norm(Z^{-1},inf) * norm(Z,inf)) for some
+              appropriately scaled matrix Z.
+              Let Z = S*(A*diag(x)), where x is the solution for the
+              current right-hand side and S scales each row of
+              A*diag(x) by a power of the radix so all absolute row
+              sums of Z are approximately 1.
+
+     See Lapack Working Note 165 for further details and extra
+     cautions.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NPARAMS</I> 
+<P>
+
+<PRE>
+          NPARAMS is INTEGER
+     Specifies the number of parameters set in PARAMS.  If .LE. 0, the
+     PARAMS array is never referenced and default values are used.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>PARAMS</I> 
+<P>
+
+<PRE>
+          PARAMS is REAL array, dimension NPARAMS
+     Specifies algorithm parameters.  If an entry is .LT. 0.0, then
+     that entry will be filled with default value used for that
+     parameter.  Only positions up to NPARAMS are accessed; defaults
+     are used for higher-numbered parameters.
+
+       PARAMS(LA_LINRX_ITREF_I = 1) : Whether to perform iterative
+            refinement or not.
+         Default: 1.0
+            = 0.0 : No refinement is performed, and no error bounds are
+                    computed.
+            = 1.0 : Use the double-precision refinement algorithm,
+                    possibly with doubled-single computations if the
+                    compilation environment does not support DOUBLE
+                    PRECISION.
+              (other values are reserved for future use)
+
+       PARAMS(LA_LINRX_ITHRESH_I = 2) : Maximum number of residual
+            computations allowed for refinement.
+         Default: 10
+         Aggressive: Set to 100 to permit convergence using approximate
+                     factorizations or factorizations other than LU. If
+                     the factorization uses a technique other than
+                     Gaussian elimination, the guarantees in
+                     err_bnds_norm and err_bnds_comp may no longer be
+                     trustworthy.
+
+       PARAMS(LA_LINRX_CWISE_I = 3) : Flag determining if the code
+            will attempt to find a solution with small componentwise
+            relative error in the double-precision algorithm.  Positive
+            is true, 0.0 is false.
+         Default: 1.0 (attempt componentwise convergence)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is REAL array, dimension (4*N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IWORK</I> 
+<P>
+
+<PRE>
+          IWORK is INTEGER array, dimension (N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+       = 0:  Successful exit. The solution to every right-hand side is
+         guaranteed.
+       &lt; 0:  If INFO = -i, the i-th argument had an illegal value
+       &gt; 0 and &lt;= N:  U(INFO,INFO) is exactly zero.  The factorization
+         has been completed, but the factor U is exactly singular, so
+         the solution and error bounds could not be computed. RCOND = 0
+         is returned.
+       = N+J: The solution corresponding to the Jth right-hand side is
+         not guaranteed. The solutions corresponding to other right-
+         hand sides K with K &gt; J may not be guaranteed as well, but
+         only the first such right-hand side is reported. If a small
+         componentwise error is not requested (<A HREF="/cgi-bin/man/man2html?3+PARAMS">PARAMS</A>(3) = 0.0) then
+         the Jth right-hand side is the first with a normwise error
+         bound that is not guaranteed (the smallest J such
+         that ERR_BNDS_NORM(J,1) = 0.0). By default (<A HREF="/cgi-bin/man/man2html?3+PARAMS">PARAMS</A>(3) = 1.0)
+         the Jth right-hand side is the first with either a normwise or
+         componentwise error bound that is not guaranteed (the smallest
+         J such that either ERR_BNDS_NORM(J,1) = 0.0 or
+         ERR_BNDS_COMP(J,1) = 0.0). See the definition of
+         ERR_BNDS_NORM(:,1) and ERR_BNDS_COMP(:,1). To get information
+         about all of the right-hand sides check ERR_BNDS_NORM or
+         ERR_BNDS_COMP.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+April 2012 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 400 of file ssyrfsx.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine ssyrfsx (characterUPLO, characterEQUED, integerN, integerNRHS, real, dimension( lda, * )A, integerLDA, real, dimension( ldaf, * )AF, integerLDAF, integer, dimension( * )IPIV, real, dimension( * )S, real, dimension( ldb, * )B, integerLDB, real, dimension( ldx, * )X, integerLDX, realRCOND, real, dimension( * )BERR, integerN_ERR_BNDS, real, dimension( nrhs, * )ERR_BNDS_NORM, real, dimension( nrhs, * )ERR_BNDS_COMP, integerNPARAMS, real, dimension( * )PARAMS, real, dimension( * )WORK, integer, dimension( * )IWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:43 GMT, February 12, 2014
+</BODY>
+</HTML>

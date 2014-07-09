@@ -1,0 +1,446 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of ctgsy2.f</TITLE>
+</HEAD><BODY>
+<H1>ctgsy2.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+ctgsy2.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>ctgsy2</B> (TRANS, IJOB, M, N, A, LDA, B, LDB, C, LDC, D, LDD, E, LDE, F, LDF, SCALE, RDSUM, RDSCAL, INFO)
+
+<BR>
+
+<I></I><B>CTGSY2</B> solves the generalized Sylvester equation (unblocked algorithm). 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine ctgsy2 (characterTRANS, integerIJOB, integerM, integerN, complex, dimension( lda, * )A, integerLDA, complex, dimension( ldb, * )B, integerLDB, complex, dimension( ldc, * )C, integerLDC, complex, dimension( ldd, * )D, integerLDD, complex, dimension( lde, * )E, integerLDE, complex, dimension( ldf, * )F, integerLDF, realSCALE, realRDSUM, realRDSCAL, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>CTGSY2</B> solves the generalized Sylvester equation (unblocked algorithm).  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ CTGSY2 solves the generalized Sylvester equation
+
+             A * R - L * B = scale *  C               (1)
+             D * R - L * E = scale * F
+
+ using Level 1 and 2 BLAS, where R and L are unknown M-by-N matrices,
+ (A, D), (B, E) and (C, F) are given matrix pairs of size M-by-M,
+ N-by-N and M-by-N, respectively. A, B, D and E are upper triangular
+ (i.e., (A,D) and (B,E) in generalized Schur form).
+
+ The solution (R, L) overwrites (C, F). 0 &lt;= SCALE &lt;= 1 is an output
+ scaling factor chosen to avoid overflow.
+
+ In matrix notation solving equation (1) corresponds to solve
+ Zx = scale * b, where Z is defined as
+
+        Z = [ kron(In, A)  -kron(B**H, Im) ]             (2)
+            [ kron(In, D)  -kron(E**H, Im) ],
+
+ Ik is the identity matrix of size k and X**H is the transpose of X.
+ kron(X, Y) is the Kronecker product between the matrices X and Y.
+
+ If TRANS = 'C', y in the conjugate transposed system Z**H*y = scale*b
+ is solved for, which is equivalent to solve for R and L in
+
+             A**H * R  + D**H * L   = scale * C           (3)
+             R  * B**H + L  * E**H  = scale * -F
+
+ This case is used to compute an estimate of Dif[(A, D), (B, E)] =
+ = sigma_min(Z) using reverse communicaton with CLACON.
+
+ CTGSY2 also (IJOB &gt;= 1) contributes to the computation in CTGSYL
+ of an upper bound on the separation between to matrix pairs. Then
+ the input (A, D), (B, E) are sub-pencils of two matrix pairs in
+ CTGSYL.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>TRANS</I> 
+<P>
+
+<PRE>
+          TRANS is CHARACTER*1
+          = 'N', solve the generalized Sylvester equation (1).
+          = 'T': solve the 'transposed' system (3).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IJOB</I> 
+<P>
+
+<PRE>
+          IJOB is INTEGER
+          Specifies what kind of functionality to be performed.
+          =0: solve (1) only.
+          =1: A contribution from this subsystem to a Frobenius
+              norm-based estimate of the separation between two matrix
+              pairs is computed. (look ahead strategy is used).
+          =2: A contribution from this subsystem to a Frobenius
+              norm-based estimate of the separation between two matrix
+              pairs is computed. (SGECON on sub-systems is used.)
+          Not referenced if TRANS = 'T'.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          On entry, M specifies the order of A and D, and the row
+          dimension of C, F, R and L.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          On entry, N specifies the order of B and E, and the column
+          dimension of C, F, R and L.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is COMPLEX array, dimension (LDA, M)
+          On entry, A contains an upper triangular matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the matrix A. LDA &gt;= max(1, M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is COMPLEX array, dimension (LDB, N)
+          On entry, B contains an upper triangular matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDB</I> 
+<P>
+
+<PRE>
+          LDB is INTEGER
+          The leading dimension of the matrix B. LDB &gt;= max(1, N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>C</I> 
+<P>
+
+<PRE>
+          C is COMPLEX array, dimension (LDC, N)
+          On entry, C contains the right-hand-side of the first matrix
+          equation in (1).
+          On exit, if IJOB = 0, C has been overwritten by the solution
+          R.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDC</I> 
+<P>
+
+<PRE>
+          LDC is INTEGER
+          The leading dimension of the matrix C. LDC &gt;= max(1, M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is COMPLEX array, dimension (LDD, M)
+          On entry, D contains an upper triangular matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDD</I> 
+<P>
+
+<PRE>
+          LDD is INTEGER
+          The leading dimension of the matrix D. LDD &gt;= max(1, M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>E</I> 
+<P>
+
+<PRE>
+          E is COMPLEX array, dimension (LDE, N)
+          On entry, E contains an upper triangular matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDE</I> 
+<P>
+
+<PRE>
+          LDE is INTEGER
+          The leading dimension of the matrix E. LDE &gt;= max(1, N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>F</I> 
+<P>
+
+<PRE>
+          F is COMPLEX array, dimension (LDF, N)
+          On entry, F contains the right-hand-side of the second matrix
+          equation in (1).
+          On exit, if IJOB = 0, F has been overwritten by the solution
+          L.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDF</I> 
+<P>
+
+<PRE>
+          LDF is INTEGER
+          The leading dimension of the matrix F. LDF &gt;= max(1, M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SCALE</I> 
+<P>
+
+<PRE>
+          SCALE is REAL
+          On exit, 0 &lt;= SCALE &lt;= 1. If 0 &lt; SCALE &lt; 1, the solutions
+          R and L (C and F on entry) will hold the solutions to a
+          slightly perturbed system but the input matrices A, B, D and
+          E have not been changed. If SCALE = 0, R and L will hold the
+          solutions to the homogeneous system with C = F = 0.
+          Normally, SCALE = 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RDSUM</I> 
+<P>
+
+<PRE>
+          RDSUM is REAL
+          On entry, the sum of squares of computed contributions to
+          the Dif-estimate under computation by CTGSYL, where the
+          scaling factor RDSCAL (see below) has been factored out.
+          On exit, the corresponding sum of squares updated with the
+          contributions from the current sub-system.
+          If TRANS = 'T' RDSUM is not touched.
+          NOTE: RDSUM only makes sense when CTGSY2 is called by
+          CTGSYL.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RDSCAL</I> 
+<P>
+
+<PRE>
+          RDSCAL is REAL
+          On entry, scaling factor used to prevent overflow in RDSUM.
+          On exit, RDSCAL is updated w.r.t. the current contributions
+          in RDSUM.
+          If TRANS = 'T', RDSCAL is not touched.
+          NOTE: RDSCAL only makes sense when CTGSY2 is called by
+          CTGSYL.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          On exit, if INFO is set to
+            =0: Successful exit
+            &lt;0: If INFO = -i, input argument number i is illegal.
+            &gt;0: The matrix pairs (A, D) and (B, E) have common or very
+                close eigenvalues.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Bo Kagstrom and Peter Poromaa, Department of Computing Science, Umea University, S-901 87 Umea, Sweden. 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 258 of file ctgsy2.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine ctgsy2 (characterTRANS, integerIJOB, integerM, integerN, complex, dimension( lda, * )A, integerLDA, complex, dimension( ldb, * )B, integerLDB, complex, dimension( ldc, * )C, integerLDC, complex, dimension( ldd, * )D, integerLDD, complex, dimension( lde, * )E, integerLDE, complex, dimension( ldf, * )F, integerLDF, realSCALE, realRDSUM, realRDSCAL, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:37 GMT, February 12, 2014
+</BODY>
+</HTML>

@@ -1,0 +1,255 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dgeqrt3.f</TITLE>
+</HEAD><BODY>
+<H1>dgeqrt3.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dgeqrt3.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+recursive subroutine <B>dgeqrt3</B> (M, N, A, LDA, T, LDT, INFO)
+
+<BR>
+
+<I></I><B>DGEQRT3</B> recursively computes a QR factorization of a general real or complex matrix using the compact WY representation of Q. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>recursive subroutine dgeqrt3 (integerM, integerN, double precision, dimension( lda, * )A, integerLDA, double precision, dimension( ldt, * )T, integerLDT, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>DGEQRT3</B> recursively computes a QR factorization of a general real or complex matrix using the compact WY representation of Q.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ DGEQRT3 recursively computes a QR factorization of a real M-by-N 
+ matrix A, using the compact WY representation of Q. 
+
+ Based on the algorithm of Elmroth and Gustavson, 
+ IBM J. Res. Develop. Vol 44 No. 4 July 2000.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The number of rows of the matrix A.  M &gt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of columns of the matrix A.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is DOUBLE PRECISION array, dimension (LDA,N)
+          On entry, the real M-by-N matrix A.  On exit, the elements on and
+          above the diagonal contain the N-by-N upper triangular matrix R; the
+          elements below the diagonal are the columns of V.  See below for
+          further details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A.  LDA &gt;= max(1,M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>T</I> 
+<P>
+
+<PRE>
+          T is DOUBLE PRECISION array, dimension (LDT,N)
+          The N-by-N upper triangular factor of the block reflector.
+          The elements on and above the diagonal contain the block
+          reflector T; the elements below the diagonal are not used.
+          See below for further details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDT</I> 
+<P>
+
+<PRE>
+          LDT is INTEGER
+          The leading dimension of the array T.  LDT &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0: successful exit
+          &lt; 0: if INFO = -i, the i-th argument had an illegal value
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  The matrix V stores the elementary reflectors H(i) in the i-th column
+  below the diagonal. For example, if M=5 and N=3, the matrix V is
+
+               V = (  1       )
+                   ( v1  1    )
+                   ( v1 v2  1 )
+                   ( v1 v2 v3 )
+                   ( v1 v2 v3 )
+
+  where the vi's represent the vectors which define H(i), which are returned
+  in the matrix A.  The 1's along the diagonal of V are not stored in A.  The
+  block reflector H is then given by
+
+               H = I - V * T * V**T
+
+  where V**T is the transpose of V.
+
+  For details of the algorithm, see Elmroth and Gustavson (cited above).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 133 of file dgeqrt3.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">recursive subroutine dgeqrt3 (integerM, integerN, double precision, dimension( lda, * )A, integerLDA, double precision, dimension( ldt, * )T, integerLDT, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:45 GMT, February 12, 2014
+</BODY>
+</HTML>

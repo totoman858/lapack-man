@@ -1,0 +1,375 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of cgbbrd.f</TITLE>
+</HEAD><BODY>
+<H1>cgbbrd.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+cgbbrd.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>cgbbrd</B> (VECT, M, N, NCC, KL, KU, AB, LDAB, D, E, Q, LDQ, PT, LDPT, C, LDC, WORK, RWORK, INFO)
+
+<BR>
+
+<I></I><B>CGBBRD</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine cgbbrd (characterVECT, integerM, integerN, integerNCC, integerKL, integerKU, complex, dimension( ldab, * )AB, integerLDAB, real, dimension( * )D, real, dimension( * )E, complex, dimension( ldq, * )Q, integerLDQ, complex, dimension( ldpt, * )PT, integerLDPT, complex, dimension( ldc, * )C, integerLDC, complex, dimension( * )WORK, real, dimension( * )RWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>CGBBRD</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ CGBBRD reduces a complex general m-by-n band matrix A to real upper
+ bidiagonal form B by a unitary transformation: Q**H * A * P = B.
+
+ The routine computes B, and optionally forms Q or P**H, or computes
+ Q**H*C for a given matrix C.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>VECT</I> 
+<P>
+
+<PRE>
+          VECT is CHARACTER*1
+          Specifies whether or not the matrices Q and P**H are to be
+          formed.
+          = 'N': do not form Q or P**H;
+          = 'Q': form Q only;
+          = 'P': form P**H only;
+          = 'B': form both.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The number of rows of the matrix A.  M &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of columns of the matrix A.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NCC</I> 
+<P>
+
+<PRE>
+          NCC is INTEGER
+          The number of columns of the matrix C.  NCC &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>KL</I> 
+<P>
+
+<PRE>
+          KL is INTEGER
+          The number of subdiagonals of the matrix A. KL &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>KU</I> 
+<P>
+
+<PRE>
+          KU is INTEGER
+          The number of superdiagonals of the matrix A. KU &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>AB</I> 
+<P>
+
+<PRE>
+          AB is COMPLEX array, dimension (LDAB,N)
+          On entry, the m-by-n band matrix A, stored in rows 1 to
+          KL+KU+1. The j-th column of A is stored in the j-th column of
+          the array AB as follows:
+          AB(ku+1+i-j,j) = A(i,j) for max(1,j-ku)&lt;=i&lt;=min(m,j+kl).
+          On exit, A is overwritten by values generated during the
+          reduction.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDAB</I> 
+<P>
+
+<PRE>
+          LDAB is INTEGER
+          The leading dimension of the array A. LDAB &gt;= KL+KU+1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is REAL array, dimension (min(M,N))
+          The diagonal elements of the bidiagonal matrix B.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>E</I> 
+<P>
+
+<PRE>
+          E is REAL array, dimension (min(M,N)-1)
+          The superdiagonal elements of the bidiagonal matrix B.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Q</I> 
+<P>
+
+<PRE>
+          Q is COMPLEX array, dimension (LDQ,M)
+          If VECT = 'Q' or 'B', the m-by-m unitary matrix Q.
+          If VECT = 'N' or 'P', the array Q is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDQ</I> 
+<P>
+
+<PRE>
+          LDQ is INTEGER
+          The leading dimension of the array Q.
+          LDQ &gt;= max(1,M) if VECT = 'Q' or 'B'; LDQ &gt;= 1 otherwise.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>PT</I> 
+<P>
+
+<PRE>
+          PT is COMPLEX array, dimension (LDPT,N)
+          If VECT = 'P' or 'B', the n-by-n unitary matrix P'.
+          If VECT = 'N' or 'Q', the array PT is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDPT</I> 
+<P>
+
+<PRE>
+          LDPT is INTEGER
+          The leading dimension of the array PT.
+          LDPT &gt;= max(1,N) if VECT = 'P' or 'B'; LDPT &gt;= 1 otherwise.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>C</I> 
+<P>
+
+<PRE>
+          C is COMPLEX array, dimension (LDC,NCC)
+          On entry, an m-by-ncc matrix C.
+          On exit, C is overwritten by Q**H*C.
+          C is not referenced if NCC = 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDC</I> 
+<P>
+
+<PRE>
+          LDC is INTEGER
+          The leading dimension of the array C.
+          LDC &gt;= max(1,M) if NCC &gt; 0; LDC &gt;= 1 if NCC = 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is COMPLEX array, dimension (max(M,N))
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RWORK</I> 
+<P>
+
+<PRE>
+          RWORK is REAL array, dimension (max(M,N))
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit.
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 193 of file cgbbrd.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine cgbbrd (characterVECT, integerM, integerN, integerNCC, integerKL, integerKU, complex, dimension( ldab, * )AB, integerLDAB, real, dimension( * )D, real, dimension( * )E, complex, dimension( ldq, * )Q, integerLDQ, complex, dimension( ldpt, * )PT, integerLDPT, complex, dimension( ldc, * )C, integerLDC, complex, dimension( * )WORK, real, dimension( * )RWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:48 GMT, February 12, 2014
+</BODY>
+</HTML>

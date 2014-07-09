@@ -1,0 +1,291 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of zggbak.f</TITLE>
+</HEAD><BODY>
+<H1>zggbak.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+zggbak.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>zggbak</B> (JOB, SIDE, N, ILO, IHI, LSCALE, RSCALE, M, V, LDV, INFO)
+
+<BR>
+
+<I></I><B>ZGGBAK</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine zggbak (characterJOB, characterSIDE, integerN, integerILO, integerIHI, double precision, dimension( * )LSCALE, double precision, dimension( * )RSCALE, integerM, complex*16, dimension( ldv, * )V, integerLDV, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>ZGGBAK</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZGGBAK forms the right or left eigenvectors of a complex generalized
+ eigenvalue problem A*x = lambda*B*x, by backward transformation on
+ the computed eigenvectors of the balanced pair of matrices output by
+ ZGGBAL.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>JOB</I> 
+<P>
+
+<PRE>
+          JOB is CHARACTER*1
+          Specifies the type of backward transformation required:
+          = 'N':  do nothing, return immediately;
+          = 'P':  do backward transformation for permutation only;
+          = 'S':  do backward transformation for scaling only;
+          = 'B':  do backward transformations for both permutation and
+                  scaling.
+          JOB must be the same as the argument JOB supplied to ZGGBAL.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SIDE</I> 
+<P>
+
+<PRE>
+          SIDE is CHARACTER*1
+          = 'R':  V contains right eigenvectors;
+          = 'L':  V contains left eigenvectors.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of rows of the matrix V.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ILO</I> 
+<P>
+
+<PRE>
+          ILO is INTEGER
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IHI</I> 
+<P>
+
+<PRE>
+          IHI is INTEGER
+          The integers ILO and IHI determined by ZGGBAL.
+          1 &lt;= ILO &lt;= IHI &lt;= N, if N &gt; 0; ILO=1 and IHI=0, if N=0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LSCALE</I> 
+<P>
+
+<PRE>
+          LSCALE is DOUBLE PRECISION array, dimension (N)
+          Details of the permutations and/or scaling factors applied
+          to the left side of A and B, as returned by ZGGBAL.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RSCALE</I> 
+<P>
+
+<PRE>
+          RSCALE is DOUBLE PRECISION array, dimension (N)
+          Details of the permutations and/or scaling factors applied
+          to the right side of A and B, as returned by ZGGBAL.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The number of columns of the matrix V.  M &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>V</I> 
+<P>
+
+<PRE>
+          V is COMPLEX*16 array, dimension (LDV,M)
+          On entry, the matrix of right or left eigenvectors to be
+          transformed, as returned by ZTGEVC.
+          On exit, V is overwritten by the transformed eigenvectors.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDV</I> 
+<P>
+
+<PRE>
+          LDV is INTEGER
+          The leading dimension of the matrix V. LDV &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit.
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  See R.C. Ward, Balancing the generalized eigenvalue problem,
+                 SIAM J. Sci. Stat. Comp. 2 (1981), 141-152.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 148 of file zggbak.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine zggbak (characterJOB, characterSIDE, integerN, integerILO, integerIHI, double precision, dimension( * )LSCALE, double precision, dimension( * )RSCALE, integerM, complex*16, dimension( ldv, * )V, integerLDV, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:33 GMT, February 12, 2014
+</BODY>
+</HTML>

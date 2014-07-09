@@ -1,0 +1,386 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of zggev.f</TITLE>
+</HEAD><BODY>
+<H1>zggev.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+zggev.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>zggev</B> (JOBVL, JOBVR, N, A, LDA, B, LDB, ALPHA, BETA, VL, LDVL, VR, LDVR, WORK, LWORK, RWORK, INFO)
+
+<BR>
+
+<I></I><B> ZGGEV computes the eigenvalues and, optionally, the left and/or right eigenvectors for GE matrices</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine zggev (characterJOBVL, characterJOBVR, integerN, complex*16, dimension( lda, * )A, integerLDA, complex*16, dimension( ldb, * )B, integerLDB, complex*16, dimension( * )ALPHA, complex*16, dimension( * )BETA, complex*16, dimension( ldvl, * )VL, integerLDVL, complex*16, dimension( ldvr, * )VR, integerLDVR, complex*16, dimension( * )WORK, integerLWORK, double precision, dimension( * )RWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B> ZGGEV computes the eigenvalues and, optionally, the left and/or right eigenvectors for GE matrices</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZGGEV computes for a pair of N-by-N complex nonsymmetric matrices
+ (A,B), the generalized eigenvalues, and optionally, the left and/or
+ right generalized eigenvectors.
+
+ A generalized eigenvalue for a pair of matrices (A,B) is a scalar
+ lambda or a ratio alpha/beta = lambda, such that A - lambda*B is
+ singular. It is usually represented as the pair (alpha,beta), as
+ there is a reasonable interpretation for beta=0, and even for both
+ being zero.
+
+ The right generalized eigenvector v(j) corresponding to the
+ generalized eigenvalue lambda(j) of (A,B) satisfies
+
+              A * v(j) = lambda(j) * B * v(j).
+
+ The left generalized eigenvector u(j) corresponding to the
+ generalized eigenvalues lambda(j) of (A,B) satisfies
+
+              u(j)**H * A = lambda(j) * u(j)**H * B
+
+ where u(j)**H is the conjugate-transpose of u(j).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>JOBVL</I> 
+<P>
+
+<PRE>
+          JOBVL is CHARACTER*1
+          = 'N':  do not compute the left generalized eigenvectors;
+          = 'V':  compute the left generalized eigenvectors.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>JOBVR</I> 
+<P>
+
+<PRE>
+          JOBVR is CHARACTER*1
+          = 'N':  do not compute the right generalized eigenvectors;
+          = 'V':  compute the right generalized eigenvectors.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrices A, B, VL, and VR.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is COMPLEX*16 array, dimension (LDA, N)
+          On entry, the matrix A in the pair (A,B).
+          On exit, A has been overwritten.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of A.  LDA &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is COMPLEX*16 array, dimension (LDB, N)
+          On entry, the matrix B in the pair (A,B).
+          On exit, B has been overwritten.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDB</I> 
+<P>
+
+<PRE>
+          LDB is INTEGER
+          The leading dimension of B.  LDB &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ALPHA</I> 
+<P>
+
+<PRE>
+          ALPHA is COMPLEX*16 array, dimension (N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>BETA</I> 
+<P>
+
+<PRE>
+          BETA is COMPLEX*16 array, dimension (N)
+          On exit, ALPHA(j)/BETA(j), j=1,...,N, will be the
+          generalized eigenvalues.
+
+          Note: the quotients ALPHA(j)/BETA(j) may easily over- or
+          underflow, and BETA(j) may even be zero.  Thus, the user
+          should avoid naively computing the ratio alpha/beta.
+          However, ALPHA will be always less than and usually
+          comparable with norm(A) in magnitude, and BETA always less
+          than and usually comparable with norm(B).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VL</I> 
+<P>
+
+<PRE>
+          VL is COMPLEX*16 array, dimension (LDVL,N)
+          If JOBVL = 'V', the left generalized eigenvectors u(j) are
+          stored one after another in the columns of VL, in the same
+          order as their eigenvalues.
+          Each eigenvector is scaled so the largest component has
+          abs(real part) + abs(imag. part) = 1.
+          Not referenced if JOBVL = 'N'.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDVL</I> 
+<P>
+
+<PRE>
+          LDVL is INTEGER
+          The leading dimension of the matrix VL. LDVL &gt;= 1, and
+          if JOBVL = 'V', LDVL &gt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VR</I> 
+<P>
+
+<PRE>
+          VR is COMPLEX*16 array, dimension (LDVR,N)
+          If JOBVR = 'V', the right generalized eigenvectors v(j) are
+          stored one after another in the columns of VR, in the same
+          order as their eigenvalues.
+          Each eigenvector is scaled so the largest component has
+          abs(real part) + abs(imag. part) = 1.
+          Not referenced if JOBVR = 'N'.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDVR</I> 
+<P>
+
+<PRE>
+          LDVR is INTEGER
+          The leading dimension of the matrix VR. LDVR &gt;= 1, and
+          if JOBVR = 'V', LDVR &gt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
+          On exit, if INFO = 0, <A HREF="/cgi-bin/man/man2html?1+WORK">WORK</A>(1) returns the optimal LWORK.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LWORK</I> 
+<P>
+
+<PRE>
+          LWORK is INTEGER
+          The dimension of the array WORK.  LWORK &gt;= max(1,2*N).
+          For good performance, LWORK must generally be larger.
+
+          If LWORK = -1, then a workspace query is assumed; the routine
+          only calculates the optimal size of the WORK array, returns
+          this value as the first entry of the WORK array, and no error
+          message related to LWORK is issued by XERBLA.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RWORK</I> 
+<P>
+
+<PRE>
+          RWORK is DOUBLE PRECISION array, dimension (8*N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value.
+          =1,...,N:
+                The QZ iteration failed.  No eigenvectors have been
+                calculated, but ALPHA(j) and BETA(j) should be
+                correct for j=INFO+1,...,N.
+          &gt; N:  =N+1: other then QZ iteration failed in DHGEQZ,
+                =N+2: error return from DTGEVC.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+April 2012 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 217 of file zggev.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine zggev (characterJOBVL, characterJOBVR, integerN, complex*16, dimension( lda, * )A, integerLDA, complex*16, dimension( ldb, * )B, integerLDB, complex*16, dimension( * )ALPHA, complex*16, dimension( * )BETA, complex*16, dimension( ldvl, * )VL, integerLDVL, complex*16, dimension( ldvr, * )VR, integerLDVR, complex*16, dimension( * )WORK, integerLWORK, double precision, dimension( * )RWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:36 GMT, February 12, 2014
+</BODY>
+</HTML>

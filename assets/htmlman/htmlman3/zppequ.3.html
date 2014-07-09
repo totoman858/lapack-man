@@ -1,0 +1,229 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of zppequ.f</TITLE>
+</HEAD><BODY>
+<H1>zppequ.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+zppequ.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>zppequ</B> (UPLO, N, AP, S, SCOND, AMAX, INFO)
+
+<BR>
+
+<I></I><B>ZPPEQU</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine zppequ (characterUPLO, integerN, complex*16, dimension( * )AP, double precision, dimension( * )S, double precisionSCOND, double precisionAMAX, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>ZPPEQU</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZPPEQU computes row and column scalings intended to equilibrate a
+ Hermitian positive definite matrix A in packed storage and reduce
+ its condition number (with respect to the two-norm).  S contains the
+ scale factors, S(i)=1/sqrt(A(i,i)), chosen so that the scaled matrix
+ B with elements B(i,j)=S(i)*A(i,j)*S(j) has ones on the diagonal.
+ This choice of S puts the condition number of B within a factor N of
+ the smallest possible condition number over all possible diagonal
+ scalings.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>UPLO</I> 
+<P>
+
+<PRE>
+          UPLO is CHARACTER*1
+          = 'U':  Upper triangle of A is stored;
+          = 'L':  Lower triangle of A is stored.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrix A.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>AP</I> 
+<P>
+
+<PRE>
+          AP is COMPLEX*16 array, dimension (N*(N+1)/2)
+          The upper or lower triangle of the Hermitian matrix A, packed
+          columnwise in a linear array.  The j-th column of A is stored
+          in the array AP as follows:
+          if UPLO = 'U', AP(i + (j-1)*j/2) = A(i,j) for 1&lt;=i&lt;=j;
+          if UPLO = 'L', AP(i + (j-1)*(2n-j)/2) = A(i,j) for j&lt;=i&lt;=n.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>S</I> 
+<P>
+
+<PRE>
+          S is DOUBLE PRECISION array, dimension (N)
+          If INFO = 0, S contains the scale factors for A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SCOND</I> 
+<P>
+
+<PRE>
+          SCOND is DOUBLE PRECISION
+          If INFO = 0, S contains the ratio of the smallest S(i) to
+          the largest S(i).  If SCOND &gt;= 0.1 and AMAX is neither too
+          large nor too small, it is not worth scaling by S.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>AMAX</I> 
+<P>
+
+<PRE>
+          AMAX is DOUBLE PRECISION
+          Absolute value of largest matrix element.  If AMAX is very
+          close to overflow or very close to underflow, the matrix
+          should be scaled.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value
+          &gt; 0:  if INFO = i, the i-th diagonal element is nonpositive.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 118 of file zppequ.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine zppequ (characterUPLO, integerN, complex*16, dimension( * )AP, double precision, dimension( * )S, double precisionSCOND, double precisionAMAX, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:46 GMT, February 12, 2014
+</BODY>
+</HTML>

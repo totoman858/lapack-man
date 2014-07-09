@@ -1,0 +1,285 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of zlagtm.f</TITLE>
+</HEAD><BODY>
+<H1>zlagtm.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+zlagtm.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>zlagtm</B> (TRANS, N, NRHS, ALPHA, DL, D, DU, X, LDX, BETA, B, LDB)
+
+<BR>
+
+<I></I><B>ZLAGTM</B> performs a matrix-matrix product of the form C = αAB+βC, where A is a tridiagonal matrix, B and C are rectangular matrices, and α and β are scalars, which may be 0, 1, or -1. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine zlagtm (characterTRANS, integerN, integerNRHS, double precisionALPHA, complex*16, dimension( * )DL, complex*16, dimension( * )D, complex*16, dimension( * )DU, complex*16, dimension( ldx, * )X, integerLDX, double precisionBETA, complex*16, dimension( ldb, * )B, integerLDB)</H3>
+
+<P>
+<P>
+
+<B>ZLAGTM</B> performs a matrix-matrix product of the form C = αAB+βC, where A is a tridiagonal matrix, B and C are rectangular matrices, and α and β are scalars, which may be 0, 1, or -1.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZLAGTM performs a matrix-vector product of the form
+
+    B := alpha * A * X + beta * B
+
+ where A is a tridiagonal matrix of order N, B and X are N by NRHS
+ matrices, and alpha and beta are real scalars, each of which may be
+ 0., 1., or -1.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>TRANS</I> 
+<P>
+
+<PRE>
+          TRANS is CHARACTER*1
+          Specifies the operation applied to A.
+          = 'N':  No transpose, B := alpha * A * X + beta * B
+          = 'T':  Transpose,    B := alpha * A**T * X + beta * B
+          = 'C':  Conjugate transpose, B := alpha * A**H * X + beta * B
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrix A.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NRHS</I> 
+<P>
+
+<PRE>
+          NRHS is INTEGER
+          The number of right hand sides, i.e., the number of columns
+          of the matrices X and B.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ALPHA</I> 
+<P>
+
+<PRE>
+          ALPHA is DOUBLE PRECISION
+          The scalar alpha.  ALPHA must be 0., 1., or -1.; otherwise,
+          it is assumed to be 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DL</I> 
+<P>
+
+<PRE>
+          DL is COMPLEX*16 array, dimension (N-1)
+          The (n-1) sub-diagonal elements of T.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is COMPLEX*16 array, dimension (N)
+          The diagonal elements of T.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DU</I> 
+<P>
+
+<PRE>
+          DU is COMPLEX*16 array, dimension (N-1)
+          The (n-1) super-diagonal elements of T.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X</I> 
+<P>
+
+<PRE>
+          X is COMPLEX*16 array, dimension (LDX,NRHS)
+          The N by NRHS matrix X.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDX</I> 
+<P>
+
+<PRE>
+          LDX is INTEGER
+          The leading dimension of the array X.  LDX &gt;= max(N,1).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>BETA</I> 
+<P>
+
+<PRE>
+          BETA is DOUBLE PRECISION
+          The scalar beta.  BETA must be 0., 1., or -1.; otherwise,
+          it is assumed to be 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is COMPLEX*16 array, dimension (LDB,NRHS)
+          On entry, the N by NRHS matrix B.
+          On exit, B is overwritten by the matrix expression
+          B := alpha * A * X + beta * B.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDB</I> 
+<P>
+
+<PRE>
+          LDB is INTEGER
+          The leading dimension of the array B.  LDB &gt;= max(N,1).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 145 of file zlagtm.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine zlagtm (characterTRANS, integerN, integerNRHS, double precisionALPHA, complex*16, dimension( * )DL, complex*16, dimension( * )D, complex*16, dimension( * )DU, complex*16, dimension( ldx, * )X, integerLDX, double precisionBETA, complex*16, dimension( ldb, * )B, integerLDB)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:46 GMT, February 12, 2014
+</BODY>
+</HTML>

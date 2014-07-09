@@ -1,0 +1,364 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dggrqf.f</TITLE>
+</HEAD><BODY>
+<H1>dggrqf.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dggrqf.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>dggrqf</B> (M, P, N, A, LDA, TAUA, B, LDB, TAUB, WORK, LWORK, INFO)
+
+<BR>
+
+<I></I><B>DGGRQF</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dggrqf (integerM, integerP, integerN, double precision, dimension( lda, * )A, integerLDA, double precision, dimension( * )TAUA, double precision, dimension( ldb, * )B, integerLDB, double precision, dimension( * )TAUB, double precision, dimension( * )WORK, integerLWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>DGGRQF</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ DGGRQF computes a generalized RQ factorization of an M-by-N matrix A
+ and a P-by-N matrix B:
+
+             A = R*Q,        B = Z*T*Q,
+
+ where Q is an N-by-N orthogonal matrix, Z is a P-by-P orthogonal
+ matrix, and R and T assume one of the forms:
+
+ if M &lt;= N,  R = ( 0  R12 ) M,   or if M &gt; N,  R = ( R11 ) M-N,
+                  N-M  M                           ( R21 ) N
+                                                      N
+
+ where R12 or R21 is upper triangular, and
+
+ if P &gt;= N,  T = ( T11 ) N  ,   or if P &lt; N,  T = ( T11  T12 ) P,
+                 (  0  ) P-N                         P   N-P
+                    N
+
+ where T11 is upper triangular.
+
+ In particular, if B is square and nonsingular, the GRQ factorization
+ of A and B implicitly gives the RQ factorization of A*inv(B):
+
+              A*inv(B) = (R*inv(T))*Z**T
+
+ where inv(B) denotes the inverse of the matrix B, and Z**T denotes the
+ transpose of the matrix Z.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The number of rows of the matrix A.  M &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>P</I> 
+<P>
+
+<PRE>
+          P is INTEGER
+          The number of rows of the matrix B.  P &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of columns of the matrices A and B. N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is DOUBLE PRECISION array, dimension (LDA,N)
+          On entry, the M-by-N matrix A.
+          On exit, if M &lt;= N, the upper triangle of the subarray
+          A(1:M,N-M+1:N) contains the M-by-M upper triangular matrix R;
+          if M &gt; N, the elements on and above the (M-N)-th subdiagonal
+          contain the M-by-N upper trapezoidal matrix R; the remaining
+          elements, with the array TAUA, represent the orthogonal
+          matrix Q as a product of elementary reflectors (see Further
+          Details).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A. LDA &gt;= max(1,M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TAUA</I> 
+<P>
+
+<PRE>
+          TAUA is DOUBLE PRECISION array, dimension (min(M,N))
+          The scalar factors of the elementary reflectors which
+          represent the orthogonal matrix Q (see Further Details).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is DOUBLE PRECISION array, dimension (LDB,N)
+          On entry, the P-by-N matrix B.
+          On exit, the elements on and above the diagonal of the array
+          contain the min(P,N)-by-N upper trapezoidal matrix T (T is
+          upper triangular if P &gt;= N); the elements below the diagonal,
+          with the array TAUB, represent the orthogonal matrix Z as a
+          product of elementary reflectors (see Further Details).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDB</I> 
+<P>
+
+<PRE>
+          LDB is INTEGER
+          The leading dimension of the array B. LDB &gt;= max(1,P).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TAUB</I> 
+<P>
+
+<PRE>
+          TAUB is DOUBLE PRECISION array, dimension (min(P,N))
+          The scalar factors of the elementary reflectors which
+          represent the orthogonal matrix Z (see Further Details).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is DOUBLE PRECISION array, dimension (MAX(1,LWORK))
+          On exit, if INFO = 0, <A HREF="/cgi-bin/man/man2html?1+WORK">WORK</A>(1) returns the optimal LWORK.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LWORK</I> 
+<P>
+
+<PRE>
+          LWORK is INTEGER
+          The dimension of the array WORK. LWORK &gt;= max(1,N,M,P).
+          For optimum performance LWORK &gt;= max(N,M,P)*max(NB1,NB2,NB3),
+          where NB1 is the optimal blocksize for the RQ factorization
+          of an M-by-N matrix, NB2 is the optimal blocksize for the
+          QR factorization of a P-by-N matrix, and NB3 is the optimal
+          blocksize for a call of DORMRQ.
+
+          If LWORK = -1, then a workspace query is assumed; the routine
+          only calculates the optimal size of the WORK array, returns
+          this value as the first entry of the WORK array, and no error
+          message related to LWORK is issued by XERBLA.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit
+          &lt; 0:  if INF0= -i, the i-th argument had an illegal value.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  The matrix Q is represented as a product of elementary reflectors
+
+     Q = <A HREF="/cgi-bin/man/man2html?1+H">H</A>(1) <A HREF="/cgi-bin/man/man2html?2+H">H</A>(2) . . . H(k), where k = min(m,n).
+
+  Each H(i) has the form
+
+     H(i) = I - taua * v * v**T
+
+  where taua is a real scalar, and v is a real vector with
+  v(n-k+i+1:n) = 0 and v(n-k+i) = 1; v(1:n-k+i-1) is stored on exit in
+  A(m-k+i,1:n-k+i-1), and taua in TAUA(i).
+  To form Q explicitly, use LAPACK subroutine DORGRQ.
+  To use Q to update another matrix, use LAPACK subroutine DORMRQ.
+
+  The matrix Z is represented as a product of elementary reflectors
+
+     Z = <A HREF="/cgi-bin/man/man2html?1+H">H</A>(1) <A HREF="/cgi-bin/man/man2html?2+H">H</A>(2) . . . H(k), where k = min(p,n).
+
+  Each H(i) has the form
+
+     H(i) = I - taub * v * v**T
+
+  where taub is a real scalar, and v is a real vector with
+  v(1:i-1) = 0 and v(i) = 1; v(i+1:p) is stored on exit in B(i+1:p,i),
+  and taub in TAUB(i).
+  To form Z explicitly, use LAPACK subroutine DORGQR.
+  To use Z to update another matrix, use LAPACK subroutine DORMQR.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 214 of file dggrqf.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dggrqf (integerM, integerP, integerN, double precision, dimension( lda, * )A, integerLDA, double precision, dimension( * )TAUA, double precision, dimension( ldb, * )B, integerLDB, double precision, dimension( * )TAUB, double precision, dimension( * )WORK, integerLWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:34 GMT, February 12, 2014
+</BODY>
+</HTML>

@@ -1,0 +1,308 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of zlags2.f</TITLE>
+</HEAD><BODY>
+<H1>zlags2.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+zlags2.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>zlags2</B> (UPPER, A1, A2, A3, B1, B2, B3, CSU, SNU, CSV, SNV, CSQ, SNQ)
+
+<BR>
+
+<I></I><B>ZLAGS2</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine zlags2 (logicalUPPER, double precisionA1, complex*16A2, double precisionA3, double precisionB1, complex*16B2, double precisionB3, double precisionCSU, complex*16SNU, double precisionCSV, complex*16SNV, double precisionCSQ, complex*16SNQ)</H3>
+
+<P>
+<P>
+
+<B>ZLAGS2</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZLAGS2 computes 2-by-2 unitary matrices U, V and Q, such
+ that if ( UPPER ) then
+
+           U**H *A*Q = U**H *( A1 A2 )*Q = ( x  0  )
+                             ( 0  A3 )     ( x  x  )
+ and
+           V**H*B*Q = V**H *( B1 B2 )*Q = ( x  0  )
+                            ( 0  B3 )     ( x  x  )
+
+ or if ( .NOT.UPPER ) then
+
+           U**H *A*Q = U**H *( A1 0  )*Q = ( x  x  )
+                             ( A2 A3 )     ( 0  x  )
+ and
+           V**H *B*Q = V**H *( B1 0  )*Q = ( x  x  )
+                             ( B2 B3 )     ( 0  x  )
+ where
+
+   U = (   CSU    SNU ), V = (  CSV    SNV ),
+       ( -SNU**H  CSU )      ( -SNV**H CSV )
+
+   Q = (   CSQ    SNQ )
+       ( -SNQ**H  CSQ )
+
+ The rows of the transformed A and B are parallel. Moreover, if the
+ input 2-by-2 matrix A is not zero, then the transformed (1,1) entry
+ of A is not zero. If the input matrices A and B are both not zero,
+ then the transformed (2,2) element of B is not zero, except when the
+ first rows of input A and B are parallel and the second rows are
+ zero.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>UPPER</I> 
+<P>
+
+<PRE>
+          UPPER is LOGICAL
+          = .TRUE.: the input matrices A and B are upper triangular.
+          = .FALSE.: the input matrices A and B are lower triangular.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A1</I> 
+<P>
+
+<PRE>
+          A1 is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A2</I> 
+<P>
+
+<PRE>
+          A2 is COMPLEX*16
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A3</I> 
+<P>
+
+<PRE>
+          A3 is DOUBLE PRECISION
+          On entry, A1, A2 and A3 are elements of the input 2-by-2
+          upper (lower) triangular matrix A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B1</I> 
+<P>
+
+<PRE>
+          B1 is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B2</I> 
+<P>
+
+<PRE>
+          B2 is COMPLEX*16
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B3</I> 
+<P>
+
+<PRE>
+          B3 is DOUBLE PRECISION
+          On entry, B1, B2 and B3 are elements of the input 2-by-2
+          upper (lower) triangular matrix B.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>CSU</I> 
+<P>
+
+<PRE>
+          CSU is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SNU</I> 
+<P>
+
+<PRE>
+          SNU is COMPLEX*16
+          The desired unitary matrix U.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>CSV</I> 
+<P>
+
+<PRE>
+          CSV is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SNV</I> 
+<P>
+
+<PRE>
+          SNV is COMPLEX*16
+          The desired unitary matrix V.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>CSQ</I> 
+<P>
+
+<PRE>
+          CSQ is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SNQ</I> 
+<P>
+
+<PRE>
+          SNQ is COMPLEX*16
+          The desired unitary matrix Q.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 158 of file zlags2.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine zlags2 (logicalUPPER, double precisionA1, complex*16A2, double precisionA3, double precisionB1, complex*16B2, double precisionB3, double precisionCSU, complex*16SNU, double precisionCSV, complex*16SNV, double precisionCSQ, complex*16SNQ)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:06 GMT, February 12, 2014
+</BODY>
+</HTML>

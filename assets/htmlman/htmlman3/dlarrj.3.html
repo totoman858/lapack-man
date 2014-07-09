@@ -1,0 +1,328 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dlarrj.f</TITLE>
+</HEAD><BODY>
+<H1>dlarrj.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dlarrj.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>dlarrj</B> (N, D, E2, IFIRST, ILAST, RTOL, OFFSET, W, WERR, WORK, IWORK, PIVMIN, SPDIAM, INFO)
+
+<BR>
+
+<I></I><B>DLARRJ</B> performs refinement of the initial estimates of the eigenvalues of the matrix T. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dlarrj (integerN, double precision, dimension( * )D, double precision, dimension( * )E2, integerIFIRST, integerILAST, double precisionRTOL, integerOFFSET, double precision, dimension( * )W, double precision, dimension( * )WERR, double precision, dimension( * )WORK, integer, dimension( * )IWORK, double precisionPIVMIN, double precisionSPDIAM, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>DLARRJ</B> performs refinement of the initial estimates of the eigenvalues of the matrix T.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ Given the initial eigenvalue approximations of T, DLARRJ
+ does  bisection to refine the eigenvalues of T,
+ W( IFIRST-OFFSET ) through W( ILAST-OFFSET ), to more accuracy. Initial
+ guesses for these eigenvalues are input in W, the corresponding estimate
+ of the error in these guesses in WERR. During bisection, intervals
+ [left, right] are maintained by storing their mid-points and
+ semi-widths in the arrays W and WERR respectively.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is DOUBLE PRECISION array, dimension (N)
+          The N diagonal elements of T.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>E2</I> 
+<P>
+
+<PRE>
+          E2 is DOUBLE PRECISION array, dimension (N-1)
+          The Squares of the (N-1) subdiagonal elements of T.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IFIRST</I> 
+<P>
+
+<PRE>
+          IFIRST is INTEGER
+          The index of the first eigenvalue to be computed.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ILAST</I> 
+<P>
+
+<PRE>
+          ILAST is INTEGER
+          The index of the last eigenvalue to be computed.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RTOL</I> 
+<P>
+
+<PRE>
+          RTOL is DOUBLE PRECISION
+          Tolerance for the convergence of the bisection intervals.
+          An interval [LEFT,RIGHT] has converged if
+          RIGHT-LEFT.LT.RTOL*MAX(|LEFT|,|RIGHT|).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>OFFSET</I> 
+<P>
+
+<PRE>
+          OFFSET is INTEGER
+          Offset for the arrays W and WERR, i.e., the IFIRST-OFFSET
+          through ILAST-OFFSET elements of these arrays are to be used.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>W</I> 
+<P>
+
+<PRE>
+          W is DOUBLE PRECISION array, dimension (N)
+          On input, W( IFIRST-OFFSET ) through W( ILAST-OFFSET ) are
+          estimates of the eigenvalues of L D L^T indexed IFIRST through
+          ILAST.
+          On output, these estimates are refined.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WERR</I> 
+<P>
+
+<PRE>
+          WERR is DOUBLE PRECISION array, dimension (N)
+          On input, WERR( IFIRST-OFFSET ) through WERR( ILAST-OFFSET ) are
+          the errors in the estimates of the corresponding elements in W.
+          On output, these errors are refined.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is DOUBLE PRECISION array, dimension (2*N)
+          Workspace.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IWORK</I> 
+<P>
+
+<PRE>
+          IWORK is INTEGER array, dimension (2*N)
+          Workspace.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>PIVMIN</I> 
+<P>
+
+<PRE>
+          PIVMIN is DOUBLE PRECISION
+          The minimum pivot in the Sturm sequence for T.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SPDIAM</I> 
+<P>
+
+<PRE>
+          SPDIAM is DOUBLE PRECISION
+          The spectral diameter of T.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          Error flag.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Beresford Parlett, University of California, Berkeley, USA 
+<BR>
+
+<BR>&nbsp;Jim&nbsp;Demmel,&nbsp;University&nbsp;of&nbsp;California,&nbsp;Berkeley,&nbsp;USA&nbsp;
+<BR>
+
+<BR>&nbsp;Inderjit&nbsp;Dhillon,&nbsp;University&nbsp;of&nbsp;Texas,&nbsp;Austin,&nbsp;USA&nbsp;
+<BR>
+
+<BR>&nbsp;Osni&nbsp;Marques,&nbsp;LBNL/NERSC,&nbsp;USA&nbsp;
+<BR>
+
+<BR>&nbsp;Christof&nbsp;Voemel,&nbsp;University&nbsp;of&nbsp;California,&nbsp;Berkeley,&nbsp;USA&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 167 of file dlarrj.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dlarrj (integerN, double precision, dimension( * )D, double precision, dimension( * )E2, integerIFIRST, integerILAST, double precisionRTOL, integerOFFSET, double precision, dimension( * )W, double precision, dimension( * )WERR, double precision, dimension( * )WORK, integer, dimension( * )IWORK, double precisionPIVMIN, double precisionSPDIAM, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:07 GMT, February 12, 2014
+</BODY>
+</HTML>

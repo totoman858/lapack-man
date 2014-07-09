@@ -1,0 +1,308 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dlasd8.f</TITLE>
+</HEAD><BODY>
+<H1>dlasd8.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dlasd8.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>dlasd8</B> (ICOMPQ, K, D, Z, VF, VL, DIFL, DIFR, LDDIFR, DSIGMA, WORK, INFO)
+
+<BR>
+
+<I></I><B>DLASD8</B> finds the square roots of the roots of the secular equation, and stores, for each element in D, the distance to its two nearest poles. Used by sbdsdc. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dlasd8 (integerICOMPQ, integerK, double precision, dimension( * )D, double precision, dimension( * )Z, double precision, dimension( * )VF, double precision, dimension( * )VL, double precision, dimension( * )DIFL, double precision, dimension( lddifr, * )DIFR, integerLDDIFR, double precision, dimension( * )DSIGMA, double precision, dimension( * )WORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>DLASD8</B> finds the square roots of the roots of the secular equation, and stores, for each element in D, the distance to its two nearest poles. Used by sbdsdc.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ DLASD8 finds the square roots of the roots of the secular equation,
+ as defined by the values in DSIGMA and Z. It makes the appropriate
+ calls to DLASD4, and stores, for each  element in D, the distance
+ to its two nearest poles (elements in DSIGMA). It also updates
+ the arrays VF and VL, the first and last components of all the
+ right singular vectors of the original bidiagonal matrix.
+
+ DLASD8 is called from DLASD6.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>ICOMPQ</I> 
+<P>
+
+<PRE>
+          ICOMPQ is INTEGER
+          Specifies whether singular vectors are to be computed in
+          factored form in the calling routine:
+          = 0: Compute singular values only.
+          = 1: Compute singular vectors in factored form as well.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>K</I> 
+<P>
+
+<PRE>
+          K is INTEGER
+          The number of terms in the rational function to be solved
+          by DLASD4.  K &gt;= 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is DOUBLE PRECISION array, dimension ( K )
+          On output, D contains the updated singular values.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is DOUBLE PRECISION array, dimension ( K )
+          On entry, the first K elements of this array contain the
+          components of the deflation-adjusted updating row vector.
+          On exit, Z is updated.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VF</I> 
+<P>
+
+<PRE>
+          VF is DOUBLE PRECISION array, dimension ( K )
+          On entry, VF contains  information passed through DBEDE8.
+          On exit, VF contains the first K components of the first
+          components of all right singular vectors of the bidiagonal
+          matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VL</I> 
+<P>
+
+<PRE>
+          VL is DOUBLE PRECISION array, dimension ( K )
+          On entry, VL contains  information passed through DBEDE8.
+          On exit, VL contains the first K components of the last
+          components of all right singular vectors of the bidiagonal
+          matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DIFL</I> 
+<P>
+
+<PRE>
+          DIFL is DOUBLE PRECISION array, dimension ( K )
+          On exit, DIFL(I) = D(I) - DSIGMA(I).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DIFR</I> 
+<P>
+
+<PRE>
+          DIFR is DOUBLE PRECISION array,
+                   dimension ( LDDIFR, 2 ) if ICOMPQ = 1 and
+                   dimension ( K ) if ICOMPQ = 0.
+          On exit, DIFR(I,1) = D(I) - DSIGMA(I+1), DIFR(K,1) is not
+          defined and will not be referenced.
+
+          If ICOMPQ = 1, DIFR(1:K,2) is an array containing the
+          normalizing factors for the right singular vector matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDDIFR</I> 
+<P>
+
+<PRE>
+          LDDIFR is INTEGER
+          The leading dimension of DIFR, must be at least K.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DSIGMA</I> 
+<P>
+
+<PRE>
+          DSIGMA is DOUBLE PRECISION array, dimension ( K )
+          On entry, the first K elements of this array contain the old
+          roots of the deflated updating problem.  These are the poles
+          of the secular equation.
+          On exit, the elements of DSIGMA may be very slightly altered
+          in value.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is DOUBLE PRECISION array, dimension at least 3 * K
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit.
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value.
+          &gt; 0:  if INFO = 1, a singular value did not converge
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Ming Gu and Huan Ren, Computer Science Division, University of California at Berkeley, USA 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 166 of file dlasd8.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dlasd8 (integerICOMPQ, integerK, double precision, dimension( * )D, double precision, dimension( * )Z, double precision, dimension( * )VF, double precision, dimension( * )VL, double precision, dimension( * )DIFL, double precision, dimension( lddifr, * )DIFR, integerLDDIFR, double precision, dimension( * )DSIGMA, double precision, dimension( * )WORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:38 GMT, February 12, 2014
+</BODY>
+</HTML>

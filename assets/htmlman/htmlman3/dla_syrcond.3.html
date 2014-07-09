@@ -1,0 +1,287 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dla_syrcond.f</TITLE>
+</HEAD><BODY>
+<H1>dla_syrcond.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dla_syrcond.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+DOUBLE PRECISION function <B>dla_syrcond</B> (UPLO, N, A, LDA, AF, LDAF, IPIV, CMODE, C, INFO, WORK, IWORK)
+
+<BR>
+
+<I></I><B>DLA_SYRCOND</B> estimates the Skeel condition number for a symmetric indefinite matrix. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>DOUBLE PRECISION function dla_syrcond (characterUPLO, integerN, double precision, dimension( lda, * )A, integerLDA, double precision, dimension( ldaf, * )AF, integerLDAF, integer, dimension( * )IPIV, integerCMODE, double precision, dimension( * )C, integerINFO, double precision, dimension( * )WORK, integer, dimension( * )IWORK)</H3>
+
+<P>
+<P>
+
+<B>DLA_SYRCOND</B> estimates the Skeel condition number for a symmetric indefinite matrix.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+    DLA_SYRCOND estimates the Skeel condition number of  op(A) * op2(C)
+    where op2 is determined by CMODE as follows
+    CMODE =  1    op2(C) = C
+    CMODE =  0    op2(C) = I
+    CMODE = -1    op2(C) = inv(C)
+    The Skeel condition number cond(A) = norminf( |inv(A)||A| )
+    is computed by computing scaling factors R such that
+    diag(R)*A*op2(C) is row equilibrated and computing the standard
+    infinity-norm condition number.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>UPLO</I> 
+<P>
+
+<PRE>
+          UPLO is CHARACTER*1
+       = 'U':  Upper triangle of A is stored;
+       = 'L':  Lower triangle of A is stored.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+     The number of linear equations, i.e., the order of the
+     matrix A.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is DOUBLE PRECISION array, dimension (LDA,N)
+     On entry, the N-by-N matrix A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+     The leading dimension of the array A.  LDA &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>AF</I> 
+<P>
+
+<PRE>
+          AF is DOUBLE PRECISION array, dimension (LDAF,N)
+     The block diagonal matrix D and the multipliers used to
+     obtain the factor U or L as computed by DSYTRF.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDAF</I> 
+<P>
+
+<PRE>
+          LDAF is INTEGER
+     The leading dimension of the array AF.  LDAF &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IPIV</I> 
+<P>
+
+<PRE>
+          IPIV is INTEGER array, dimension (N)
+     Details of the interchanges and the block structure of D
+     as determined by DSYTRF.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>CMODE</I> 
+<P>
+
+<PRE>
+          CMODE is INTEGER
+     Determines op2(C) in the formula op(A) * op2(C) as follows:
+     CMODE =  1    op2(C) = C
+     CMODE =  0    op2(C) = I
+     CMODE = -1    op2(C) = inv(C)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>C</I> 
+<P>
+
+<PRE>
+          C is DOUBLE PRECISION array, dimension (N)
+     The vector C in the formula op(A) * op2(C).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+       = 0:  Successful exit.
+     i &gt; 0:  The ith argument is invalid.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is DOUBLE PRECISION array, dimension (3*N).
+     Workspace.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IWORK</I> 
+<P>
+
+<PRE>
+          IWORK is INTEGER array, dimension (N).
+     Workspace.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 147 of file dla_syrcond.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">DOUBLE PRECISION function dla_syrcond (characterUPLO, integerN, double precision, dimension( lda, * )A, integerLDA, double precision, dimension( ldaf, * )AF, integerLDAF, integer, dimension( * )IPIV, integerCMODE, double precision, dimension( * )C, integerINFO, double precision, dimension( * )WORK, integer, dimension( * )IWORK)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:57 GMT, February 12, 2014
+</BODY>
+</HTML>

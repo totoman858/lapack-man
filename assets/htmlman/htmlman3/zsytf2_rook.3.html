@@ -1,0 +1,317 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of zsytf2_rook.f</TITLE>
+</HEAD><BODY>
+<H1>zsytf2_rook.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+zsytf2_rook.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>zsytf2_rook</B> (UPLO, N, A, LDA, IPIV, INFO)
+
+<BR>
+
+<I></I><B>ZSYTF2_ROOK</B> computes the factorization of a complex symmetric indefinite matrix using the bounded Bunch-Kaufman ('rook') diagonal pivoting method (unblocked algorithm). 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine zsytf2_rook (characterUPLO, integerN, complex*16, dimension( lda, * )A, integerLDA, integer, dimension( * )IPIV, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>ZSYTF2_ROOK</B> computes the factorization of a complex symmetric indefinite matrix using the bounded Bunch-Kaufman ('rook') diagonal pivoting method (unblocked algorithm).  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZSYTF2_ROOK computes the factorization of a complex symmetric matrix A
+ using the bounded Bunch-Kaufman (&quot;rook&quot;) diagonal pivoting method:
+
+    A = U*D*U**T  or  A = L*D*L**T
+
+ where U (or L) is a product of permutation and unit upper (lower)
+ triangular matrices, U**T is the transpose of U, and D is symmetric and
+ block diagonal with 1-by-1 and 2-by-2 diagonal blocks.
+
+ This is the unblocked version of the algorithm, calling Level 2 BLAS.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>UPLO</I> 
+<P>
+
+<PRE>
+          UPLO is CHARACTER*1
+          Specifies whether the upper or lower triangular part of the
+          symmetric matrix A is stored:
+          = 'U':  Upper triangular
+          = 'L':  Lower triangular
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrix A.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is COMPLEX*16 array, dimension (LDA,N)
+          On entry, the symmetric matrix A.  If UPLO = 'U', the leading
+          n-by-n upper triangular part of A contains the upper
+          triangular part of the matrix A, and the strictly lower
+          triangular part of A is not referenced.  If UPLO = 'L', the
+          leading n-by-n lower triangular part of A contains the lower
+          triangular part of the matrix A, and the strictly upper
+          triangular part of A is not referenced.
+
+          On exit, the block diagonal matrix D and the multipliers used
+          to obtain the factor U or L (see below for further details).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A.  LDA &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IPIV</I> 
+<P>
+
+<PRE>
+          IPIV is INTEGER array, dimension (N)
+          Details of the interchanges and the block structure of D.
+
+          If UPLO = 'U':
+             If IPIV(k) &gt; 0, then rows and columns k and IPIV(k)
+             were interchanged and D(k,k) is a 1-by-1 diagonal block.
+
+             If IPIV(k) &lt; 0 and IPIV(k-1) &lt; 0, then rows and
+             columns k and -IPIV(k) were interchanged and rows and
+             columns k-1 and -IPIV(k-1) were inerchaged,
+             D(k-1:k,k-1:k) is a 2-by-2 diagonal block.
+
+          If UPLO = 'L':
+             If IPIV(k) &gt; 0, then rows and columns k and IPIV(k)
+             were interchanged and D(k,k) is a 1-by-1 diagonal block.
+
+             If IPIV(k) &lt; 0 and IPIV(k+1) &lt; 0, then rows and
+             columns k and -IPIV(k) were interchanged and rows and
+             columns k+1 and -IPIV(k+1) were inerchaged,
+             D(k:k+1,k:k+1) is a 2-by-2 diagonal block.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0: successful exit
+          &lt; 0: if INFO = -k, the k-th argument had an illegal value
+          &gt; 0: if INFO = k, D(k,k) is exactly zero.  The factorization
+               has been completed, but the block diagonal matrix D is
+               exactly singular, and division by zero will occur if it
+               is used to solve a system of equations.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2013 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  If UPLO = 'U', then A = U*D*U**T, where
+     U = <A HREF="/cgi-bin/man/man2html?n+P">P</A>(n)*<A HREF="/cgi-bin/man/man2html?n+U">U</A>(n)* ... *P(k)U(k)* ...,
+  i.e., U is a product of terms P(k)*U(k), where k decreases from n to
+  1 in steps of 1 or 2, and D is a block diagonal matrix with 1-by-1
+  and 2-by-2 diagonal blocks D(k).  P(k) is a permutation matrix as
+  defined by IPIV(k), and U(k) is a unit upper triangular matrix, such
+  that if the diagonal block D(k) is of order s (s = 1 or 2), then
+
+             (   I    v    0   )   k-s
+     U(k) =  (   0    I    0   )   s
+             (   0    0    I   )   n-k
+                k-s   s   n-k
+
+  If s = 1, D(k) overwrites A(k,k), and v overwrites A(1:k-1,k).
+  If s = 2, the upper triangle of D(k) overwrites A(k-1,k-1), A(k-1,k),
+  and A(k,k), and v overwrites A(1:k-2,k-1:k).
+
+  If UPLO = 'L', then A = L*D*L**T, where
+     L = <A HREF="/cgi-bin/man/man2html?1+P">P</A>(1)*<A HREF="/cgi-bin/man/man2html?1+L">L</A>(1)* ... *P(k)*L(k)* ...,
+  i.e., L is a product of terms P(k)*L(k), where k increases from 1 to
+  n in steps of 1 or 2, and D is a block diagonal matrix with 1-by-1
+  and 2-by-2 diagonal blocks D(k).  P(k) is a permutation matrix as
+  defined by IPIV(k), and L(k) is a unit lower triangular matrix, such
+  that if the diagonal block D(k) is of order s (s = 1 or 2), then
+
+             (   I    0     0   )  k-1
+     L(k) =  (   0    I     0   )  s
+             (   0    v     I   )  n-k-s+1
+                k-1   s  n-k-s+1
+
+  If s = 1, D(k) overwrites A(k,k), and v overwrites A(k+1:n,k).
+  If s = 2, the lower triangle of D(k) overwrites A(k,k), A(k+1,k),
+  and A(k+1,k+1), and v overwrites A(k+2:n,k:k+1).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  November 2013,     Igor Kozachenko,
+                  Computer Science Division,
+                  University of California, Berkeley
+
+  September 2007, Sven Hammarling, Nicholas J. Higham, Craig Lucas,
+                  School of Mathematics,
+                  University of Manchester
+
+  01-01-96 - Based on modifications by
+    J. Lewis, Boeing Computer Services Company
+    A. Petitet, Computer Science Dept., Univ. of Tenn., Knoxville abd , USA
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 195 of file zsytf2_rook.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine zsytf2_rook (characterUPLO, integerN, complex*16, dimension( lda, * )A, integerLDA, integer, dimension( * )IPIV, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:37 GMT, February 12, 2014
+</BODY>
+</HTML>

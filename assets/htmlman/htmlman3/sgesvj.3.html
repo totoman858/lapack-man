@@ -1,0 +1,507 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of sgesvj.f</TITLE>
+</HEAD><BODY>
+<H1>sgesvj.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+sgesvj.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>sgesvj</B> (JOBA, JOBU, JOBV, M, N, A, LDA, SVA, MV, V, LDV, WORK, LWORK, INFO)
+
+<BR>
+
+<I></I><B>SGESVJ</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine sgesvj (character*1JOBA, character*1JOBU, character*1JOBV, integerM, integerN, real, dimension( lda, * )A, integerLDA, real, dimension( n )SVA, integerMV, real, dimension( ldv, * )V, integerLDV, real, dimension( lwork )WORK, integerLWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>SGESVJ</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ SGESVJ computes the singular value decomposition (SVD) of a real
+ M-by-N matrix A, where M &gt;= N. The SVD of A is written as
+                                    [++]   [xx]   [x0]   [xx]
+              A = U * SIGMA * V^t,  [++] = [xx] * [ox] * [xx]
+                                    [++]   [xx]
+ where SIGMA is an N-by-N diagonal matrix, U is an M-by-N orthonormal
+ matrix, and V is an N-by-N orthogonal matrix. The diagonal elements
+ of SIGMA are the singular values of A. The columns of U and V are the
+ left and the right singular vectors of A, respectively.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>JOBA</I> 
+<P>
+
+<PRE>
+          JOBA is CHARACTER* 1
+          Specifies the structure of A.
+          = 'L': The input matrix A is lower triangular;
+          = 'U': The input matrix A is upper triangular;
+          = 'G': The input matrix A is general M-by-N matrix, M &gt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>JOBU</I> 
+<P>
+
+<PRE>
+          JOBU is CHARACTER*1
+          Specifies whether to compute the left singular vectors
+          (columns of U):
+          = 'U': The left singular vectors corresponding to the nonzero
+                 singular values are computed and returned in the leading
+                 columns of A. See more details in the description of A.
+                 The default numerical orthogonality threshold is set to
+                 approximately TOL=CTOL*EPS, CTOL=SQRT(M), EPS=SLAMCH('E').
+          = 'C': Analogous to JOBU='U', except that user can control the
+                 level of numerical orthogonality of the computed left
+                 singular vectors. TOL can be set to TOL = CTOL*EPS, where
+                 CTOL is given on input in the array WORK.
+                 No CTOL smaller than ONE is allowed. CTOL greater
+                 than 1 / EPS is meaningless. The option 'C'
+                 can be used if M*EPS is satisfactory orthogonality
+                 of the computed left singular vectors, so CTOL=M could
+                 save few sweeps of Jacobi rotations.
+                 See the descriptions of A and <A HREF="/cgi-bin/man/man2html?1+WORK">WORK</A>(1).
+          = 'N': The matrix U is not computed. However, see the
+                 description of A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>JOBV</I> 
+<P>
+
+<PRE>
+          JOBV is CHARACTER*1
+          Specifies whether to compute the right singular vectors, that
+          is, the matrix V:
+          = 'V' : the matrix V is computed and returned in the array V
+          = 'A' : the Jacobi rotations are applied to the MV-by-N
+                  array V. In other words, the right singular vector
+                  matrix V is not computed explicitly; instead it is
+                  applied to an MV-by-N matrix initially stored in the
+                  first MV rows of V.
+          = 'N' : the matrix V is not computed and the array V is not
+                  referenced
+</PRE>
+
+<P>
+
+<BR>
+
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The number of rows of the input matrix A. 1/SLAMCH('E') &gt; M &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of columns of the input matrix A.
+          M &gt;= N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is REAL array, dimension (LDA,N)
+          On entry, the M-by-N matrix A.
+          On exit,
+          If JOBU .EQ. 'U' .OR. JOBU .EQ. 'C':
+                 If INFO .EQ. 0 :
+                 RANKA orthonormal columns of U are returned in the
+                 leading RANKA columns of the array A. Here RANKA &lt;= N
+                 is the number of computed singular values of A that are
+                 above the underflow threshold SLAMCH('S'). The singular
+                 vectors corresponding to underflowed or zero singular
+                 values are not computed. The value of RANKA is returned
+                 in the array WORK as RANKA=NINT(<A HREF="/cgi-bin/man/man2html?2+WORK">WORK</A>(2)). Also see the
+                 descriptions of SVA and WORK. The computed columns of U
+                 are mutually numerically orthogonal up to approximately
+                 TOL=SQRT(M)*EPS (default); or TOL=CTOL*EPS (JOBU.EQ.'C'),
+                 see the description of JOBU.
+                 If INFO .GT. 0,
+                 the procedure SGESVJ did not converge in the given number
+                 of iterations (sweeps). In that case, the computed
+                 columns of U may not be orthogonal up to TOL. The output
+                 U (stored in A), SIGMA (given by the computed singular
+                 values in SVA(1:N)) and V is still a decomposition of the
+                 input matrix A in the sense that the residual
+                 ||A-SCALE*U*SIGMA*V^T||_2 / ||A||_2 is small.
+          If JOBU .EQ. 'N':
+                 If INFO .EQ. 0 :
+                 Note that the left singular vectors are 'for free' in the
+                 one-sided Jacobi SVD algorithm. However, if only the
+                 singular values are needed, the level of numerical
+                 orthogonality of U is not an issue and iterations are
+                 stopped when the columns of the iterated matrix are
+                 numerically orthogonal up to approximately M*EPS. Thus,
+                 on exit, A contains the columns of U scaled with the
+                 corresponding singular values.
+                 If INFO .GT. 0 :
+                 the procedure SGESVJ did not converge in the given number
+                 of iterations (sweeps).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A.  LDA &gt;= max(1,M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SVA</I> 
+<P>
+
+<PRE>
+          SVA is REAL array, dimension (N)
+          On exit,
+          If INFO .EQ. 0 :
+          depending on the value SCALE = <A HREF="/cgi-bin/man/man2html?1+WORK">WORK</A>(1), we have:
+                 If SCALE .EQ. ONE:
+                 SVA(1:N) contains the computed singular values of A.
+                 During the computation SVA contains the Euclidean column
+                 norms of the iterated matrices in the array A.
+                 If SCALE .NE. ONE:
+                 The singular values of A are SCALE*SVA(1:N), and this
+                 factored representation is due to the fact that some of the
+                 singular values of A might underflow or overflow.
+
+          If INFO .GT. 0 :
+          the procedure SGESVJ did not converge in the given number of
+          iterations (sweeps) and SCALE*SVA(1:N) may not be accurate.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>MV</I> 
+<P>
+
+<PRE>
+          MV is INTEGER
+          If JOBV .EQ. 'A', then the product of Jacobi rotations in SGESVJ
+          is applied to the first MV rows of V. See the description of JOBV.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>V</I> 
+<P>
+
+<PRE>
+          V is REAL array, dimension (LDV,N)
+          If JOBV = 'V', then V contains on exit the N-by-N matrix of
+                         the right singular vectors;
+          If JOBV = 'A', then V contains the product of the computed right
+                         singular vector matrix and the initial matrix in
+                         the array V.
+          If JOBV = 'N', then V is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDV</I> 
+<P>
+
+<PRE>
+          LDV is INTEGER
+          The leading dimension of the array V, LDV .GE. 1.
+          If JOBV .EQ. 'V', then LDV .GE. max(1,N).
+          If JOBV .EQ. 'A', then LDV .GE. max(1,MV) .
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is REAL array, dimension max(4,M+N).
+          On entry,
+          If JOBU .EQ. 'C' :
+          <A HREF="/cgi-bin/man/man2html?1+WORK">WORK</A>(1) = CTOL, where CTOL defines the threshold for convergence.
+                    The process stops if all columns of A are mutually
+                    orthogonal up to CTOL*EPS, EPS=SLAMCH('E').
+                    It is required that CTOL &gt;= ONE, i.e. it is not
+                    allowed to force the routine to obtain orthogonality
+                    below EPSILON.
+          On exit,
+          <A HREF="/cgi-bin/man/man2html?1+WORK">WORK</A>(1) = SCALE is the scaling factor such that SCALE*SVA(1:N)
+                    are the computed singular vcalues of A.
+                    (See description of SVA().)
+          <A HREF="/cgi-bin/man/man2html?2+WORK">WORK</A>(2) = NINT(<A HREF="/cgi-bin/man/man2html?2+WORK">WORK</A>(2)) is the number of the computed nonzero
+                    singular values.
+          <A HREF="/cgi-bin/man/man2html?3+WORK">WORK</A>(3) = NINT(<A HREF="/cgi-bin/man/man2html?3+WORK">WORK</A>(3)) is the number of the computed singular
+                    values that are larger than the underflow threshold.
+          <A HREF="/cgi-bin/man/man2html?4+WORK">WORK</A>(4) = NINT(<A HREF="/cgi-bin/man/man2html?4+WORK">WORK</A>(4)) is the number of sweeps of Jacobi
+                    rotations needed for numerical convergence.
+          <A HREF="/cgi-bin/man/man2html?5+WORK">WORK</A>(5) = max_{i.NE.j} |COS(A(:,i),A(:,j))| in the last sweep.
+                    This is useful information in cases when SGESVJ did
+                    not converge, as it can be used to estimate whether
+                    the output is stil useful and for post festum analysis.
+          <A HREF="/cgi-bin/man/man2html?6+WORK">WORK</A>(6) = the largest absolute value over all sines of the
+                    Jacobi rotation angles in the last sweep. It can be
+                    useful for a post festum analysis.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LWORK</I> 
+<P>
+
+<PRE>
+          LWORK is INTEGER
+         length of WORK, WORK &gt;= MAX(6,M+N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0 : successful exit.
+          &lt; 0 : if INFO = -i, then the i-th argument had an illegal value
+          &gt; 0 : SGESVJ did not converge in the maximal allowed number (30)
+                of sweeps. The output may still be useful. See the
+                description of WORK.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+The orthogonal N-by-N matrix V is obtained as a product of Jacobi plane rotations. The rotations are implemented as fast scaled rotations of Anda and Park [1]. In the case of underflow of the Jacobi angle, a modified Jacobi transformation of Drmac [4] is used. Pivot strategy uses column interchanges of de Rijk [2]. The relative accuracy of the computed singular values and the accuracy of the computed singular vectors (in angle metric) is as guaranteed by the theory of Demmel and Veselic [3]. The condition number that determines the accuracy in the full rank case is essentially min_{D=diag} kappa(A*D), where kappa(.) is the spectral condition number. The best performance of this Jacobi SVD procedure is achieved if used in an accelerated version of Drmac and Veselic [5,6], and it is the kernel routine in the SIGMA library [7]. Some tunning parameters (marked with [TP]) are available for the implementer. 
+<BR>
+
+<BR>&nbsp;The&nbsp;computational&nbsp;range&nbsp;for&nbsp;the&nbsp;nonzero&nbsp;singular&nbsp;values&nbsp;is&nbsp;the&nbsp;machine&nbsp;number&nbsp;interval&nbsp;(&nbsp;UNDERFLOW&nbsp;,&nbsp;OVERFLOW&nbsp;).&nbsp;In&nbsp;extreme&nbsp;cases,&nbsp;even&nbsp;denormalized&nbsp;singular&nbsp;values&nbsp;can&nbsp;be&nbsp;computed&nbsp;with&nbsp;the&nbsp;corresponding&nbsp;gradual&nbsp;loss&nbsp;of&nbsp;accurate&nbsp;digits.
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Zlatko Drmac (Zagreb, Croatia) and Kresimir Veselic (Hagen, Germany)
+</DL>
+
+<P>
+
+<B>References: </B>
+<DL COMPACT><DT><DD>
+[1] A. A. Anda and H. Park: Fast plane rotations with dynamic scaling. 
+<BR>
+
+<BR>&nbsp;SIAM&nbsp;J.&nbsp;matrix&nbsp;Anal.&nbsp;Appl.,&nbsp;Vol.&nbsp;15&nbsp;(1994),&nbsp;pp.&nbsp;162-174.&nbsp;
+<BR>
+
+<P>
+<BR>
+
+<BR>&nbsp;[2]&nbsp;P.&nbsp;P.&nbsp;M.&nbsp;De&nbsp;Rijk:&nbsp;A&nbsp;one-sided&nbsp;Jacobi&nbsp;algorithm&nbsp;for&nbsp;computing&nbsp;the&nbsp;singular&nbsp;value&nbsp;decomposition&nbsp;on&nbsp;a&nbsp;vector&nbsp;computer.&nbsp;
+<BR>
+
+<BR>&nbsp;SIAM&nbsp;J.&nbsp;Sci.&nbsp;Stat.&nbsp;Comp.,&nbsp;Vol.&nbsp;10&nbsp;(1998),&nbsp;pp.&nbsp;359-371.&nbsp;
+<BR>
+
+<P>
+<BR>
+
+<BR>&nbsp;[3]&nbsp;J.&nbsp;Demmel&nbsp;and&nbsp;K.&nbsp;Veselic:&nbsp;Jacobi&nbsp;method&nbsp;is&nbsp;more&nbsp;accurate&nbsp;than&nbsp;QR.&nbsp;
+<BR>
+
+<BR>&nbsp;[4]&nbsp;Z.&nbsp;Drmac:&nbsp;Implementation&nbsp;of&nbsp;Jacobi&nbsp;rotations&nbsp;for&nbsp;accurate&nbsp;singular&nbsp;value&nbsp;computation&nbsp;in&nbsp;floating&nbsp;point&nbsp;arithmetic.&nbsp;
+<BR>
+
+<BR>&nbsp;SIAM&nbsp;J.&nbsp;Sci.&nbsp;Comp.,&nbsp;Vol.&nbsp;18&nbsp;(1997),&nbsp;pp.&nbsp;1200-1222.&nbsp;
+<BR>
+
+<P>
+<BR>
+
+<BR>&nbsp;[5]&nbsp;Z.&nbsp;Drmac&nbsp;and&nbsp;K.&nbsp;Veselic:&nbsp;New&nbsp;fast&nbsp;and&nbsp;accurate&nbsp;Jacobi&nbsp;SVD&nbsp;algorithm&nbsp;I.&nbsp;
+<BR>
+
+<BR>&nbsp;SIAM&nbsp;J.&nbsp;Matrix&nbsp;Anal.&nbsp;Appl.&nbsp;Vol.&nbsp;35,&nbsp;No.&nbsp;2&nbsp;(2008),&nbsp;pp.&nbsp;1322-1342.&nbsp;
+<BR>
+
+<BR>&nbsp;LAPACK&nbsp;Working&nbsp;note&nbsp;169.&nbsp;
+<BR>
+
+<P>
+<BR>
+
+<BR>&nbsp;[6]&nbsp;Z.&nbsp;Drmac&nbsp;and&nbsp;K.&nbsp;Veselic:&nbsp;New&nbsp;fast&nbsp;and&nbsp;accurate&nbsp;Jacobi&nbsp;SVD&nbsp;algorithm&nbsp;II.&nbsp;
+<BR>
+
+<BR>&nbsp;SIAM&nbsp;J.&nbsp;Matrix&nbsp;Anal.&nbsp;Appl.&nbsp;Vol.&nbsp;35,&nbsp;No.&nbsp;2&nbsp;(2008),&nbsp;pp.&nbsp;1343-1362.&nbsp;
+<BR>
+
+<BR>&nbsp;LAPACK&nbsp;Working&nbsp;note&nbsp;170.&nbsp;
+<BR>
+
+<P>
+<BR>
+
+<BR>&nbsp;[7]&nbsp;Z.&nbsp;Drmac:&nbsp;SIGMA&nbsp;-&nbsp;mathematical&nbsp;software&nbsp;library&nbsp;for&nbsp;accurate&nbsp;SVD,&nbsp;PSV,&nbsp;QSVD,&nbsp;(H,K)-SVD&nbsp;computations.
+<BR>
+
+<BR>&nbsp;Department&nbsp;of&nbsp;Mathematics,&nbsp;University&nbsp;of&nbsp;Zagreb,&nbsp;2008.
+</DL>
+
+<P>
+
+<B>Bugs, Examples and Comments: </B>
+<DL COMPACT><DT><DD>
+Please report all bugs and send interesting test examples and comments to <A HREF="mailto:drmac@math.hr">drmac@math.hr</A>. Thank you. 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 321 of file sgesvj.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine sgesvj (character*1JOBA, character*1JOBU, character*1JOBV, integerM, integerN, real, dimension( lda, * )A, integerLDA, real, dimension( n )SVA, integerMV, real, dimension( ldv, * )V, integerLDV, real, dimension( lwork )WORK, integerLWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:04 GMT, February 12, 2014
+</BODY>
+</HTML>

@@ -1,0 +1,435 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of ctprfb.f</TITLE>
+</HEAD><BODY>
+<H1>ctprfb.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+ctprfb.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>ctprfb</B> (SIDE, TRANS, DIRECT, STOREV, M, N, K, L, V, LDV, T, LDT, A, LDA, B, LDB, WORK, LDWORK)
+
+<BR>
+
+<I></I><B>CTPRFB</B> applies a real or complex 'triangular-pentagonal' blocked reflector to a real or complex matrix, which is composed of two blocks. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine ctprfb (characterSIDE, characterTRANS, characterDIRECT, characterSTOREV, integerM, integerN, integerK, integerL, complex, dimension( ldv, * )V, integerLDV, complex, dimension( ldt, * )T, integerLDT, complex, dimension( lda, * )A, integerLDA, complex, dimension( ldb, * )B, integerLDB, complex, dimension( ldwork, * )WORK, integerLDWORK)</H3>
+
+<P>
+<P>
+
+<B>CTPRFB</B> applies a real or complex 'triangular-pentagonal' blocked reflector to a real or complex matrix, which is composed of two blocks.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ CTPRFB applies a complex &quot;triangular-pentagonal&quot; block reflector H or its 
+ conjugate transpose H**H to a complex matrix C, which is composed of two 
+ blocks A and B, either from the left or right.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>SIDE</I> 
+<P>
+
+<PRE>
+          SIDE is CHARACTER*1
+          = 'L': apply H or H**H from the Left
+          = 'R': apply H or H**H from the Right
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TRANS</I> 
+<P>
+
+<PRE>
+          TRANS is CHARACTER*1
+          = 'N': apply H (No transpose)
+          = 'C': apply H**H (Conjugate transpose)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DIRECT</I> 
+<P>
+
+<PRE>
+          DIRECT is CHARACTER*1
+          Indicates how H is formed from a product of elementary
+          reflectors
+          = 'F': H = <A HREF="/cgi-bin/man/man2html?1+H">H</A>(1) <A HREF="/cgi-bin/man/man2html?2+H">H</A>(2) . . . H(k) (Forward)
+          = 'B': H = H(k) . . . <A HREF="/cgi-bin/man/man2html?2+H">H</A>(2) <A HREF="/cgi-bin/man/man2html?1+H">H</A>(1) (Backward)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>STOREV</I> 
+<P>
+
+<PRE>
+          STOREV is CHARACTER*1
+          Indicates how the vectors which define the elementary
+          reflectors are stored:
+          = 'C': Columns
+          = 'R': Rows
+</PRE>
+
+<P>
+
+<BR>
+
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The number of rows of the matrix B.  
+          M &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of columns of the matrix B.  
+          N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>K</I> 
+<P>
+
+<PRE>
+          K is INTEGER
+          The order of the matrix T, i.e. the number of elementary
+          reflectors whose product defines the block reflector.  
+          K &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>L</I> 
+<P>
+
+<PRE>
+          L is INTEGER
+          The order of the trapezoidal part of V.  
+          K &gt;= L &gt;= 0.  See Further Details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>V</I> 
+<P>
+
+<PRE>
+          V is COMPLEX array, dimension
+                                (LDV,K) if STOREV = 'C'
+                                (LDV,M) if STOREV = 'R' and SIDE = 'L'
+                                (LDV,N) if STOREV = 'R' and SIDE = 'R'
+          The pentagonal matrix V, which contains the elementary reflectors
+          <A HREF="/cgi-bin/man/man2html?1+H">H</A>(1), <A HREF="/cgi-bin/man/man2html?2+H">H</A>(2), ..., H(K).  See Further Details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDV</I> 
+<P>
+
+<PRE>
+          LDV is INTEGER
+          The leading dimension of the array V.
+          If STOREV = 'C' and SIDE = 'L', LDV &gt;= max(1,M);
+          if STOREV = 'C' and SIDE = 'R', LDV &gt;= max(1,N);
+          if STOREV = 'R', LDV &gt;= K.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>T</I> 
+<P>
+
+<PRE>
+          T is COMPLEX array, dimension (LDT,K)
+          The triangular K-by-K matrix T in the representation of the
+          block reflector.  
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDT</I> 
+<P>
+
+<PRE>
+          LDT is INTEGER
+          The leading dimension of the array T. 
+          LDT &gt;= K.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is COMPLEX array, dimension
+          (LDA,N) if SIDE = 'L' or (LDA,K) if SIDE = 'R'
+          On entry, the K-by-N or M-by-K matrix A.
+          On exit, A is overwritten by the corresponding block of 
+          H*C or H**H*C or C*H or C*H**H.  See Futher Details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A. 
+          If SIDE = 'L', LDC &gt;= max(1,K);
+          If SIDE = 'R', LDC &gt;= max(1,M). 
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is COMPLEX array, dimension (LDB,N)
+          On entry, the M-by-N matrix B.
+          On exit, B is overwritten by the corresponding block of
+          H*C or H**H*C or C*H or C*H**H.  See Further Details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDB</I> 
+<P>
+
+<PRE>
+          LDB is INTEGER
+          The leading dimension of the array B. 
+          LDB &gt;= max(1,M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is COMPLEX array, dimension
+          (LDWORK,N) if SIDE = 'L',
+          (LDWORK,K) if SIDE = 'R'.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDWORK</I> 
+<P>
+
+<PRE>
+          LDWORK is INTEGER
+          The leading dimension of the array WORK.
+          If SIDE = 'L', LDWORK &gt;= K; 
+          if SIDE = 'R', LDWORK &gt;= M.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  The matrix C is a composite matrix formed from blocks A and B.
+  The block B is of size M-by-N; if SIDE = 'R', A is of size M-by-K, 
+  and if SIDE = 'L', A is of size K-by-N.
+
+  If SIDE = 'R' and DIRECT = 'F', C = [A B].
+
+  If SIDE = 'L' and DIRECT = 'F', C = [A] 
+                                      [B].
+
+  If SIDE = 'R' and DIRECT = 'B', C = [B A].
+
+  If SIDE = 'L' and DIRECT = 'B', C = [B]
+                                      [A]. 
+
+  The pentagonal matrix V is composed of a rectangular block V1 and a 
+  trapezoidal block V2.  The size of the trapezoidal block is determined by 
+  the parameter L, where 0&lt;=L&lt;=K.  If L=K, the V2 block of V is triangular;
+  if L=0, there is no trapezoidal block, thus V = V1 is rectangular.
+
+  If DIRECT = 'F' and STOREV = 'C':  V = [V1]
+                                         [V2]
+     - V2 is upper trapezoidal (first L rows of K-by-K upper triangular)
+
+  If DIRECT = 'F' and STOREV = 'R':  V = [V1 V2]
+
+     - V2 is lower trapezoidal (first L columns of K-by-K lower triangular)
+
+  If DIRECT = 'B' and STOREV = 'C':  V = [V2]
+                                         [V1]
+     - V2 is lower trapezoidal (last L rows of K-by-K lower triangular)
+
+  If DIRECT = 'B' and STOREV = 'R':  V = [V2 V1]
+    
+     - V2 is upper trapezoidal (last L columns of K-by-K upper triangular)
+
+  If STOREV = 'C' and SIDE = 'L', V is M-by-K with V2 L-by-K.
+
+  If STOREV = 'C' and SIDE = 'R', V is N-by-K with V2 L-by-K.
+
+  If STOREV = 'R' and SIDE = 'L', V is K-by-M with V2 K-by-L.
+
+  If STOREV = 'R' and SIDE = 'R', V is K-by-N with V2 K-by-L.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 251 of file ctprfb.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine ctprfb (characterSIDE, characterTRANS, characterDIRECT, characterSTOREV, integerM, integerN, integerK, integerL, complex, dimension( ldv, * )V, integerLDV, complex, dimension( ldt, * )T, integerLDT, complex, dimension( lda, * )A, integerLDA, complex, dimension( ldb, * )B, integerLDB, complex, dimension( ldwork, * )WORK, integerLDWORK)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:51 GMT, February 12, 2014
+</BODY>
+</HTML>

@@ -1,0 +1,276 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of sgeequb.f</TITLE>
+</HEAD><BODY>
+<H1>sgeequb.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+sgeequb.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>sgeequb</B> (M, N, A, LDA, R, C, ROWCND, COLCND, AMAX, INFO)
+
+<BR>
+
+<I></I><B>SGEEQUB</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine sgeequb (integerM, integerN, real, dimension( lda, * )A, integerLDA, real, dimension( * )R, real, dimension( * )C, realROWCND, realCOLCND, realAMAX, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>SGEEQUB</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ SGEEQUB computes row and column scalings intended to equilibrate an
+ M-by-N matrix A and reduce its condition number.  R returns the row
+ scale factors and C the column scale factors, chosen to try to make
+ the largest element in each row and column of the matrix B with
+ elements B(i,j)=R(i)*A(i,j)*C(j) have an absolute value of at most
+ the radix.
+
+ R(i) and C(j) are restricted to be a power of the radix between
+ SMLNUM = smallest safe number and BIGNUM = largest safe number.  Use
+ of these scaling factors is not guaranteed to reduce the condition
+ number of A but works well in practice.
+
+ This routine differs from SGEEQU by restricting the scaling factors
+ to a power of the radix.  Baring over- and underflow, scaling by
+ these factors introduces no additional rounding errors.  However, the
+ scaled entries' magnitured are no longer approximately 1 but lie
+ between sqrt(radix) and 1/sqrt(radix).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The number of rows of the matrix A.  M &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of columns of the matrix A.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is REAL array, dimension (LDA,N)
+          The M-by-N matrix whose equilibration factors are
+          to be computed.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A.  LDA &gt;= max(1,M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>R</I> 
+<P>
+
+<PRE>
+          R is REAL array, dimension (M)
+          If INFO = 0 or INFO &gt; M, R contains the row scale factors
+          for A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>C</I> 
+<P>
+
+<PRE>
+          C is REAL array, dimension (N)
+          If INFO = 0,  C contains the column scale factors for A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ROWCND</I> 
+<P>
+
+<PRE>
+          ROWCND is REAL
+          If INFO = 0 or INFO &gt; M, ROWCND contains the ratio of the
+          smallest R(i) to the largest R(i).  If ROWCND &gt;= 0.1 and
+          AMAX is neither too large nor too small, it is not worth
+          scaling by R.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>COLCND</I> 
+<P>
+
+<PRE>
+          COLCND is REAL
+          If INFO = 0, COLCND contains the ratio of the smallest
+          C(i) to the largest C(i).  If COLCND &gt;= 0.1, it is not
+          worth scaling by C.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>AMAX</I> 
+<P>
+
+<PRE>
+          AMAX is REAL
+          Absolute value of largest matrix element.  If AMAX is very
+          close to overflow or very close to underflow, the matrix
+          should be scaled.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value
+          &gt; 0:  if INFO = i,  and i is
+                &lt;= M:  the i-th row of A is exactly zero
+                &gt;  M:  the (i-M)-th column of A is exactly zero
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 146 of file sgeequb.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine sgeequb (integerM, integerN, real, dimension( lda, * )A, integerLDA, real, dimension( * )R, real, dimension( * )C, realROWCND, realCOLCND, realAMAX, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:00 GMT, February 12, 2014
+</BODY>
+</HTML>

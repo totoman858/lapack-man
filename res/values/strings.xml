@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">lapack man</string>
+    <string name="about_popup_name">Lapack man pages</string>
+    <string name="about_popup_desc">LAPACK (Linear Algebra PACKage) is written in Fortran 90 and provides routines for solving systems of simultaneous linear equations, least-squares solutions of linear systems of equations, eigenvalue problems, and singular value problems. The associated matrix factorizations (LU, Cholesky, QR, SVD, Schur, generalized Schur) are also provided, as are related computations such as reordering of the Schur factorizations and estimating condition numbers. Dense and banded matrices are handled, but not general sparse matrices. In all areas, similar functionality is provided for real and complex matrices, in both single and double precision.</string>
+    <string name="about_popup_licence">BSD License</string>
+    <string name="search">Search</string>
+    <string name="no_external_storage">No storage found… retry later</string>
+    <string name="error_writing">Error while writing file… retry later</string>
+</resources>

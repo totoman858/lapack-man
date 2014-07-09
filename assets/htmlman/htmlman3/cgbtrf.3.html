@@ -1,0 +1,272 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of cgbtrf.f</TITLE>
+</HEAD><BODY>
+<H1>cgbtrf.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+cgbtrf.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>cgbtrf</B> (M, N, KL, KU, AB, LDAB, IPIV, INFO)
+
+<BR>
+
+<I></I><B>CGBTRF</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine cgbtrf (integerM, integerN, integerKL, integerKU, complex, dimension( ldab, * )AB, integerLDAB, integer, dimension( * )IPIV, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>CGBTRF</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ CGBTRF computes an LU factorization of a complex m-by-n band matrix A
+ using partial pivoting with row interchanges.
+
+ This is the blocked version of the algorithm, calling Level 3 BLAS.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The number of rows of the matrix A.  M &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of columns of the matrix A.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>KL</I> 
+<P>
+
+<PRE>
+          KL is INTEGER
+          The number of subdiagonals within the band of A.  KL &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>KU</I> 
+<P>
+
+<PRE>
+          KU is INTEGER
+          The number of superdiagonals within the band of A.  KU &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>AB</I> 
+<P>
+
+<PRE>
+          AB is COMPLEX array, dimension (LDAB,N)
+          On entry, the matrix A in band storage, in rows KL+1 to
+          2*KL+KU+1; rows 1 to KL of the array need not be set.
+          The j-th column of A is stored in the j-th column of the
+          array AB as follows:
+          AB(kl+ku+1+i-j,j) = A(i,j) for max(1,j-ku)&lt;=i&lt;=min(m,j+kl)
+
+          On exit, details of the factorization: U is stored as an
+          upper triangular band matrix with KL+KU superdiagonals in
+          rows 1 to KL+KU+1, and the multipliers used during the
+          factorization are stored in rows KL+KU+2 to 2*KL+KU+1.
+          See below for further details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDAB</I> 
+<P>
+
+<PRE>
+          LDAB is INTEGER
+          The leading dimension of the array AB.  LDAB &gt;= 2*KL+KU+1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IPIV</I> 
+<P>
+
+<PRE>
+          IPIV is INTEGER array, dimension (min(M,N))
+          The pivot indices; for 1 &lt;= i &lt;= min(M,N), row i of the
+          matrix was interchanged with row IPIV(i).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0: successful exit
+          &lt; 0: if INFO = -i, the i-th argument had an illegal value
+          &gt; 0: if INFO = +i, U(i,i) is exactly zero. The factorization
+               has been completed, but the factor U is exactly
+               singular, and division by zero will occur if it is used
+               to solve a system of equations.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  The band storage scheme is illustrated by the following example, when
+  M = N = 6, KL = 2, KU = 1:
+
+  On entry:                       On exit:
+
+      *    *    *    +    +    +       *    *    *   u14  u25  u36
+      *    *    +    +    +    +       *    *   u13  u24  u35  u46
+      *   a12  a23  a34  a45  a56      *   u12  u23  u34  u45  u56
+     a11  a22  a33  a44  a55  a66     u11  u22  u33  u44  u55  u66
+     a21  a32  a43  a54  a65   *      m21  m32  m43  m54  m65   *
+     a31  a42  a53  a64   *    *      m31  m42  m53  m64   *    *
+
+  Array elements marked * are not used by the routine; elements marked
+  + need not be set on entry, but are required by the routine to store
+  elements of U because of fill-in resulting from the row interchanges.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 145 of file cgbtrf.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine cgbtrf (integerM, integerN, integerKL, integerKU, complex, dimension( ldab, * )AB, integerLDAB, integer, dimension( * )IPIV, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:54 GMT, February 12, 2014
+</BODY>
+</HTML>

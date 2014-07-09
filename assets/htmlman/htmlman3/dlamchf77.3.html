@@ -1,0 +1,657 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dlamchf77.f</TITLE>
+</HEAD><BODY>
+<H1>dlamchf77.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dlamchf77.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+DOUBLE PRECISION function <B>dlamch</B> (CMACH)
+
+<BR>
+
+<I></I><B>DLAMCHF77</B> deprecated 
+
+<BR>
+
+subroutine <B>dlamc1</B> (BETA, T, RND, IEEE1)
+
+<BR>
+
+<I></I><B>DLAMC1</B> 
+
+<BR>
+
+subroutine <B>dlamc2</B> (BETA, T, RND, EPS, EMIN, RMIN, EMAX, RMAX)
+
+<BR>
+
+<I></I><B>DLAMC2</B> 
+
+<BR>
+
+DOUBLE PRECISION function <B>dlamc3</B> (A, B)
+
+<BR>
+
+<I></I><B>DLAMC3</B> 
+
+<BR>
+
+subroutine <B>dlamc4</B> (EMIN, START, BASE)
+
+<BR>
+
+<I></I><B>DLAMC4</B> 
+
+<BR>
+
+subroutine <B>dlamc5</B> (BETA, P, EMIN, IEEE, EMAX, RMAX)
+
+<BR>
+
+<I></I><B>DLAMC5</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dlamc1 (integerBETA, integerT, logicalRND, logicalIEEE1)</H3>
+
+<P>
+<P>
+
+<B>DLAMC1</B> <B>Purpose:</B> 
+<P>
+
+<PRE>
+ DLAMC1 determines the machine parameters given by BETA, T, RND, and
+ IEEE1.
+</PRE>
+
+<P>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>BETA</I> 
+<P>
+
+<PRE>
+          The base of the machine.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>T</I> 
+<P>
+
+<PRE>
+          The number of ( BETA ) digits in the mantissa.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RND</I> 
+<P>
+
+<PRE>
+          Specifies whether proper rounding  ( RND = .TRUE. )  or
+          chopping  ( RND = .FALSE. )  occurs in addition. This may not
+          be a reliable guide to the way in which the machine performs
+          its arithmetic.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IEEE1</I> 
+<P>
+
+<PRE>
+          Specifies whether rounding appears to be done in the IEEE
+          'round to nearest' style.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+LAPACK is a software package provided by Univ. of Tennessee, Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd.. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+April 2012
+</DL>
+
+<P>
+
+<B>Further</B> <B>Details</B> 
+<P>
+
+<PRE>
+  The routine is based on the routine  ENVRON  by Malcolm and
+  incorporates suggestions by Gentleman and Marovich. See
+
+     Malcolm M. A. (1972) Algorithms to reveal properties of
+        floating-point arithmetic. Comms. of the ACM, 15, 949-951.
+
+     Gentleman W. M. and Marovich S. B. (1974) More on algorithms
+        that reveal properties of floating point arithmetic units.
+        Comms. of the ACM, 17, 276-277.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+<P>
+
+Definition at line 206 of file dlamchf77.f.
+<A NAME="lbAG">&nbsp;</A>
+<H3>subroutine dlamc2 (integerBETA, integerT, logicalRND, double precisionEPS, integerEMIN, double precisionRMIN, integerEMAX, double precisionRMAX)</H3>
+
+<P>
+<P>
+
+<B>DLAMC2</B> <B>Purpose:</B> 
+<P>
+
+<PRE>
+ DLAMC2 determines the machine parameters specified in its argument
+ list.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+LAPACK is a software package provided by Univ. of Tennessee, Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd.. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+April 2012
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>BETA</I> 
+<P>
+
+<PRE>
+          The base of the machine.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>T</I> 
+<P>
+
+<PRE>
+          The number of ( BETA ) digits in the mantissa.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RND</I> 
+<P>
+
+<PRE>
+          Specifies whether proper rounding  ( RND = .TRUE. )  or
+          chopping  ( RND = .FALSE. )  occurs in addition. This may not
+          be a reliable guide to the way in which the machine performs
+          its arithmetic.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>EPS</I> 
+<P>
+
+<PRE>
+          The smallest positive number such that
+             fl( 1.0 - EPS ) .LT. 1.0,
+          where fl denotes the computed value.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>EMIN</I> 
+<P>
+
+<PRE>
+          The minimum exponent before (gradual) underflow occurs.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RMIN</I> 
+<P>
+
+<PRE>
+          The smallest normalized number for the machine, given by
+          BASE**( EMIN - 1 ), where  BASE  is the floating point value
+          of BETA.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>EMAX</I> 
+<P>
+
+<PRE>
+          The maximum exponent before overflow occurs.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RMAX</I> 
+<P>
+
+<PRE>
+          The largest positive number for the machine, given by
+          BASE**EMAX * ( 1 - EPS ), where  BASE  is the floating point
+          value of BETA.
+</PRE>
+
+<P>
+
+</DL>
+
+<P>
+
+<B>Further</B> <B>Details</B> 
+<P>
+
+<PRE>
+  The computation of  EPS  is based on a routine PARANOIA by
+  W. Kahan of the University of California at Berkeley.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+<P>
+
+Definition at line 419 of file dlamchf77.f.
+<A NAME="lbAH">&nbsp;</A>
+<H3>DOUBLE PRECISION function dlamc3 (double precisionA, double precisionB)</H3>
+
+<P>
+<P>
+
+<B>DLAMC3</B> <B>Purpose:</B> 
+<P>
+
+<PRE>
+ DLAMC3  is intended to force  A  and  B  to be stored prior to doing
+ the addition of  A  and  B ,  for use in situations where optimizers
+ might hold one of these in a register.
+</PRE>
+
+<P>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>A</I> 
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          The values A and B.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 642 of file dlamchf77.f.
+<A NAME="lbAI">&nbsp;</A>
+<H3>subroutine dlamc4 (integerEMIN, double precisionSTART, integerBASE)</H3>
+
+<P>
+<P>
+
+<B>DLAMC4</B> <B>Purpose:</B> 
+<P>
+
+<PRE>
+ DLAMC4 is a service routine for DLAMC2.
+</PRE>
+
+<P>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>EMIN</I> 
+<P>
+
+<PRE>
+          The minimum exponent before (gradual) underflow, computed by
+          setting A = START and dividing by BASE until the previous A
+          can not be recovered.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>START</I> 
+<P>
+
+<PRE>
+          The starting point for determining EMIN.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>BASE</I> 
+<P>
+
+<PRE>
+          The base of the machine.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 689 of file dlamchf77.f.
+<A NAME="lbAJ">&nbsp;</A>
+<H3>subroutine dlamc5 (integerBETA, integerP, integerEMIN, logicalIEEE, integerEMAX, double precisionRMAX)</H3>
+
+<P>
+<P>
+
+<B>DLAMC5</B> <B>Purpose:</B> 
+<P>
+
+<PRE>
+ DLAMC5 attempts to compute RMAX, the largest machine floating-point
+ number, without overflow.  It assumes that EMAX + abs(EMIN) sum
+ approximately to a power of 2.  It will fail on machines where this
+ assumption does not hold, for example, the Cyber 205 (EMIN = -28625,
+ EMAX = 28718).  It will also fail if the value supplied for EMIN is
+ too large (i.e. too close to zero), probably with overflow.
+</PRE>
+
+<P>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>BETA</I> 
+<P>
+
+<PRE>
+          The base of floating-point arithmetic.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>P</I> 
+<P>
+
+<PRE>
+          The number of base BETA digits in the mantissa of a
+          floating-point value.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>EMIN</I> 
+<P>
+
+<PRE>
+          The minimum exponent before (gradual) underflow.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IEEE</I> 
+<P>
+
+<PRE>
+          A logical flag specifying whether or not the arithmetic
+          system is thought to comply with the IEEE standard.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>EMAX</I> 
+<P>
+
+<PRE>
+          The largest exponent before overflow
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RMAX</I> 
+<P>
+
+<PRE>
+          The largest machine floating-point number.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 796 of file dlamchf77.f.
+<A NAME="lbAK">&nbsp;</A>
+<H3>DOUBLE PRECISION function dlamch (characterCMACH)</H3>
+
+<P>
+<P>
+
+<B>DLAMCHF77</B> deprecated <B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ DLAMCHF77 determines double precision machine parameters.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>CMACH</I> 
+<P>
+
+<PRE>
+          Specifies the value to be returned by DLAMCH:
+          = 'E' or 'e',   DLAMCH := eps
+          = 'S' or 's ,   DLAMCH := sfmin
+          = 'B' or 'b',   DLAMCH := base
+          = 'P' or 'p',   DLAMCH := eps*base
+          = 'N' or 'n',   DLAMCH := t
+          = 'R' or 'r',   DLAMCH := rnd
+          = 'M' or 'm',   DLAMCH := emin
+          = 'U' or 'u',   DLAMCH := rmin
+          = 'L' or 'l',   DLAMCH := emax
+          = 'O' or 'o',   DLAMCH := rmax
+          where
+          eps   = relative machine precision
+          sfmin = safe minimum, such that 1/sfmin does not overflow
+          base  = base of the machine
+          prec  = eps*base
+          t     = number of (base) digits in the mantissa
+          rnd   = 1.0 when rounding occurs in addition, 0.0 otherwise
+          emin  = minimum exponent before (gradual) underflow
+          rmin  = underflow threshold - base**(emin-1)
+          emax  = largest exponent before overflow
+          rmax  = overflow threshold  - (base**emax)*(1-eps)
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+April 2012 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 64 of file dlamchf77.f.
+<A NAME="lbAL">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dlamc1 (integerBETA, integerT, logicalRND, logicalIEEE1)</A><DD>
+<DT><A HREF="#lbAG">subroutine dlamc2 (integerBETA, integerT, logicalRND, double precisionEPS, integerEMIN, double precisionRMIN, integerEMAX, double precisionRMAX)</A><DD>
+<DT><A HREF="#lbAH">DOUBLE PRECISION function dlamc3 (double precisionA, double precisionB)</A><DD>
+<DT><A HREF="#lbAI">subroutine dlamc4 (integerEMIN, double precisionSTART, integerBASE)</A><DD>
+<DT><A HREF="#lbAJ">subroutine dlamc5 (integerBETA, integerP, integerEMIN, logicalIEEE, integerEMAX, double precisionRMAX)</A><DD>
+<DT><A HREF="#lbAK">DOUBLE PRECISION function dlamch (characterCMACH)</A><DD>
+</DL>
+<DT><A HREF="#lbAL">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:53 GMT, February 12, 2014
+</BODY>
+</HTML>

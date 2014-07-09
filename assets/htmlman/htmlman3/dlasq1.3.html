@@ -1,0 +1,211 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dlasq1.f</TITLE>
+</HEAD><BODY>
+<H1>dlasq1.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dlasq1.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>dlasq1</B> (N, D, E, WORK, INFO)
+
+<BR>
+
+<I></I><B>DLASQ1</B> computes the singular values of a real square bidiagonal matrix. Used by sbdsqr. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dlasq1 (integerN, double precision, dimension( * )D, double precision, dimension( * )E, double precision, dimension( * )WORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>DLASQ1</B> computes the singular values of a real square bidiagonal matrix. Used by sbdsqr.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ DLASQ1 computes the singular values of a real N-by-N bidiagonal
+ matrix with diagonal D and off-diagonal E. The singular values
+ are computed to high relative accuracy, in the absence of
+ denormalization, underflow and overflow. The algorithm was first
+ presented in
+
+ &quot;Accurate singular values and differential qd algorithms&quot; by K. V.
+ Fernando and B. N. Parlett, Numer. Math., Vol-67, No. 2, pp. 191-230,
+ 1994,
+
+ and the present implementation is described in &quot;An implementation of
+ the dqds Algorithm (Positive Case)&quot;, LAPACK Working Note.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+        The number of rows and columns in the matrix. N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is DOUBLE PRECISION array, dimension (N)
+        On entry, D contains the diagonal elements of the
+        bidiagonal matrix whose SVD is desired. On normal exit,
+        D contains the singular values in decreasing order.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>E</I> 
+<P>
+
+<PRE>
+          E is DOUBLE PRECISION array, dimension (N)
+        On entry, elements E(1:N-1) contain the off-diagonal elements
+        of the bidiagonal matrix whose SVD is desired.
+        On exit, E is overwritten.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is DOUBLE PRECISION array, dimension (4*N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+        = 0: successful exit
+        &lt; 0: if INFO = -i, the i-th argument had an illegal value
+        &gt; 0: the algorithm failed
+             = 1, a split was marked by a positive value in E
+             = 2, current block of Z not diagonalized after 100*N
+                  iterations (in inner while loop)  On exit D and E
+                  represent a matrix with the same singular values
+                  which the calling subroutine could use to finish the
+                  computation, or even feed back into DLASQ1
+             = 3, termination criterion of outer while loop not met 
+                  (program created more than N unreduced blocks)
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 109 of file dlasq1.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dlasq1 (integerN, double precision, dimension( * )D, double precision, dimension( * )E, double precision, dimension( * )WORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:32 GMT, February 12, 2014
+</BODY>
+</HTML>

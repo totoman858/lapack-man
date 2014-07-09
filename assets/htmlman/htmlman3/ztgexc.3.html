@@ -1,0 +1,344 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of ztgexc.f</TITLE>
+</HEAD><BODY>
+<H1>ztgexc.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+ztgexc.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>ztgexc</B> (WANTQ, WANTZ, N, A, LDA, B, LDB, Q, LDQ, Z, LDZ, IFST, ILST, INFO)
+
+<BR>
+
+<I></I><B>ZTGEXC</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine ztgexc (logicalWANTQ, logicalWANTZ, integerN, complex*16, dimension( lda, * )A, integerLDA, complex*16, dimension( ldb, * )B, integerLDB, complex*16, dimension( ldq, * )Q, integerLDQ, complex*16, dimension( ldz, * )Z, integerLDZ, integerIFST, integerILST, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>ZTGEXC</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZTGEXC reorders the generalized Schur decomposition of a complex
+ matrix pair (A,B), using an unitary equivalence transformation
+ (A, B) := Q * (A, B) * Z**H, so that the diagonal block of (A, B) with
+ row index IFST is moved to row ILST.
+
+ (A, B) must be in generalized Schur canonical form, that is, A and
+ B are both upper triangular.
+
+ Optionally, the matrices Q and Z of generalized Schur vectors are
+ updated.
+
+        Q(in) * A(in) * Z(in)**H = Q(out) * A(out) * Z(out)**H
+        Q(in) * B(in) * Z(in)**H = Q(out) * B(out) * Z(out)**H
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>WANTQ</I> 
+<P>
+
+<PRE>
+          WANTQ is LOGICAL
+          .TRUE. : update the left transformation matrix Q;
+          .FALSE.: do not update Q.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WANTZ</I> 
+<P>
+
+<PRE>
+          WANTZ is LOGICAL
+          .TRUE. : update the right transformation matrix Z;
+          .FALSE.: do not update Z.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrices A and B. N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is COMPLEX*16 array, dimension (LDA,N)
+          On entry, the upper triangular matrix A in the pair (A, B).
+          On exit, the updated matrix A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A. LDA &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is COMPLEX*16 array, dimension (LDB,N)
+          On entry, the upper triangular matrix B in the pair (A, B).
+          On exit, the updated matrix B.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDB</I> 
+<P>
+
+<PRE>
+          LDB is INTEGER
+          The leading dimension of the array B. LDB &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Q</I> 
+<P>
+
+<PRE>
+          Q is COMPLEX*16 array, dimension (LDZ,N)
+          On entry, if WANTQ = .TRUE., the unitary matrix Q.
+          On exit, the updated matrix Q.
+          If WANTQ = .FALSE., Q is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDQ</I> 
+<P>
+
+<PRE>
+          LDQ is INTEGER
+          The leading dimension of the array Q. LDQ &gt;= 1;
+          If WANTQ = .TRUE., LDQ &gt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is COMPLEX*16 array, dimension (LDZ,N)
+          On entry, if WANTZ = .TRUE., the unitary matrix Z.
+          On exit, the updated matrix Z.
+          If WANTZ = .FALSE., Z is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDZ</I> 
+<P>
+
+<PRE>
+          LDZ is INTEGER
+          The leading dimension of the array Z. LDZ &gt;= 1;
+          If WANTZ = .TRUE., LDZ &gt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IFST</I> 
+<P>
+
+<PRE>
+          IFST is INTEGER
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ILST</I> 
+<P>
+
+<PRE>
+          ILST is INTEGER
+          Specify the reordering of the diagonal blocks of (A, B).
+          The block with row index IFST is moved to row ILST, by a
+          sequence of swapping between adjacent blocks.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+           =0:  Successful exit.
+           &lt;0:  if INFO = -i, the i-th argument had an illegal value.
+           =1:  The transformed matrix pair (A, B) would be too far
+                from generalized Schur form; the problem is ill-
+                conditioned. (A, B) may have been partially reordered,
+                and ILST points to the first row of the current
+                position of the block being moved.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Bo Kagstrom and Peter Poromaa, Department of Computing Science, Umea University, S-901 87 Umea, Sweden. 
+</DL>
+
+<P>
+
+<B>References: </B>
+<DL COMPACT><DT><DD>
+[1] B. Kagstrom; A Direct Method for Reordering Eigenvalues in the Generalized Real Schur Form of a Regular Matrix Pair (A, B), in M.S. Moonen et al (eds), Linear Algebra for Large Scale and Real-Time Applications, Kluwer Academic Publ. 1993, pp 195-218. 
+<BR>
+
+<BR>&nbsp;[2]&nbsp;B.&nbsp;Kagstrom&nbsp;and&nbsp;P.&nbsp;Poromaa;&nbsp;Computing&nbsp;Eigenspaces&nbsp;with&nbsp;Specified&nbsp;Eigenvalues&nbsp;of&nbsp;a&nbsp;Regular&nbsp;Matrix&nbsp;Pair&nbsp;(A,&nbsp;B)&nbsp;and&nbsp;Condition&nbsp;Estimation:&nbsp;Theory,&nbsp;Algorithms&nbsp;and&nbsp;Software,&nbsp;Report&nbsp;UMINF&nbsp;-&nbsp;94.04,&nbsp;Department&nbsp;of&nbsp;Computing&nbsp;Science,&nbsp;Umea&nbsp;University,&nbsp;S-901&nbsp;87&nbsp;Umea,&nbsp;Sweden,&nbsp;1994.&nbsp;Also&nbsp;as&nbsp;LAPACK&nbsp;Working&nbsp;Note&nbsp;87.&nbsp;To&nbsp;appear&nbsp;in&nbsp;Numerical&nbsp;Algorithms,&nbsp;1996.&nbsp;
+<BR>
+
+<BR>&nbsp;[3]&nbsp;B.&nbsp;Kagstrom&nbsp;and&nbsp;P.&nbsp;Poromaa,&nbsp;LAPACK-Style&nbsp;Algorithms&nbsp;and&nbsp;Software&nbsp;for&nbsp;Solving&nbsp;the&nbsp;Generalized&nbsp;Sylvester&nbsp;Equation&nbsp;and&nbsp;Estimating&nbsp;the&nbsp;Separation&nbsp;between&nbsp;Regular&nbsp;Matrix&nbsp;Pairs,&nbsp;Report&nbsp;UMINF&nbsp;-&nbsp;93.23,&nbsp;Department&nbsp;of&nbsp;Computing&nbsp;Science,&nbsp;Umea&nbsp;University,&nbsp;S-901&nbsp;87&nbsp;Umea,&nbsp;Sweden,&nbsp;December&nbsp;1993,&nbsp;Revised&nbsp;April&nbsp;1994,&nbsp;Also&nbsp;as&nbsp;LAPACK&nbsp;working&nbsp;Note&nbsp;75.&nbsp;To&nbsp;appear&nbsp;in&nbsp;ACM&nbsp;Trans.&nbsp;on&nbsp;Math.&nbsp;Software,&nbsp;Vol&nbsp;22,&nbsp;No&nbsp;1,&nbsp;1996.&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 200 of file ztgexc.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine ztgexc (logicalWANTQ, logicalWANTZ, integerN, complex*16, dimension( lda, * )A, integerLDA, complex*16, dimension( ldb, * )B, integerLDB, complex*16, dimension( ldq, * )Q, integerLDQ, complex*16, dimension( ldz, * )Z, integerLDZ, integerIFST, integerILST, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:33 GMT, February 12, 2014
+</BODY>
+</HTML>

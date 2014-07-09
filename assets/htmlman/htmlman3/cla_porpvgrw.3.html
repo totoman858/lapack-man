@@ -1,0 +1,217 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of cla_porpvgrw.f</TITLE>
+</HEAD><BODY>
+<H1>cla_porpvgrw.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+cla_porpvgrw.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+REAL function <B>cla_porpvgrw</B> (UPLO, NCOLS, A, LDA, AF, LDAF, WORK)
+
+<BR>
+
+<I></I><B>CLA_PORPVGRW</B> computes the reciprocal pivot growth factor norm(A)/norm(U) for a symmetric or Hermitian positive-definite matrix. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>REAL function cla_porpvgrw (character*1UPLO, integerNCOLS, complex, dimension( lda, * )A, integerLDA, complex, dimension( ldaf, * )AF, integerLDAF, real, dimension( * )WORK)</H3>
+
+<P>
+<P>
+
+<B>CLA_PORPVGRW</B> computes the reciprocal pivot growth factor norm(A)/norm(U) for a symmetric or Hermitian positive-definite matrix.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ CLA_PORPVGRW computes the reciprocal pivot growth factor
+ norm(A)/norm(U). The &quot;max absolute element&quot; norm is used. If this is
+ much less than 1, the stability of the LU factorization of the
+ (equilibrated) matrix A could be poor. This also means that the
+ solution X, estimated condition numbers, and error bounds could be
+ unreliable.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>UPLO</I> 
+<P>
+
+<PRE>
+          UPLO is CHARACTER*1
+       = 'U':  Upper triangle of A is stored;
+       = 'L':  Lower triangle of A is stored.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NCOLS</I> 
+<P>
+
+<PRE>
+          NCOLS is INTEGER
+     The number of columns of the matrix A. NCOLS &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is COMPLEX array, dimension (LDA,N)
+     On entry, the N-by-N matrix A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+     The leading dimension of the array A.  LDA &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>AF</I> 
+<P>
+
+<PRE>
+          AF is COMPLEX array, dimension (LDAF,N)
+     The triangular factor U or L from the Cholesky factorization
+     A = U**T*U or A = L*L**T, as computed by CPOTRF.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDAF</I> 
+<P>
+
+<PRE>
+          LDAF is INTEGER
+     The leading dimension of the array AF.  LDAF &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is COMPLEX array, dimension (2*N)
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 106 of file cla_porpvgrw.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">REAL function cla_porpvgrw (character*1UPLO, integerNCOLS, complex, dimension( lda, * )A, integerLDA, complex, dimension( ldaf, * )AF, integerLDAF, real, dimension( * )WORK)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:02 GMT, February 12, 2014
+</BODY>
+</HTML>

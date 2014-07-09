@@ -1,0 +1,374 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of zunbdb4.f</TITLE>
+</HEAD><BODY>
+<H1>zunbdb4.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+zunbdb4.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>zunbdb4</B> (M, P, Q, X11, LDX11, X21, LDX21, THETA, PHI, TAUP1, TAUP2, TAUQ1, PHANTOM, WORK, LWORK, INFO)
+
+<BR>
+
+<I></I><B>ZUNBDB4</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine zunbdb4 (integerM, integerP, integerQ, complex*16, dimension(ldx11,*)X11, integerLDX11, complex*16, dimension(ldx21,*)X21, integerLDX21, double precision, dimension(*)THETA, double precision, dimension(*)PHI, complex*16, dimension(*)TAUP1, complex*16, dimension(*)TAUP2, complex*16, dimension(*)TAUQ1, complex*16, dimension(*)PHANTOM, complex*16, dimension(*)WORK, integerLWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>ZUNBDB4</B> .SH &quot;Purpose:&quot;
+<P>
+
+<P>
+
+<P>
+
+<PRE>
+ ZUNBDB4 simultaneously bidiagonalizes the blocks of a tall and skinny
+ matrix X with orthonomal columns:
+
+                            [ B11 ]
+      [ X11 ]   [ P1 |    ] [  0  ]
+      [-----] = [---------] [-----] Q1**T .
+      [ X21 ]   [    | P2 ] [ B21 ]
+                            [  0  ]
+
+ X11 is P-by-Q, and X21 is (M-P)-by-Q. M-Q must be no larger than P,
+ M-P, or Q. Routines ZUNBDB1, ZUNBDB2, and ZUNBDB3 handle cases in
+ which M-Q is not the minimum dimension.
+
+ The unitary matrices P1, P2, and Q1 are P-by-P, (M-P)-by-(M-P),
+ and (M-Q)-by-(M-Q), respectively. They are represented implicitly by
+ Householder vectors.
+
+ B11 and B12 are (M-Q)-by-(M-Q) bidiagonal matrices represented
+ implicitly by angles THETA, PHI..fi
+
+ 
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD><I>M</I> 
+
+          M is INTEGER
+           The number of rows X11 plus the number of rows in X21.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>P</I> 
+<P>
+
+<PRE>
+          P is INTEGER
+           The number of rows in X11. 0 &lt;= P &lt;= M.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Q</I> 
+<P>
+
+<PRE>
+          Q is INTEGER
+           The number of columns in X11 and X21. 0 &lt;= Q &lt;= M and
+           M-Q &lt;= min(P,M-P,Q).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X11</I> 
+<P>
+
+<PRE>
+          X11 is COMPLEX*16 array, dimension (LDX11,Q)
+           On entry, the top block of the matrix X to be reduced. On
+           exit, the columns of tril(X11) specify reflectors for P1 and
+           the rows of triu(X11,1) specify reflectors for Q1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDX11</I> 
+<P>
+
+<PRE>
+          LDX11 is INTEGER
+           The leading dimension of X11. LDX11 &gt;= P.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X21</I> 
+<P>
+
+<PRE>
+          X21 is COMPLEX*16 array, dimension (LDX21,Q)
+           On entry, the bottom block of the matrix X to be reduced. On
+           exit, the columns of tril(X21) specify reflectors for P2.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDX21</I> 
+<P>
+
+<PRE>
+          LDX21 is INTEGER
+           The leading dimension of X21. LDX21 &gt;= M-P.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>THETA</I> 
+<P>
+
+<PRE>
+          THETA is DOUBLE PRECISION array, dimension (Q)
+           The entries of the bidiagonal blocks B11, B21 are defined by
+           THETA and PHI. See Further Details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>PHI</I> 
+<P>
+
+<PRE>
+          PHI is DOUBLE PRECISION array, dimension (Q-1)
+           The entries of the bidiagonal blocks B11, B21 are defined by
+           THETA and PHI. See Further Details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TAUP1</I> 
+<P>
+
+<PRE>
+          TAUP1 is COMPLEX*16 array, dimension (P)
+           The scalar factors of the elementary reflectors that define
+           P1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TAUP2</I> 
+<P>
+
+<PRE>
+          TAUP2 is COMPLEX*16 array, dimension (M-P)
+           The scalar factors of the elementary reflectors that define
+           P2.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TAUQ1</I> 
+<P>
+
+<PRE>
+          TAUQ1 is COMPLEX*16 array, dimension (Q)
+           The scalar factors of the elementary reflectors that define
+           Q1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>PHANTOM</I> 
+<P>
+
+<PRE>
+          PHANTOM is COMPLEX*16 array, dimension (M)
+           The routine computes an M-by-1 column vector Y that is
+           orthogonal to the columns of [ X11; X21 ]. PHANTOM(1:P) and
+           PHANTOM(P+1:M) contain Householder vectors for Y(1:P) and
+           Y(P+1:M), respectively.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is COMPLEX*16 array, dimension (LWORK)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LWORK</I> 
+<P>
+
+<PRE>
+          LWORK is INTEGER
+           The dimension of the array WORK. LWORK &gt;= M-Q.
+ 
+           If LWORK = -1, then a workspace query is assumed; the routine
+           only calculates the optimal size of the WORK array, returns
+           this value as the first entry of the WORK array, and no error
+           message related to LWORK is issued by XERBLA.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+           = 0:  successful exit.
+           &lt; 0:  if INFO = -i, the i-th argument had an illegal value.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+July 2012 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  The upper-bidiagonal blocks B11, B21 are represented implicitly by
+  angles <A HREF="/cgi-bin/man/man2html?1+THETA">THETA</A>(1), ..., THETA(Q) and <A HREF="/cgi-bin/man/man2html?1+PHI">PHI</A>(1), ..., PHI(Q-1). Every entry
+  in each bidiagonal band is a product of a sine or cosine of a THETA
+  with a sine or cosine of a PHI. See [1] or ZUNCSD for details.
+
+  P1, P2, and Q1 are represented as products of elementary reflectors.
+  See ZUNCSD2BY1 for details on generating P1, P2, and Q1 using ZUNGQR
+  and ZUNGLQ.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>References: </B>
+<DL COMPACT><DT><DD>
+[1] Brian D. Sutton. Computing the complete CS decomposition. Numer. Algorithms, <A HREF="/cgi-bin/man/man2html?1+50">50</A>(1):33-65, 2009. 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 212 of file zunbdb4.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine zunbdb4 (integerM, integerP, integerQ, complex*16, dimension(ldx11,*)X11, integerLDX11, complex*16, dimension(ldx21,*)X21, integerLDX21, double precision, dimension(*)THETA, double precision, dimension(*)PHI, complex*16, dimension(*)TAUP1, complex*16, dimension(*)TAUP2, complex*16, dimension(*)TAUQ1, complex*16, dimension(*)PHANTOM, complex*16, dimension(*)WORK, integerLWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:43 GMT, February 12, 2014
+</BODY>
+</HTML>

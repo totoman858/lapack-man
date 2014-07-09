@@ -1,0 +1,376 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dlarrf.f</TITLE>
+</HEAD><BODY>
+<H1>dlarrf.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dlarrf.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>dlarrf</B> (N, D, L, LD, CLSTRT, CLEND, W, WGAP, WERR, SPDIAM, CLGAPL, CLGAPR, PIVMIN, SIGMA, DPLUS, LPLUS, WORK, INFO)
+
+<BR>
+
+<I></I><B>DLARRF</B> finds a new relatively robust representation such that at least one of the eigenvalues is relatively isolated. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dlarrf (integerN, double precision, dimension( * )D, double precision, dimension( * )L, double precision, dimension( * )LD, integerCLSTRT, integerCLEND, double precision, dimension( * )W, double precision, dimension( * )WGAP, double precision, dimension( * )WERR, double precisionSPDIAM, double precisionCLGAPL, double precisionCLGAPR, double precisionPIVMIN, double precisionSIGMA, double precision, dimension( * )DPLUS, double precision, dimension( * )LPLUS, double precision, dimension( * )WORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>DLARRF</B> finds a new relatively robust representation such that at least one of the eigenvalues is relatively isolated.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ Given the initial representation L D L^T and its cluster of close
+ eigenvalues (in a relative measure), W( CLSTRT ), W( CLSTRT+1 ), ...
+ W( CLEND ), DLARRF finds a new relatively robust representation
+ L D L^T - SIGMA I = L(+) D(+) L(+)^T such that at least one of the
+ eigenvalues of L(+) D(+) L(+)^T is relatively isolated.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrix (subblock, if the matrix splitted).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is DOUBLE PRECISION array, dimension (N)
+          The N diagonal elements of the diagonal matrix D.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>L</I> 
+<P>
+
+<PRE>
+          L is DOUBLE PRECISION array, dimension (N-1)
+          The (N-1) subdiagonal elements of the unit bidiagonal
+          matrix L.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LD</I> 
+<P>
+
+<PRE>
+          LD is DOUBLE PRECISION array, dimension (N-1)
+          The (N-1) elements L(i)*D(i).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>CLSTRT</I> 
+<P>
+
+<PRE>
+          CLSTRT is INTEGER
+          The index of the first eigenvalue in the cluster.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>CLEND</I> 
+<P>
+
+<PRE>
+          CLEND is INTEGER
+          The index of the last eigenvalue in the cluster.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>W</I> 
+<P>
+
+<PRE>
+          W is DOUBLE PRECISION array, dimension
+          dimension is &gt;=  (CLEND-CLSTRT+1)
+          The eigenvalue APPROXIMATIONS of L D L^T in ascending order.
+          W( CLSTRT ) through W( CLEND ) form the cluster of relatively
+          close eigenalues.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WGAP</I> 
+<P>
+
+<PRE>
+          WGAP is DOUBLE PRECISION array, dimension
+          dimension is &gt;=  (CLEND-CLSTRT+1)
+          The separation from the right neighbor eigenvalue in W.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WERR</I> 
+<P>
+
+<PRE>
+          WERR is DOUBLE PRECISION array, dimension
+          dimension is  &gt;=  (CLEND-CLSTRT+1)
+          WERR contain the semiwidth of the uncertainty
+          interval of the corresponding eigenvalue APPROXIMATION in W
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SPDIAM</I> 
+<P>
+
+<PRE>
+          SPDIAM is DOUBLE PRECISION
+          estimate of the spectral diameter obtained from the
+          Gerschgorin intervals
+</PRE>
+
+<P>
+
+<BR>
+
+<I>CLGAPL</I> 
+<P>
+
+<PRE>
+          CLGAPL is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>CLGAPR</I> 
+<P>
+
+<PRE>
+          CLGAPR is DOUBLE PRECISION
+          absolute gap on each end of the cluster.
+          Set by the calling routine to protect against shifts too close
+          to eigenvalues outside the cluster.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>PIVMIN</I> 
+<P>
+
+<PRE>
+          PIVMIN is DOUBLE PRECISION
+          The minimum pivot allowed in the Sturm sequence.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SIGMA</I> 
+<P>
+
+<PRE>
+          SIGMA is DOUBLE PRECISION
+          The shift used to form L(+) D(+) L(+)^T.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DPLUS</I> 
+<P>
+
+<PRE>
+          DPLUS is DOUBLE PRECISION array, dimension (N)
+          The N diagonal elements of the diagonal matrix D(+).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LPLUS</I> 
+<P>
+
+<PRE>
+          LPLUS is DOUBLE PRECISION array, dimension (N-1)
+          The first (N-1) elements of LPLUS contain the subdiagonal
+          elements of the unit bidiagonal matrix L(+).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is DOUBLE PRECISION array, dimension (2*N)
+          Workspace.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          Signals processing OK (=0) or failure (=1)
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Beresford Parlett, University of California, Berkeley, USA 
+<BR>
+
+<BR>&nbsp;Jim&nbsp;Demmel,&nbsp;University&nbsp;of&nbsp;California,&nbsp;Berkeley,&nbsp;USA&nbsp;
+<BR>
+
+<BR>&nbsp;Inderjit&nbsp;Dhillon,&nbsp;University&nbsp;of&nbsp;Texas,&nbsp;Austin,&nbsp;USA&nbsp;
+<BR>
+
+<BR>&nbsp;Osni&nbsp;Marques,&nbsp;LBNL/NERSC,&nbsp;USA&nbsp;
+<BR>
+
+<BR>&nbsp;Christof&nbsp;Voemel,&nbsp;University&nbsp;of&nbsp;California,&nbsp;Berkeley,&nbsp;USA&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 191 of file dlarrf.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dlarrf (integerN, double precision, dimension( * )D, double precision, dimension( * )L, double precision, dimension( * )LD, integerCLSTRT, integerCLEND, double precision, dimension( * )W, double precision, dimension( * )WGAP, double precision, dimension( * )WERR, double precisionSPDIAM, double precisionCLGAPL, double precisionCLGAPR, double precisionPIVMIN, double precisionSIGMA, double precision, dimension( * )DPLUS, double precision, dimension( * )LPLUS, double precision, dimension( * )WORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:56 GMT, February 12, 2014
+</BODY>
+</HTML>

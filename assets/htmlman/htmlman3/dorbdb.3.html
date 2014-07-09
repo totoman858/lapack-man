@@ -1,0 +1,492 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dorbdb.f</TITLE>
+</HEAD><BODY>
+<H1>dorbdb.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dorbdb.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>dorbdb</B> (TRANS, SIGNS, M, P, Q, X11, LDX11, X12, LDX12, X21, LDX21, X22, LDX22, THETA, PHI, TAUP1, TAUP2, TAUQ1, TAUQ2, WORK, LWORK, INFO)
+
+<BR>
+
+<I></I><B>DORBDB</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dorbdb (characterTRANS, characterSIGNS, integerM, integerP, integerQ, double precision, dimension( ldx11, * )X11, integerLDX11, double precision, dimension( ldx12, * )X12, integerLDX12, double precision, dimension( ldx21, * )X21, integerLDX21, double precision, dimension( ldx22, * )X22, integerLDX22, double precision, dimension( * )THETA, double precision, dimension( * )PHI, double precision, dimension( * )TAUP1, double precision, dimension( * )TAUP2, double precision, dimension( * )TAUQ1, double precision, dimension( * )TAUQ2, double precision, dimension( * )WORK, integerLWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>DORBDB</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ DORBDB simultaneously bidiagonalizes the blocks of an M-by-M
+ partitioned orthogonal matrix X:
+
+                                 [ B11 | B12 0  0 ]
+     [ X11 | X12 ]   [ P1 |    ] [  0  |  0 -I  0 ] [ Q1 |    ]**T
+ X = [-----------] = [---------] [----------------] [---------]   .
+     [ X21 | X22 ]   [    | P2 ] [ B21 | B22 0  0 ] [    | Q2 ]
+                                 [  0  |  0  0  I ]
+
+ X11 is P-by-Q. Q must be no larger than P, M-P, or M-Q. (If this is
+ not the case, then X must be transposed and/or permuted. This can be
+ done in constant time using the TRANS and SIGNS options. See DORCSD
+ for details.)
+
+ The orthogonal matrices P1, P2, Q1, and Q2 are P-by-P, (M-P)-by-
+ (M-P), Q-by-Q, and (M-Q)-by-(M-Q), respectively. They are
+ represented implicitly by Householder vectors.
+
+ B11, B12, B21, and B22 are Q-by-Q bidiagonal matrices represented
+ implicitly by angles THETA, PHI.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>TRANS</I> 
+<P>
+
+<PRE>
+          TRANS is CHARACTER
+          = 'T':      X, U1, U2, V1T, and V2T are stored in row-major
+                      order;
+          otherwise:  X, U1, U2, V1T, and V2T are stored in column-
+                      major order.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SIGNS</I> 
+<P>
+
+<PRE>
+          SIGNS is CHARACTER
+          = 'O':      The lower-left block is made nonpositive (the
+                      &quot;other&quot; convention);
+          otherwise:  The upper-right block is made nonpositive (the
+                      &quot;default&quot; convention).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The number of rows and columns in X.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>P</I> 
+<P>
+
+<PRE>
+          P is INTEGER
+          The number of rows in X11 and X12. 0 &lt;= P &lt;= M.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Q</I> 
+<P>
+
+<PRE>
+          Q is INTEGER
+          The number of columns in X11 and X21. 0 &lt;= Q &lt;=
+          MIN(P,M-P,M-Q).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X11</I> 
+<P>
+
+<PRE>
+          X11 is DOUBLE PRECISION array, dimension (LDX11,Q)
+          On entry, the top-left block of the orthogonal matrix to be
+          reduced. On exit, the form depends on TRANS:
+          If TRANS = 'N', then
+             the columns of tril(X11) specify reflectors for P1,
+             the rows of triu(X11,1) specify reflectors for Q1;
+          else TRANS = 'T', and
+             the rows of triu(X11) specify reflectors for P1,
+             the columns of tril(X11,-1) specify reflectors for Q1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDX11</I> 
+<P>
+
+<PRE>
+          LDX11 is INTEGER
+          The leading dimension of X11. If TRANS = 'N', then LDX11 &gt;=
+          P; else LDX11 &gt;= Q.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X12</I> 
+<P>
+
+<PRE>
+          X12 is DOUBLE PRECISION array, dimension (LDX12,M-Q)
+          On entry, the top-right block of the orthogonal matrix to
+          be reduced. On exit, the form depends on TRANS:
+          If TRANS = 'N', then
+             the rows of triu(X12) specify the first P reflectors for
+             Q2;
+          else TRANS = 'T', and
+             the columns of tril(X12) specify the first P reflectors
+             for Q2.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDX12</I> 
+<P>
+
+<PRE>
+          LDX12 is INTEGER
+          The leading dimension of X12. If TRANS = 'N', then LDX12 &gt;=
+          P; else LDX11 &gt;= M-Q.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X21</I> 
+<P>
+
+<PRE>
+          X21 is DOUBLE PRECISION array, dimension (LDX21,Q)
+          On entry, the bottom-left block of the orthogonal matrix to
+          be reduced. On exit, the form depends on TRANS:
+          If TRANS = 'N', then
+             the columns of tril(X21) specify reflectors for P2;
+          else TRANS = 'T', and
+             the rows of triu(X21) specify reflectors for P2.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDX21</I> 
+<P>
+
+<PRE>
+          LDX21 is INTEGER
+          The leading dimension of X21. If TRANS = 'N', then LDX21 &gt;=
+          M-P; else LDX21 &gt;= Q.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X22</I> 
+<P>
+
+<PRE>
+          X22 is DOUBLE PRECISION array, dimension (LDX22,M-Q)
+          On entry, the bottom-right block of the orthogonal matrix to
+          be reduced. On exit, the form depends on TRANS:
+          If TRANS = 'N', then
+             the rows of triu(X22(Q+1:M-P,P+1:M-Q)) specify the last
+             M-P-Q reflectors for Q2,
+          else TRANS = 'T', and
+             the columns of tril(X22(P+1:M-Q,Q+1:M-P)) specify the last
+             M-P-Q reflectors for P2.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDX22</I> 
+<P>
+
+<PRE>
+          LDX22 is INTEGER
+          The leading dimension of X22. If TRANS = 'N', then LDX22 &gt;=
+          M-P; else LDX22 &gt;= M-Q.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>THETA</I> 
+<P>
+
+<PRE>
+          THETA is DOUBLE PRECISION array, dimension (Q)
+          The entries of the bidiagonal blocks B11, B12, B21, B22 can
+          be computed from the angles THETA and PHI. See Further
+          Details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>PHI</I> 
+<P>
+
+<PRE>
+          PHI is DOUBLE PRECISION array, dimension (Q-1)
+          The entries of the bidiagonal blocks B11, B12, B21, B22 can
+          be computed from the angles THETA and PHI. See Further
+          Details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TAUP1</I> 
+<P>
+
+<PRE>
+          TAUP1 is DOUBLE PRECISION array, dimension (P)
+          The scalar factors of the elementary reflectors that define
+          P1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TAUP2</I> 
+<P>
+
+<PRE>
+          TAUP2 is DOUBLE PRECISION array, dimension (M-P)
+          The scalar factors of the elementary reflectors that define
+          P2.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TAUQ1</I> 
+<P>
+
+<PRE>
+          TAUQ1 is DOUBLE PRECISION array, dimension (Q)
+          The scalar factors of the elementary reflectors that define
+          Q1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TAUQ2</I> 
+<P>
+
+<PRE>
+          TAUQ2 is DOUBLE PRECISION array, dimension (M-Q)
+          The scalar factors of the elementary reflectors that define
+          Q2.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is DOUBLE PRECISION array, dimension (LWORK)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LWORK</I> 
+<P>
+
+<PRE>
+          LWORK is INTEGER
+          The dimension of the array WORK. LWORK &gt;= M-Q.
+
+          If LWORK = -1, then a workspace query is assumed; the routine
+          only calculates the optimal size of the WORK array, returns
+          this value as the first entry of the WORK array, and no error
+          message related to LWORK is issued by XERBLA.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit.
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2013 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  The bidiagonal blocks B11, B12, B21, and B22 are represented
+  implicitly by angles <A HREF="/cgi-bin/man/man2html?1+THETA">THETA</A>(1), ..., THETA(Q) and <A HREF="/cgi-bin/man/man2html?1+PHI">PHI</A>(1), ...,
+  PHI(Q-1). B11 and B21 are upper bidiagonal, while B21 and B22 are
+  lower bidiagonal. Every entry in each bidiagonal band is a product
+  of a sine or cosine of a THETA with a sine or cosine of a PHI. See
+  [1] or DORCSD for details.
+
+  P1, P2, Q1, and Q2 are represented as products of elementary
+  reflectors. See DORCSD for details on generating P1, P2, Q1, and Q2
+  using DORGQR and DORGLQ.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>References: </B>
+<DL COMPACT><DT><DD>
+[1] Brian D. Sutton. Computing the complete CS decomposition. Numer. Algorithms, <A HREF="/cgi-bin/man/man2html?1+50">50</A>(1):33-65, 2009. 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 286 of file dorbdb.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dorbdb (characterTRANS, characterSIGNS, integerM, integerP, integerQ, double precision, dimension( ldx11, * )X11, integerLDX11, double precision, dimension( ldx12, * )X12, integerLDX12, double precision, dimension( ldx21, * )X21, integerLDX21, double precision, dimension( ldx22, * )X22, integerLDX22, double precision, dimension( * )THETA, double precision, dimension( * )PHI, double precision, dimension( * )TAUP1, double precision, dimension( * )TAUP2, double precision, dimension( * )TAUQ1, double precision, dimension( * )TAUQ2, double precision, dimension( * )WORK, integerLWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:44 GMT, February 12, 2014
+</BODY>
+</HTML>

@@ -1,0 +1,7 @@
+=== LAPACK-MAN ===
+
+Linear Algebra PACKage man pages
+
+Android app for viewing the lapack man pages in html format
+
+Man pages come from the lapack web site : http://www.netlib.org/lapack/manpages.tgz

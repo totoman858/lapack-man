@@ -1,0 +1,483 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of zlals0.f</TITLE>
+</HEAD><BODY>
+<H1>zlals0.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+zlals0.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>zlals0</B> (ICOMPQ, NL, NR, SQRE, NRHS, B, LDB, BX, LDBX, PERM, GIVPTR, GIVCOL, LDGCOL, GIVNUM, LDGNUM, POLES, DIFL, DIFR, Z, K, C, S, RWORK, INFO)
+
+<BR>
+
+<I></I><B>ZLALS0</B> applies back multiplying factors in solving the least squares problem using divide and conquer SVD approach. Used by sgelsd. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine zlals0 (integerICOMPQ, integerNL, integerNR, integerSQRE, integerNRHS, complex*16, dimension( ldb, * )B, integerLDB, complex*16, dimension( ldbx, * )BX, integerLDBX, integer, dimension( * )PERM, integerGIVPTR, integer, dimension( ldgcol, * )GIVCOL, integerLDGCOL, double precision, dimension( ldgnum, * )GIVNUM, integerLDGNUM, double precision, dimension( ldgnum, * )POLES, double precision, dimension( * )DIFL, double precision, dimension( ldgnum, * )DIFR, double precision, dimension( * )Z, integerK, double precisionC, double precisionS, double precision, dimension( * )RWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>ZLALS0</B> applies back multiplying factors in solving the least squares problem using divide and conquer SVD approach. Used by sgelsd.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZLALS0 applies back the multiplying factors of either the left or the
+ right singular vector matrix of a diagonal matrix appended by a row
+ to the right hand side matrix B in solving the least squares problem
+ using the divide-and-conquer SVD approach.
+
+ For the left singular vector matrix, three types of orthogonal
+ matrices are involved:
+
+ (1L) Givens rotations: the number of such rotations is GIVPTR; the
+      pairs of columns/rows they were applied to are stored in GIVCOL;
+      and the C- and S-values of these rotations are stored in GIVNUM.
+
+ (2L) Permutation. The (NL+1)-st row of B is to be moved to the first
+      row, and for J=2:N, PERM(J)-th row of B is to be moved to the
+      J-th row.
+
+ (3L) The left singular vector matrix of the remaining matrix.
+
+ For the right singular vector matrix, four types of orthogonal
+ matrices are involved:
+
+ (1R) The right singular vector matrix of the remaining matrix.
+
+ (2R) If SQRE = 1, one extra Givens rotation to generate the right
+      null space.
+
+ (3R) The inverse transformation of (2L).
+
+ (4R) The inverse transformation of (1L).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>ICOMPQ</I> 
+<P>
+
+<PRE>
+          ICOMPQ is INTEGER
+         Specifies whether singular vectors are to be computed in
+         factored form:
+         = 0: Left singular vector matrix.
+         = 1: Right singular vector matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NL</I> 
+<P>
+
+<PRE>
+          NL is INTEGER
+         The row dimension of the upper block. NL &gt;= 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NR</I> 
+<P>
+
+<PRE>
+          NR is INTEGER
+         The row dimension of the lower block. NR &gt;= 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SQRE</I> 
+<P>
+
+<PRE>
+          SQRE is INTEGER
+         = 0: the lower block is an NR-by-NR square matrix.
+         = 1: the lower block is an NR-by-(NR+1) rectangular matrix.
+
+         The bidiagonal matrix has row dimension N = NL + NR + 1,
+         and column dimension M = N + SQRE.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NRHS</I> 
+<P>
+
+<PRE>
+          NRHS is INTEGER
+         The number of columns of B and BX. NRHS must be at least 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is COMPLEX*16 array, dimension ( LDB, NRHS )
+         On input, B contains the right hand sides of the least
+         squares problem in rows 1 through M. On output, B contains
+         the solution X in rows 1 through N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDB</I> 
+<P>
+
+<PRE>
+          LDB is INTEGER
+         The leading dimension of B. LDB must be at least
+         max(1,MAX( M, N ) ).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>BX</I> 
+<P>
+
+<PRE>
+          BX is COMPLEX*16 array, dimension ( LDBX, NRHS )
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDBX</I> 
+<P>
+
+<PRE>
+          LDBX is INTEGER
+         The leading dimension of BX.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>PERM</I> 
+<P>
+
+<PRE>
+          PERM is INTEGER array, dimension ( N )
+         The permutations (from deflation and sorting) applied
+         to the two blocks.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>GIVPTR</I> 
+<P>
+
+<PRE>
+          GIVPTR is INTEGER
+         The number of Givens rotations which took place in this
+         subproblem.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>GIVCOL</I> 
+<P>
+
+<PRE>
+          GIVCOL is INTEGER array, dimension ( LDGCOL, 2 )
+         Each pair of numbers indicates a pair of rows/columns
+         involved in a Givens rotation.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDGCOL</I> 
+<P>
+
+<PRE>
+          LDGCOL is INTEGER
+         The leading dimension of GIVCOL, must be at least N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>GIVNUM</I> 
+<P>
+
+<PRE>
+          GIVNUM is DOUBLE PRECISION array, dimension ( LDGNUM, 2 )
+         Each number indicates the C or S value used in the
+         corresponding Givens rotation.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDGNUM</I> 
+<P>
+
+<PRE>
+          LDGNUM is INTEGER
+         The leading dimension of arrays DIFR, POLES and
+         GIVNUM, must be at least K.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>POLES</I> 
+<P>
+
+<PRE>
+          POLES is DOUBLE PRECISION array, dimension ( LDGNUM, 2 )
+         On entry, POLES(1:K, 1) contains the new singular
+         values obtained from solving the secular equation, and
+         POLES(1:K, 2) is an array containing the poles in the secular
+         equation.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DIFL</I> 
+<P>
+
+<PRE>
+          DIFL is DOUBLE PRECISION array, dimension ( K ).
+         On entry, DIFL(I) is the distance between I-th updated
+         (undeflated) singular value and the I-th (undeflated) old
+         singular value.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DIFR</I> 
+<P>
+
+<PRE>
+          DIFR is DOUBLE PRECISION array, dimension ( LDGNUM, 2 ).
+         On entry, DIFR(I, 1) contains the distances between I-th
+         updated (undeflated) singular value and the I+1-th
+         (undeflated) old singular value. And DIFR(I, 2) is the
+         normalizing factor for the I-th right singular vector.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is DOUBLE PRECISION array, dimension ( K )
+         Contain the components of the deflation-adjusted updating row
+         vector.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>K</I> 
+<P>
+
+<PRE>
+          K is INTEGER
+         Contains the dimension of the non-deflated matrix,
+         This is the order of the related secular equation. 1 &lt;= K &lt;=N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>C</I> 
+<P>
+
+<PRE>
+          C is DOUBLE PRECISION
+         C contains garbage if SQRE =0 and the C-value of a Givens
+         rotation related to the right null space if SQRE = 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>S</I> 
+<P>
+
+<PRE>
+          S is DOUBLE PRECISION
+         S contains garbage if SQRE =0 and the S-value of a Givens
+         rotation related to the right null space if SQRE = 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RWORK</I> 
+<P>
+
+<PRE>
+          RWORK is DOUBLE PRECISION array, dimension
+         ( K*(1+NRHS) + 2*NRHS )
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit.
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Ming Gu and Ren-Cang Li, Computer Science Division, University of California at Berkeley, USA 
+<BR>
+
+<BR>&nbsp;Osni&nbsp;Marques,&nbsp;LBNL/NERSC,&nbsp;USA&nbsp;
+<BR>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 269 of file zlals0.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine zlals0 (integerICOMPQ, integerNL, integerNR, integerSQRE, integerNRHS, complex*16, dimension( ldb, * )B, integerLDB, complex*16, dimension( ldbx, * )BX, integerLDBX, integer, dimension( * )PERM, integerGIVPTR, integer, dimension( ldgcol, * )GIVCOL, integerLDGCOL, double precision, dimension( ldgnum, * )GIVNUM, integerLDGNUM, double precision, dimension( ldgnum, * )POLES, double precision, dimension( * )DIFL, double precision, dimension( ldgnum, * )DIFR, double precision, dimension( * )Z, integerK, double precisionC, double precisionS, double precision, dimension( * )RWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:59 GMT, February 12, 2014
+</BODY>
+</HTML>

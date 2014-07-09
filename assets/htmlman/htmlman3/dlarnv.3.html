@@ -1,0 +1,201 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dlarnv.f</TITLE>
+</HEAD><BODY>
+<H1>dlarnv.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dlarnv.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>dlarnv</B> (IDIST, ISEED, N, X)
+
+<BR>
+
+<I></I><B>DLARNV</B> returns a vector of random numbers from a uniform or normal distribution. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dlarnv (integerIDIST, integer, dimension( 4 )ISEED, integerN, double precision, dimension( * )X)</H3>
+
+<P>
+<P>
+
+<B>DLARNV</B> returns a vector of random numbers from a uniform or normal distribution.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ DLARNV returns a vector of n random real numbers from a uniform or
+ normal distribution.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>IDIST</I> 
+<P>
+
+<PRE>
+          IDIST is INTEGER
+          Specifies the distribution of the random numbers:
+          = 1:  uniform (0,1)
+          = 2:  uniform (-1,1)
+          = 3:  normal (0,1)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ISEED</I> 
+<P>
+
+<PRE>
+          ISEED is INTEGER array, dimension (4)
+          On entry, the seed of the random number generator; the array
+          elements must be between 0 and 4095, and <A HREF="/cgi-bin/man/man2html?4+ISEED">ISEED</A>(4) must be
+          odd.
+          On exit, the seed is updated.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of random numbers to be generated.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X</I> 
+<P>
+
+<PRE>
+          X is DOUBLE PRECISION array, dimension (N)
+          The generated random numbers.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  This routine calls the auxiliary routine DLARUV to generate random
+  real numbers from a uniform (0,1) distribution, in batches of up to
+  128 using vectorisable code. The Box-Muller method is used to
+  transform numbers from a uniform to a normal distribution.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 98 of file dlarnv.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dlarnv (integerIDIST, integer, dimension( 4 )ISEED, integerN, double precision, dimension( * )X)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:52 GMT, February 12, 2014
+</BODY>
+</HTML>

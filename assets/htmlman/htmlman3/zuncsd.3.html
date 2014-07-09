@@ -1,0 +1,568 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of zuncsd.f</TITLE>
+</HEAD><BODY>
+<H1>zuncsd.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+zuncsd.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+recursive subroutine <B>zuncsd</B> (JOBU1, JOBU2, JOBV1T, JOBV2T, TRANS, SIGNS, M, P, Q, X11, LDX11, X12, LDX12, X21, LDX21, X22, LDX22, THETA, U1, LDU1, U2, LDU2, V1T, LDV1T, V2T, LDV2T, WORK, LWORK, RWORK, LRWORK, IWORK, INFO)
+
+<BR>
+
+<I></I><B>ZUNCSD</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>recursive subroutine zuncsd (characterJOBU1, characterJOBU2, characterJOBV1T, characterJOBV2T, characterTRANS, characterSIGNS, integerM, integerP, integerQ, complex*16, dimension( ldx11, * )X11, integerLDX11, complex*16, dimension( ldx12, * )X12, integerLDX12, complex*16, dimension( ldx21, * )X21, integerLDX21, complex*16, dimension( ldx22,                         * )X22, integerLDX22, double precision, dimension( * )THETA, complex*16, dimension( ldu1, * )U1, integerLDU1, complex*16, dimension( ldu2, * )U2, integerLDU2, complex*16, dimension( ldv1t, * )V1T, integerLDV1T, complex*16, dimension( ldv2t, * )V2T, integerLDV2T, complex*16, dimension( * )WORK, integerLWORK, double precision, dimension( * )RWORK, integerLRWORK, integer, dimension( * )IWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>ZUNCSD</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZUNCSD computes the CS decomposition of an M-by-M partitioned
+ unitary matrix X:
+
+                                 [  I  0  0 |  0  0  0 ]
+                                 [  0  C  0 |  0 -S  0 ]
+     [ X11 | X12 ]   [ U1 |    ] [  0  0  0 |  0  0 -I ] [ V1 |    ]**H
+ X = [-----------] = [---------] [---------------------] [---------]   .
+     [ X21 | X22 ]   [    | U2 ] [  0  0  0 |  I  0  0 ] [    | V2 ]
+                                 [  0  S  0 |  0  C  0 ]
+                                 [  0  0  I |  0  0  0 ]
+
+ X11 is P-by-Q. The unitary matrices U1, U2, V1, and V2 are P-by-P,
+ (M-P)-by-(M-P), Q-by-Q, and (M-Q)-by-(M-Q), respectively. C and S are
+ R-by-R nonnegative diagonal matrices satisfying C^2 + S^2 = I, in
+ which R = MIN(P,M-P,Q,M-Q).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>JOBU1</I> 
+<P>
+
+<PRE>
+          JOBU1 is CHARACTER
+          = 'Y':      U1 is computed;
+          otherwise:  U1 is not computed.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>JOBU2</I> 
+<P>
+
+<PRE>
+          JOBU2 is CHARACTER
+          = 'Y':      U2 is computed;
+          otherwise:  U2 is not computed.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>JOBV1T</I> 
+<P>
+
+<PRE>
+          JOBV1T is CHARACTER
+          = 'Y':      V1T is computed;
+          otherwise:  V1T is not computed.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>JOBV2T</I> 
+<P>
+
+<PRE>
+          JOBV2T is CHARACTER
+          = 'Y':      V2T is computed;
+          otherwise:  V2T is not computed.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TRANS</I> 
+<P>
+
+<PRE>
+          TRANS is CHARACTER
+          = 'T':      X, U1, U2, V1T, and V2T are stored in row-major
+                      order;
+          otherwise:  X, U1, U2, V1T, and V2T are stored in column-
+                      major order.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SIGNS</I> 
+<P>
+
+<PRE>
+          SIGNS is CHARACTER
+          = 'O':      The lower-left block is made nonpositive (the
+                      &quot;other&quot; convention);
+          otherwise:  The upper-right block is made nonpositive (the
+                      &quot;default&quot; convention).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The number of rows and columns in X.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>P</I> 
+<P>
+
+<PRE>
+          P is INTEGER
+          The number of rows in X11 and X12. 0 &lt;= P &lt;= M.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Q</I> 
+<P>
+
+<PRE>
+          Q is INTEGER
+          The number of columns in X11 and X21. 0 &lt;= Q &lt;= M.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X11</I> 
+<P>
+
+<PRE>
+          X11 is COMPLEX*16 array, dimension (LDX11,Q)
+          On entry, part of the unitary matrix whose CSD is desired.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDX11</I> 
+<P>
+
+<PRE>
+          LDX11 is INTEGER
+          The leading dimension of X11. LDX11 &gt;= MAX(1,P).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X12</I> 
+<P>
+
+<PRE>
+          X12 is COMPLEX*16 array, dimension (LDX12,M-Q)
+          On entry, part of the unitary matrix whose CSD is desired.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDX12</I> 
+<P>
+
+<PRE>
+          LDX12 is INTEGER
+          The leading dimension of X12. LDX12 &gt;= MAX(1,P).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X21</I> 
+<P>
+
+<PRE>
+          X21 is COMPLEX*16 array, dimension (LDX21,Q)
+          On entry, part of the unitary matrix whose CSD is desired.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDX21</I> 
+<P>
+
+<PRE>
+          LDX21 is INTEGER
+          The leading dimension of X11. LDX21 &gt;= MAX(1,M-P).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X22</I> 
+<P>
+
+<PRE>
+          X22 is COMPLEX*16 array, dimension (LDX22,M-Q)
+          On entry, part of the unitary matrix whose CSD is desired.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDX22</I> 
+<P>
+
+<PRE>
+          LDX22 is INTEGER
+          The leading dimension of X11. LDX22 &gt;= MAX(1,M-P).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>THETA</I> 
+<P>
+
+<PRE>
+          THETA is DOUBLE PRECISION array, dimension (R), in which R =
+          MIN(P,M-P,Q,M-Q).
+          C = DIAG( COS(<A HREF="/cgi-bin/man/man2html?1+THETA">THETA</A>(1)), ... , COS(THETA(R)) ) and
+          S = DIAG( SIN(<A HREF="/cgi-bin/man/man2html?1+THETA">THETA</A>(1)), ... , SIN(THETA(R)) ).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>U1</I> 
+<P>
+
+<PRE>
+          U1 is COMPLEX*16 array, dimension (P)
+          If JOBU1 = 'Y', U1 contains the P-by-P unitary matrix U1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDU1</I> 
+<P>
+
+<PRE>
+          LDU1 is INTEGER
+          The leading dimension of U1. If JOBU1 = 'Y', LDU1 &gt;=
+          MAX(1,P).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>U2</I> 
+<P>
+
+<PRE>
+          U2 is COMPLEX*16 array, dimension (M-P)
+          If JOBU2 = 'Y', U2 contains the (M-P)-by-(M-P) unitary
+          matrix U2.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDU2</I> 
+<P>
+
+<PRE>
+          LDU2 is INTEGER
+          The leading dimension of U2. If JOBU2 = 'Y', LDU2 &gt;=
+          MAX(1,M-P).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>V1T</I> 
+<P>
+
+<PRE>
+          V1T is COMPLEX*16 array, dimension (Q)
+          If JOBV1T = 'Y', V1T contains the Q-by-Q matrix unitary
+          matrix V1**H.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDV1T</I> 
+<P>
+
+<PRE>
+          LDV1T is INTEGER
+          The leading dimension of V1T. If JOBV1T = 'Y', LDV1T &gt;=
+          MAX(1,Q).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>V2T</I> 
+<P>
+
+<PRE>
+          V2T is COMPLEX*16 array, dimension (M-Q)
+          If JOBV2T = 'Y', V2T contains the (M-Q)-by-(M-Q) unitary
+          matrix V2**H.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDV2T</I> 
+<P>
+
+<PRE>
+          LDV2T is INTEGER
+          The leading dimension of V2T. If JOBV2T = 'Y', LDV2T &gt;=
+          MAX(1,M-Q).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
+          On exit, if INFO = 0, <A HREF="/cgi-bin/man/man2html?1+WORK">WORK</A>(1) returns the optimal LWORK.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LWORK</I> 
+<P>
+
+<PRE>
+          LWORK is INTEGER
+          The dimension of the array WORK.
+
+          If LWORK = -1, then a workspace query is assumed; the routine
+          only calculates the optimal size of the WORK array, returns
+          this value as the first entry of the work array, and no error
+          message related to LWORK is issued by XERBLA.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RWORK</I> 
+<P>
+
+<PRE>
+          RWORK is DOUBLE PRECISION array, dimension MAX(1,LRWORK)
+          On exit, if INFO = 0, <A HREF="/cgi-bin/man/man2html?1+RWORK">RWORK</A>(1) returns the optimal LRWORK.
+          If INFO &gt; 0 on exit, RWORK(2:R) contains the values <A HREF="/cgi-bin/man/man2html?1+PHI">PHI</A>(1),
+          ..., PHI(R-1) that, together with <A HREF="/cgi-bin/man/man2html?1+THETA">THETA</A>(1), ..., THETA(R),
+          define the matrix in intermediate bidiagonal-block form
+          remaining after nonconvergence. INFO specifies the number
+          of nonzero PHI's.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LRWORK</I> 
+<P>
+
+<PRE>
+          LRWORK is INTEGER
+          The dimension of the array RWORK.
+
+          If LRWORK = -1, then a workspace query is assumed; the routine
+          only calculates the optimal size of the RWORK array, returns
+          this value as the first entry of the work array, and no error
+          message related to LRWORK is issued by XERBLA.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IWORK</I> 
+<P>
+
+<PRE>
+          IWORK is INTEGER array, dimension (M-MIN(P,M-P,Q,M-Q))
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit.
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value.
+          &gt; 0:  ZBBCSD did not converge. See the description of RWORK
+                above for details.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>References: </B>
+<DL COMPACT><DT><DD>
+[1] Brian D. Sutton. Computing the complete CS decomposition. Numer. Algorithms, <A HREF="/cgi-bin/man/man2html?1+50">50</A>(1):33-65, 2009. 
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2013 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 316 of file zuncsd.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">recursive subroutine zuncsd (characterJOBU1, characterJOBU2, characterJOBV1T, characterJOBV2T, characterTRANS, characterSIGNS, integerM, integerP, integerQ, complex*16, dimension( ldx11, * )X11, integerLDX11, complex*16, dimension( ldx12, * )X12, integerLDX12, complex*16, dimension( ldx21, * )X21, integerLDX21, complex*16, dimension( ldx22,                         * )X22, integerLDX22, double precision, dimension( * )THETA, complex*16, dimension( ldu1, * )U1, integerLDU1, complex*16, dimension( ldu2, * )U2, integerLDU2, complex*16, dimension( ldv1t, * )V1T, integerLDV1T, complex*16, dimension( ldv2t, * )V2T, integerLDV2T, complex*16, dimension( * )WORK, integerLWORK, double precision, dimension( * )RWORK, integerLRWORK, integer, dimension( * )IWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:54 GMT, February 12, 2014
+</BODY>
+</HTML>

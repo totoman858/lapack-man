@@ -1,0 +1,251 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dsdot.f</TITLE>
+</HEAD><BODY>
+<H1>dsdot.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dsdot.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+DOUBLE PRECISION function <B>dsdot</B> (N, SX, INCX, SY, INCY)
+
+<BR>
+
+<I></I><B>DSDOT</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>DOUBLE PRECISION function dsdot (integerN, real, dimension(*)SX, integerINCX, real, dimension(*)SY, integerINCY)</H3>
+
+<P>
+<P>
+
+<B>DSDOT</B> <B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ Compute the inner product of two vectors with extended
+ precision accumulation and result.
+
+ Returns D.P. dot product accumulated in D.P., for S.P. SX and SY
+ DSDOT = sum for I = 0 to N-1 of  SX(LX+I*INCX) * SY(LY+I*INCY),
+ where LX = 1 if INCX .GE. 0, else LX = 1+(1-N)*INCX, and LY is
+ defined in a similar way using INCY.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+         number of elements in input vector(s)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SX</I> 
+<P>
+
+<PRE>
+          SX is REAL array, dimension(N)
+         single precision vector with N elements
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INCX</I> 
+<P>
+
+<PRE>
+          INCX is INTEGER
+          storage spacing between elements of SX
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SY</I> 
+<P>
+
+<PRE>
+          SY is REAL array, dimension(N)
+         single precision vector with N elements
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INCY</I> 
+<P>
+
+<PRE>
+          INCY is INTEGER
+         storage spacing between elements of SY
+</PRE>
+
+<P>
+
+</DL>
+
+<P>
+
+<B>Returns:</B>
+<DL COMPACT><DT><DD>
+DSDOT 
+<P>
+
+<PRE>
+          DSDOT is DOUBLE PRECISION
+         DSDOT  double precision dot product (zero if N.LE.0)
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ 
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>References: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  C. L. Lawson, R. J. Hanson, D. R. Kincaid and F. T.
+  Krogh, Basic linear algebra subprograms for Fortran
+  usage, Algorithm No. 539, Transactions on Mathematical
+  Software 5, 3 (September 1979), pp. 308-323.
+
+  REVISION HISTORY  (YYMMDD)
+
+  791001  DATE WRITTEN
+  890831  Modified array declarations.  (WRB)
+  890831  REVISION DATE from Version 3.2
+  891214  Prologue converted to Version 4.0 format.  (BAB)
+  920310  Corrected definition of LX in DESCRIPTION.  (WRB)
+  920501  Reformatted the REFERENCES section.  (WRB)
+  070118  Reformat to LAPACK style (JL)
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 120 of file dsdot.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">DOUBLE PRECISION function dsdot (integerN, real, dimension(*)SX, integerINCX, real, dimension(*)SY, integerINCY)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:01 GMT, February 12, 2014
+</BODY>
+</HTML>

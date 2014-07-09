@@ -1,0 +1,297 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of zlarft.f</TITLE>
+</HEAD><BODY>
+<H1>zlarft.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+zlarft.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>zlarft</B> (DIRECT, STOREV, N, K, V, LDV, TAU, T, LDT)
+
+<BR>
+
+<I></I><B>ZLARFT</B> forms the triangular factor T of a block reflector H = I - vtvH 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine zlarft (characterDIRECT, characterSTOREV, integerN, integerK, complex*16, dimension( ldv, * )V, integerLDV, complex*16, dimension( * )TAU, complex*16, dimension( ldt, * )T, integerLDT)</H3>
+
+<P>
+<P>
+
+<B>ZLARFT</B> forms the triangular factor T of a block reflector H = I - vtvH  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZLARFT forms the triangular factor T of a complex block reflector H
+ of order n, which is defined as a product of k elementary reflectors.
+
+ If DIRECT = 'F', H = <A HREF="/cgi-bin/man/man2html?1+H">H</A>(1) <A HREF="/cgi-bin/man/man2html?2+H">H</A>(2) . . . H(k) and T is upper triangular;
+
+ If DIRECT = 'B', H = H(k) . . . <A HREF="/cgi-bin/man/man2html?2+H">H</A>(2) <A HREF="/cgi-bin/man/man2html?1+H">H</A>(1) and T is lower triangular.
+
+ If STOREV = 'C', the vector which defines the elementary reflector
+ H(i) is stored in the i-th column of the array V, and
+
+    H  =  I - V * T * V**H
+
+ If STOREV = 'R', the vector which defines the elementary reflector
+ H(i) is stored in the i-th row of the array V, and
+
+    H  =  I - V**H * T * V
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>DIRECT</I> 
+<P>
+
+<PRE>
+          DIRECT is CHARACTER*1
+          Specifies the order in which the elementary reflectors are
+          multiplied to form the block reflector:
+          = 'F': H = <A HREF="/cgi-bin/man/man2html?1+H">H</A>(1) <A HREF="/cgi-bin/man/man2html?2+H">H</A>(2) . . . H(k) (Forward)
+          = 'B': H = H(k) . . . <A HREF="/cgi-bin/man/man2html?2+H">H</A>(2) <A HREF="/cgi-bin/man/man2html?1+H">H</A>(1) (Backward)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>STOREV</I> 
+<P>
+
+<PRE>
+          STOREV is CHARACTER*1
+          Specifies how the vectors which define the elementary
+          reflectors are stored (see also Further Details):
+          = 'C': columnwise
+          = 'R': rowwise
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the block reflector H. N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>K</I> 
+<P>
+
+<PRE>
+          K is INTEGER
+          The order of the triangular factor T (= the number of
+          elementary reflectors). K &gt;= 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>V</I> 
+<P>
+
+<PRE>
+          V is COMPLEX*16 array, dimension
+                               (LDV,K) if STOREV = 'C'
+                               (LDV,N) if STOREV = 'R'
+          The matrix V. See further details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDV</I> 
+<P>
+
+<PRE>
+          LDV is INTEGER
+          The leading dimension of the array V.
+          If STOREV = 'C', LDV &gt;= max(1,N); if STOREV = 'R', LDV &gt;= K.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TAU</I> 
+<P>
+
+<PRE>
+          TAU is COMPLEX*16 array, dimension (K)
+          TAU(i) must contain the scalar factor of the elementary
+          reflector H(i).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>T</I> 
+<P>
+
+<PRE>
+          T is COMPLEX*16 array, dimension (LDT,K)
+          The k by k triangular factor T of the block reflector.
+          If DIRECT = 'F', T is upper triangular; if DIRECT = 'B', T is
+          lower triangular. The rest of the array is not used.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDT</I> 
+<P>
+
+<PRE>
+          LDT is INTEGER
+          The leading dimension of the array T. LDT &gt;= K.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  The shape of the matrix V and the storage of the vectors which define
+  the H(i) is best illustrated by the following example with n = 5 and
+  k = 3. The elements equal to 1 are not stored.
+
+  DIRECT = 'F' and STOREV = 'C':         DIRECT = 'F' and STOREV = 'R':
+
+               V = (  1       )                 V = (  1 v1 v1 v1 v1 )
+                   ( v1  1    )                     (     1 v2 v2 v2 )
+                   ( v1 v2  1 )                     (        1 v3 v3 )
+                   ( v1 v2 v3 )
+                   ( v1 v2 v3 )
+
+  DIRECT = 'B' and STOREV = 'C':         DIRECT = 'B' and STOREV = 'R':
+
+               V = ( v1 v2 v3 )                 V = ( v1 v1  1       )
+                   ( v1 v2 v3 )                     ( v2 v2 v2  1    )
+                   (  1 v2 v3 )                     ( v3 v3 v3 v3  1 )
+                   (     1 v3 )
+                   (        1 )
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 164 of file zlarft.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine zlarft (characterDIRECT, characterSTOREV, integerN, integerK, complex*16, dimension( ldv, * )V, integerLDV, complex*16, dimension( * )TAU, complex*16, dimension( ldt, * )T, integerLDT)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:52 GMT, February 12, 2014
+</BODY>
+</HTML>

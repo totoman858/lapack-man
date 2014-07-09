@@ -1,0 +1,331 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of claqps.f</TITLE>
+</HEAD><BODY>
+<H1>claqps.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+claqps.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>claqps</B> (M, N, OFFSET, NB, KB, A, LDA, JPVT, TAU, VN1, VN2, AUXV, F, LDF)
+
+<BR>
+
+<I></I><B>CLAQPS</B> computes a step of QR factorization with column pivoting of a real m-by-n matrix A by using BLAS level 3. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine claqps (integerM, integerN, integerOFFSET, integerNB, integerKB, complex, dimension( lda, * )A, integerLDA, integer, dimension( * )JPVT, complex, dimension( * )TAU, real, dimension( * )VN1, real, dimension( * )VN2, complex, dimension( * )AUXV, complex, dimension( ldf, * )F, integerLDF)</H3>
+
+<P>
+<P>
+
+<B>CLAQPS</B> computes a step of QR factorization with column pivoting of a real m-by-n matrix A by using BLAS level 3.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ CLAQPS computes a step of QR factorization with column pivoting
+ of a complex M-by-N matrix A by using Blas-3.  It tries to factorize
+ NB columns from A starting from the row OFFSET+1, and updates all
+ of the matrix with Blas-3 xGEMM.
+
+ In some cases, due to catastrophic cancellations, it cannot
+ factorize NB columns.  Hence, the actual number of factorized
+ columns is returned in KB.
+
+ Block A(1:OFFSET,1:N) is accordingly pivoted, but not factorized.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The number of rows of the matrix A. M &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of columns of the matrix A. N &gt;= 0
+</PRE>
+
+<P>
+
+<BR>
+
+<I>OFFSET</I> 
+<P>
+
+<PRE>
+          OFFSET is INTEGER
+          The number of rows of A that have been factorized in
+          previous steps.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NB</I> 
+<P>
+
+<PRE>
+          NB is INTEGER
+          The number of columns to factorize.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>KB</I> 
+<P>
+
+<PRE>
+          KB is INTEGER
+          The number of columns actually factorized.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is COMPLEX array, dimension (LDA,N)
+          On entry, the M-by-N matrix A.
+          On exit, block A(OFFSET+1:M,1:KB) is the triangular
+          factor obtained and block A(1:OFFSET,1:N) has been
+          accordingly pivoted, but no factorized.
+          The rest of the matrix, block A(OFFSET+1:M,KB+1:N) has
+          been updated.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A. LDA &gt;= max(1,M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>JPVT</I> 
+<P>
+
+<PRE>
+          JPVT is INTEGER array, dimension (N)
+          JPVT(I) = K &lt;==&gt; Column K of the full matrix A has been
+          permuted into position I in AP.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TAU</I> 
+<P>
+
+<PRE>
+          TAU is COMPLEX array, dimension (KB)
+          The scalar factors of the elementary reflectors.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VN1</I> 
+<P>
+
+<PRE>
+          VN1 is REAL array, dimension (N)
+          The vector with the partial column norms.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VN2</I> 
+<P>
+
+<PRE>
+          VN2 is REAL array, dimension (N)
+          The vector with the exact column norms.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>AUXV</I> 
+<P>
+
+<PRE>
+          AUXV is COMPLEX array, dimension (NB)
+          Auxiliar vector.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>F</I> 
+<P>
+
+<PRE>
+          F is COMPLEX array, dimension (LDF,NB)
+          Matrix  F**H = L * Y**H * A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDF</I> 
+<P>
+
+<PRE>
+          LDF is INTEGER
+          The leading dimension of the array F. LDF &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+G. Quintana-Orti, Depto. de Informatica, Universidad Jaime I, Spain X. Sun, Computer Science Dept., Duke University, USA
+</DL>
+
+<P>
+
+<P>
+<BR>
+
+<BR>&nbsp;Partial&nbsp;column&nbsp;norm&nbsp;updating&nbsp;strategy&nbsp;modified&nbsp;on&nbsp;April&nbsp;2011&nbsp;Z.&nbsp;Drmac&nbsp;and&nbsp;Z.&nbsp;Bujanovic,&nbsp;Dept.&nbsp;of&nbsp;Mathematics,&nbsp;University&nbsp;of&nbsp;Zagreb,&nbsp;Croatia.&nbsp;
+<P>
+
+<B>References: </B>
+<DL COMPACT><DT><DD>
+LAPACK Working Note 176  
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 178 of file claqps.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine claqps (integerM, integerN, integerOFFSET, integerNB, integerKB, complex, dimension( lda, * )A, integerLDA, integer, dimension( * )JPVT, complex, dimension( * )TAU, real, dimension( * )VN1, real, dimension( * )VN2, complex, dimension( * )AUXV, complex, dimension( ldf, * )F, integerLDF)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:59 GMT, February 12, 2014
+</BODY>
+</HTML>

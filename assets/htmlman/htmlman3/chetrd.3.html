@@ -1,0 +1,331 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of chetrd.f</TITLE>
+</HEAD><BODY>
+<H1>chetrd.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+chetrd.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>chetrd</B> (UPLO, N, A, LDA, D, E, TAU, WORK, LWORK, INFO)
+
+<BR>
+
+<I></I><B>CHETRD</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine chetrd (characterUPLO, integerN, complex, dimension( lda, * )A, integerLDA, real, dimension( * )D, real, dimension( * )E, complex, dimension( * )TAU, complex, dimension( * )WORK, integerLWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>CHETRD</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ CHETRD reduces a complex Hermitian matrix A to real symmetric
+ tridiagonal form T by a unitary similarity transformation:
+ Q**H * A * Q = T.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>UPLO</I> 
+<P>
+
+<PRE>
+          UPLO is CHARACTER*1
+          = 'U':  Upper triangle of A is stored;
+          = 'L':  Lower triangle of A is stored.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrix A.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is COMPLEX array, dimension (LDA,N)
+          On entry, the Hermitian matrix A.  If UPLO = 'U', the leading
+          N-by-N upper triangular part of A contains the upper
+          triangular part of the matrix A, and the strictly lower
+          triangular part of A is not referenced.  If UPLO = 'L', the
+          leading N-by-N lower triangular part of A contains the lower
+          triangular part of the matrix A, and the strictly upper
+          triangular part of A is not referenced.
+          On exit, if UPLO = 'U', the diagonal and first superdiagonal
+          of A are overwritten by the corresponding elements of the
+          tridiagonal matrix T, and the elements above the first
+          superdiagonal, with the array TAU, represent the unitary
+          matrix Q as a product of elementary reflectors; if UPLO
+          = 'L', the diagonal and first subdiagonal of A are over-
+          written by the corresponding elements of the tridiagonal
+          matrix T, and the elements below the first subdiagonal, with
+          the array TAU, represent the unitary matrix Q as a product
+          of elementary reflectors. See Further Details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A.  LDA &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is REAL array, dimension (N)
+          The diagonal elements of the tridiagonal matrix T:
+          D(i) = A(i,i).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>E</I> 
+<P>
+
+<PRE>
+          E is REAL array, dimension (N-1)
+          The off-diagonal elements of the tridiagonal matrix T:
+          E(i) = A(i,i+1) if UPLO = 'U', E(i) = A(i+1,i) if UPLO = 'L'.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TAU</I> 
+<P>
+
+<PRE>
+          TAU is COMPLEX array, dimension (N-1)
+          The scalar factors of the elementary reflectors (see Further
+          Details).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is COMPLEX array, dimension (MAX(1,LWORK))
+          On exit, if INFO = 0, <A HREF="/cgi-bin/man/man2html?1+WORK">WORK</A>(1) returns the optimal LWORK.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LWORK</I> 
+<P>
+
+<PRE>
+          LWORK is INTEGER
+          The dimension of the array WORK.  LWORK &gt;= 1.
+          For optimum performance LWORK &gt;= N*NB, where NB is the
+          optimal blocksize.
+
+          If LWORK = -1, then a workspace query is assumed; the routine
+          only calculates the optimal size of the WORK array, returns
+          this value as the first entry of the WORK array, and no error
+          message related to LWORK is issued by XERBLA.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  If UPLO = 'U', the matrix Q is represented as a product of elementary
+  reflectors
+
+     Q = H(n-1) . . . <A HREF="/cgi-bin/man/man2html?2+H">H</A>(2) <A HREF="/cgi-bin/man/man2html?1+H">H</A>(1).
+
+  Each H(i) has the form
+
+     H(i) = I - tau * v * v**H
+
+  where tau is a complex scalar, and v is a complex vector with
+  v(i+1:n) = 0 and v(i) = 1; v(1:i-1) is stored on exit in
+  A(1:i-1,i+1), and tau in TAU(i).
+
+  If UPLO = 'L', the matrix Q is represented as a product of elementary
+  reflectors
+
+     Q = <A HREF="/cgi-bin/man/man2html?1+H">H</A>(1) <A HREF="/cgi-bin/man/man2html?2+H">H</A>(2) . . . H(n-1).
+
+  Each H(i) has the form
+
+     H(i) = I - tau * v * v**H
+
+  where tau is a complex scalar, and v is a complex vector with
+  v(1:i) = 0 and v(i+1) = 1; v(i+2:n) is stored on exit in A(i+2:n,i),
+  and tau in TAU(i).
+
+  The contents of A on exit are illustrated by the following examples
+  with n = 5:
+
+  if UPLO = 'U':                       if UPLO = 'L':
+
+    (  d   e   v2  v3  v4 )              (  d                  )
+    (      d   e   v3  v4 )              (  e   d              )
+    (          d   e   v4 )              (  v1  e   d          )
+    (              d   e  )              (  v1  v2  e   d      )
+    (                  d  )              (  v1  v2  v3  e   d  )
+
+  where d and e denote diagonal and off-diagonal elements of T, and vi
+  denotes an element of the vector defining H(i).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 193 of file chetrd.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine chetrd (characterUPLO, integerN, complex, dimension( lda, * )A, integerLDA, real, dimension( * )D, real, dimension( * )E, complex, dimension( * )TAU, complex, dimension( * )WORK, integerLWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:36 GMT, February 12, 2014
+</BODY>
+</HTML>

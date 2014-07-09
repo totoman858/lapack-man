@@ -1,0 +1,429 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of zlar1v.f</TITLE>
+</HEAD><BODY>
+<H1>zlar1v.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+zlar1v.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>zlar1v</B> (N, B1, BN, LAMBDA, D, L, LD, LLD, PIVMIN, GAPTOL, Z, WANTNC, NEGCNT, ZTZ, MINGMA, R, ISUPPZ, NRMINV, RESID, RQCORR, WORK)
+
+<BR>
+
+<I></I><B>ZLAR1V</B> computes the (scaled) r-th column of the inverse of the submatrix in rows b1 through bn of the tridiagonal matrix LDLT - λI. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine zlar1v (integerN, integerB1, integerBN, double precisionLAMBDA, double precision, dimension( * )D, double precision, dimension( * )L, double precision, dimension( * )LD, double precision, dimension( * )LLD, double precisionPIVMIN, double precisionGAPTOL, complex*16, dimension( * )Z, logicalWANTNC, integerNEGCNT, double precisionZTZ, double precisionMINGMA, integerR, integer, dimension( * )ISUPPZ, double precisionNRMINV, double precisionRESID, double precisionRQCORR, double precision, dimension( * )WORK)</H3>
+
+<P>
+<P>
+
+<B>ZLAR1V</B> computes the (scaled) r-th column of the inverse of the submatrix in rows b1 through bn of the tridiagonal matrix LDLT - λI.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZLAR1V computes the (scaled) r-th column of the inverse of
+ the sumbmatrix in rows B1 through BN of the tridiagonal matrix
+ L D L**T - sigma I. When sigma is close to an eigenvalue, the
+ computed vector is an accurate eigenvector. Usually, r corresponds
+ to the index where the eigenvector is largest in magnitude.
+ The following steps accomplish this computation :
+ (a) Stationary qd transform,  L D L**T - sigma I = L(+) D(+) L(+)**T,
+ (b) Progressive qd transform, L D L**T - sigma I = U(-) D(-) U(-)**T,
+ (c) Computation of the diagonal elements of the inverse of
+     L D L**T - sigma I by combining the above transforms, and choosing
+     r as the index where the diagonal of the inverse is (one of the)
+     largest in magnitude.
+ (d) Computation of the (scaled) r-th column of the inverse using the
+     twisted factorization obtained by combining the top part of the
+     the stationary and the bottom part of the progressive transform.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+           The order of the matrix L D L**T.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B1</I> 
+<P>
+
+<PRE>
+          B1 is INTEGER
+           First index of the submatrix of L D L**T.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>BN</I> 
+<P>
+
+<PRE>
+          BN is INTEGER
+           Last index of the submatrix of L D L**T.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LAMBDA</I> 
+<P>
+
+<PRE>
+          LAMBDA is DOUBLE PRECISION
+           The shift. In order to compute an accurate eigenvector,
+           LAMBDA should be a good approximation to an eigenvalue
+           of L D L**T.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>L</I> 
+<P>
+
+<PRE>
+          L is DOUBLE PRECISION array, dimension (N-1)
+           The (n-1) subdiagonal elements of the unit bidiagonal matrix
+           L, in elements 1 to N-1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is DOUBLE PRECISION array, dimension (N)
+           The n diagonal elements of the diagonal matrix D.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LD</I> 
+<P>
+
+<PRE>
+          LD is DOUBLE PRECISION array, dimension (N-1)
+           The n-1 elements L(i)*D(i).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LLD</I> 
+<P>
+
+<PRE>
+          LLD is DOUBLE PRECISION array, dimension (N-1)
+           The n-1 elements L(i)*L(i)*D(i).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>PIVMIN</I> 
+<P>
+
+<PRE>
+          PIVMIN is DOUBLE PRECISION
+           The minimum pivot in the Sturm sequence.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>GAPTOL</I> 
+<P>
+
+<PRE>
+          GAPTOL is DOUBLE PRECISION
+           Tolerance that indicates when eigenvector entries are negligible
+           w.r.t. their contribution to the residual.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is COMPLEX*16 array, dimension (N)
+           On input, all entries of Z must be set to 0.
+           On output, Z contains the (scaled) r-th column of the
+           inverse. The scaling is such that Z(R) equals 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WANTNC</I> 
+<P>
+
+<PRE>
+          WANTNC is LOGICAL
+           Specifies whether NEGCNT has to be computed.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NEGCNT</I> 
+<P>
+
+<PRE>
+          NEGCNT is INTEGER
+           If WANTNC is .TRUE. then NEGCNT = the number of pivots &lt; pivmin
+           in the  matrix factorization L D L**T, and NEGCNT = -1 otherwise.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ZTZ</I> 
+<P>
+
+<PRE>
+          ZTZ is DOUBLE PRECISION
+           The square of the 2-norm of Z.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>MINGMA</I> 
+<P>
+
+<PRE>
+          MINGMA is DOUBLE PRECISION
+           The reciprocal of the largest (in magnitude) diagonal
+           element of the inverse of L D L**T - sigma I.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>R</I> 
+<P>
+
+<PRE>
+          R is INTEGER
+           The twist index for the twisted factorization used to
+           compute Z.
+           On input, 0 &lt;= R &lt;= N. If R is input as 0, R is set to
+           the index where (L D L**T - sigma I)^{-1} is largest
+           in magnitude. If 1 &lt;= R &lt;= N, R is unchanged.
+           On output, R contains the twist index used to compute Z.
+           Ideally, R designates the position of the maximum entry in the
+           eigenvector.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ISUPPZ</I> 
+<P>
+
+<PRE>
+          ISUPPZ is INTEGER array, dimension (2)
+           The support of the vector in Z, i.e., the vector Z is
+           nonzero only in elements <A HREF="/cgi-bin/man/man2html?1+ISUPPZ">ISUPPZ</A>(1) through ISUPPZ( 2 ).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NRMINV</I> 
+<P>
+
+<PRE>
+          NRMINV is DOUBLE PRECISION
+           NRMINV = 1/SQRT( ZTZ )
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RESID</I> 
+<P>
+
+<PRE>
+          RESID is DOUBLE PRECISION
+           The residual of the FP vector.
+           RESID = ABS( MINGMA )/SQRT( ZTZ )
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RQCORR</I> 
+<P>
+
+<PRE>
+          RQCORR is DOUBLE PRECISION
+           The Rayleigh Quotient correction to LAMBDA.
+           RQCORR = MINGMA*TMP
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is DOUBLE PRECISION array, dimension (4*N)
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Beresford Parlett, University of California, Berkeley, USA 
+<BR>
+
+<BR>&nbsp;Jim&nbsp;Demmel,&nbsp;University&nbsp;of&nbsp;California,&nbsp;Berkeley,&nbsp;USA&nbsp;
+<BR>
+
+<BR>&nbsp;Inderjit&nbsp;Dhillon,&nbsp;University&nbsp;of&nbsp;Texas,&nbsp;Austin,&nbsp;USA&nbsp;
+<BR>
+
+<BR>&nbsp;Osni&nbsp;Marques,&nbsp;LBNL/NERSC,&nbsp;USA&nbsp;
+<BR>
+
+<BR>&nbsp;Christof&nbsp;Voemel,&nbsp;University&nbsp;of&nbsp;California,&nbsp;Berkeley,&nbsp;USA&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 229 of file zlar1v.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine zlar1v (integerN, integerB1, integerBN, double precisionLAMBDA, double precision, dimension( * )D, double precision, dimension( * )L, double precision, dimension( * )LD, double precision, dimension( * )LLD, double precisionPIVMIN, double precisionGAPTOL, complex*16, dimension( * )Z, logicalWANTNC, integerNEGCNT, double precisionZTZ, double precisionMINGMA, integerR, integer, dimension( * )ISUPPZ, double precisionNRMINV, double precisionRESID, double precisionRQCORR, double precision, dimension( * )WORK)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:53 GMT, February 12, 2014
+</BODY>
+</HTML>

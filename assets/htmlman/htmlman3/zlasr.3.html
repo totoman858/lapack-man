@@ -1,0 +1,325 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of zlasr.f</TITLE>
+</HEAD><BODY>
+<H1>zlasr.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+zlasr.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>zlasr</B> (SIDE, PIVOT, DIRECT, M, N, C, S, A, LDA)
+
+<BR>
+
+<I></I><B>ZLASR</B> applies a sequence of plane rotations to a general rectangular matrix. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine zlasr (characterSIDE, characterPIVOT, characterDIRECT, integerM, integerN, double precision, dimension( * )C, double precision, dimension( * )S, complex*16, dimension( lda, * )A, integerLDA)</H3>
+
+<P>
+<P>
+
+<B>ZLASR</B> applies a sequence of plane rotations to a general rectangular matrix.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZLASR applies a sequence of real plane rotations to a complex matrix
+ A, from either the left or the right.
+
+ When SIDE = 'L', the transformation takes the form
+
+    A := P*A
+
+ and when SIDE = 'R', the transformation takes the form
+
+    A := A*P**T
+
+ where P is an orthogonal matrix consisting of a sequence of z plane
+ rotations, with z = M when SIDE = 'L' and z = N when SIDE = 'R',
+ and P**T is the transpose of P.
+ 
+ When DIRECT = 'F' (Forward sequence), then
+ 
+    P = P(z-1) * ... * <A HREF="/cgi-bin/man/man2html?2+P">P</A>(2) * <A HREF="/cgi-bin/man/man2html?1+P">P</A>(1)
+ 
+ and when DIRECT = 'B' (Backward sequence), then
+ 
+    P = <A HREF="/cgi-bin/man/man2html?1+P">P</A>(1) * <A HREF="/cgi-bin/man/man2html?2+P">P</A>(2) * ... * P(z-1)
+ 
+ where P(k) is a plane rotation matrix defined by the 2-by-2 rotation
+ 
+    R(k) = (  c(k)  s(k) )
+         = ( -s(k)  c(k) ).
+ 
+ When PIVOT = 'V' (Variable pivot), the rotation is performed
+ for the plane (k,k+1), i.e., P(k) has the form
+ 
+    P(k) = (  1                                            )
+           (       ...                                     )
+           (              1                                )
+           (                   c(k)  s(k)                  )
+           (                  -s(k)  c(k)                  )
+           (                                1              )
+           (                                     ...       )
+           (                                            1  )
+ 
+ where R(k) appears as a rank-2 modification to the identity matrix in
+ rows and columns k and k+1.
+ 
+ When PIVOT = 'T' (Top pivot), the rotation is performed for the
+ plane (1,k+1), so P(k) has the form
+ 
+    P(k) = (  c(k)                    s(k)                 )
+           (         1                                     )
+           (              ...                              )
+           (                     1                         )
+           ( -s(k)                    c(k)                 )
+           (                                 1             )
+           (                                      ...      )
+           (                                             1 )
+ 
+ where R(k) appears in rows and columns 1 and k+1.
+ 
+ Similarly, when PIVOT = 'B' (Bottom pivot), the rotation is
+ performed for the plane (k,z), giving P(k) the form
+ 
+    P(k) = ( 1                                             )
+           (      ...                                      )
+           (             1                                 )
+           (                  c(k)                    s(k) )
+           (                         1                     )
+           (                              ...              )
+           (                                     1         )
+           (                 -s(k)                    c(k) )
+ 
+ where R(k) appears in rows and columns k and z.  The rotations are
+ performed without ever forming P(k) explicitly.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>SIDE</I> 
+<P>
+
+<PRE>
+          SIDE is CHARACTER*1
+          Specifies whether the plane rotation matrix P is applied to
+          A on the left or the right.
+          = 'L':  Left, compute A := P*A
+          = 'R':  Right, compute A:= A*P**T
+</PRE>
+
+<P>
+
+<BR>
+
+<I>PIVOT</I> 
+<P>
+
+<PRE>
+          PIVOT is CHARACTER*1
+          Specifies the plane for which P(k) is a plane rotation
+          matrix.
+          = 'V':  Variable pivot, the plane (k,k+1)
+          = 'T':  Top pivot, the plane (1,k+1)
+          = 'B':  Bottom pivot, the plane (k,z)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DIRECT</I> 
+<P>
+
+<PRE>
+          DIRECT is CHARACTER*1
+          Specifies whether P is a forward or backward sequence of
+          plane rotations.
+          = 'F':  Forward, P = P(z-1)*...*<A HREF="/cgi-bin/man/man2html?2+P">P</A>(2)*<A HREF="/cgi-bin/man/man2html?1+P">P</A>(1)
+          = 'B':  Backward, P = <A HREF="/cgi-bin/man/man2html?1+P">P</A>(1)*<A HREF="/cgi-bin/man/man2html?2+P">P</A>(2)*...*P(z-1)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The number of rows of the matrix A.  If m &lt;= 1, an immediate
+          return is effected.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of columns of the matrix A.  If n &lt;= 1, an
+          immediate return is effected.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>C</I> 
+<P>
+
+<PRE>
+          C is DOUBLE PRECISION array, dimension
+                  (M-1) if SIDE = 'L'
+                  (N-1) if SIDE = 'R'
+          The cosines c(k) of the plane rotations.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>S</I> 
+<P>
+
+<PRE>
+          S is DOUBLE PRECISION array, dimension
+                  (M-1) if SIDE = 'L'
+                  (N-1) if SIDE = 'R'
+          The sines s(k) of the plane rotations.  The 2-by-2 plane
+          rotation part of the matrix P(k), R(k), has the form
+          R(k) = (  c(k)  s(k) )
+                 ( -s(k)  c(k) ).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is COMPLEX*16 array, dimension (LDA,N)
+          The M-by-N matrix A.  On exit, A is overwritten by P*A if
+          SIDE = 'R' or by A*P**T if SIDE = 'L'.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A.  LDA &gt;= max(1,M).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 201 of file zlasr.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine zlasr (characterSIDE, characterPIVOT, characterDIRECT, integerM, integerN, double precision, dimension( * )C, double precision, dimension( * )S, complex*16, dimension( lda, * )A, integerLDA)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:49 GMT, February 12, 2014
+</BODY>
+</HTML>

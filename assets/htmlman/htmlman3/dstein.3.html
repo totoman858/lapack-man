@@ -1,0 +1,330 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dstein.f</TITLE>
+</HEAD><BODY>
+<H1>dstein.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dstein.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>dstein</B> (N, D, E, M, W, IBLOCK, ISPLIT, Z, LDZ, WORK, IWORK, IFAIL, INFO)
+
+<BR>
+
+<I></I><B>DSTEIN</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dstein (integerN, double precision, dimension( * )D, double precision, dimension( * )E, integerM, double precision, dimension( * )W, integer, dimension( * )IBLOCK, integer, dimension( * )ISPLIT, double precision, dimension( ldz, * )Z, integerLDZ, double precision, dimension( * )WORK, integer, dimension( * )IWORK, integer, dimension( * )IFAIL, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>DSTEIN</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ DSTEIN computes the eigenvectors of a real symmetric tridiagonal
+ matrix T corresponding to specified eigenvalues, using inverse
+ iteration.
+
+ The maximum number of iterations allowed for each eigenvector is
+ specified by an internal parameter MAXITS (currently set to 5).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrix.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is DOUBLE PRECISION array, dimension (N)
+          The n diagonal elements of the tridiagonal matrix T.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>E</I> 
+<P>
+
+<PRE>
+          E is DOUBLE PRECISION array, dimension (N-1)
+          The (n-1) subdiagonal elements of the tridiagonal matrix
+          T, in elements 1 to N-1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The number of eigenvectors to be found.  0 &lt;= M &lt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>W</I> 
+<P>
+
+<PRE>
+          W is DOUBLE PRECISION array, dimension (N)
+          The first M elements of W contain the eigenvalues for
+          which eigenvectors are to be computed.  The eigenvalues
+          should be grouped by split-off block and ordered from
+          smallest to largest within the block.  ( The output array
+          W from DSTEBZ with ORDER = 'B' is expected here. )
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IBLOCK</I> 
+<P>
+
+<PRE>
+          IBLOCK is INTEGER array, dimension (N)
+          The submatrix indices associated with the corresponding
+          eigenvalues in W; IBLOCK(i)=1 if eigenvalue W(i) belongs to
+          the first submatrix from the top, =2 if W(i) belongs to
+          the second submatrix, etc.  ( The output array IBLOCK
+          from DSTEBZ is expected here. )
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ISPLIT</I> 
+<P>
+
+<PRE>
+          ISPLIT is INTEGER array, dimension (N)
+          The splitting points, at which T breaks up into submatrices.
+          The first submatrix consists of rows/columns 1 to
+          ISPLIT( 1 ), the second of rows/columns ISPLIT( 1 )+1
+          through ISPLIT( 2 ), etc.
+          ( The output array ISPLIT from DSTEBZ is expected here. )
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is DOUBLE PRECISION array, dimension (LDZ, M)
+          The computed eigenvectors.  The eigenvector associated
+          with the eigenvalue W(i) is stored in the i-th column of
+          Z.  Any vector which fails to converge is set to its current
+          iterate after MAXITS iterations.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDZ</I> 
+<P>
+
+<PRE>
+          LDZ is INTEGER
+          The leading dimension of the array Z.  LDZ &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is DOUBLE PRECISION array, dimension (5*N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IWORK</I> 
+<P>
+
+<PRE>
+          IWORK is INTEGER array, dimension (N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IFAIL</I> 
+<P>
+
+<PRE>
+          IFAIL is INTEGER array, dimension (M)
+          On normal exit, all elements of IFAIL are zero.
+          If one or more eigenvectors fail to converge after
+          MAXITS iterations, then their indices are stored in
+          array IFAIL.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0: successful exit.
+          &lt; 0: if INFO = -i, the i-th argument had an illegal value
+          &gt; 0: if INFO = i, then i eigenvectors failed to converge
+               in MAXITS iterations.  Their indices are stored in
+               array IFAIL.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Internal Parameters: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  MAXITS  INTEGER, default = 5
+          The maximum number of iterations performed.
+
+  EXTRA   INTEGER, default = 2
+          The number of iterations performed after norm growth
+          criterion is satisfied, should be at least 1.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 174 of file dstein.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dstein (integerN, double precision, dimension( * )D, double precision, dimension( * )E, integerM, double precision, dimension( * )W, integer, dimension( * )IBLOCK, integer, dimension( * )ISPLIT, double precision, dimension( ldz, * )Z, integerLDZ, double precision, dimension( * )WORK, integer, dimension( * )IWORK, integer, dimension( * )IFAIL, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:59 GMT, February 12, 2014
+</BODY>
+</HTML>

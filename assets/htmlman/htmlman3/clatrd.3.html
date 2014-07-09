@@ -1,0 +1,332 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of clatrd.f</TITLE>
+</HEAD><BODY>
+<H1>clatrd.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+clatrd.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>clatrd</B> (UPLO, N, NB, A, LDA, E, TAU, W, LDW)
+
+<BR>
+
+<I></I><B>CLATRD</B> reduces the first nb rows and columns of a symmetric/Hermitian matrix A to real tridiagonal form by an unitary similarity transformation. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine clatrd (characterUPLO, integerN, integerNB, complex, dimension( lda, * )A, integerLDA, real, dimension( * )E, complex, dimension( * )TAU, complex, dimension( ldw, * )W, integerLDW)</H3>
+
+<P>
+<P>
+
+<B>CLATRD</B> reduces the first nb rows and columns of a symmetric/Hermitian matrix A to real tridiagonal form by an unitary similarity transformation.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ CLATRD reduces NB rows and columns of a complex Hermitian matrix A to
+ Hermitian tridiagonal form by a unitary similarity
+ transformation Q**H * A * Q, and returns the matrices V and W which are
+ needed to apply the transformation to the unreduced part of A.
+
+ If UPLO = 'U', CLATRD reduces the last NB rows and columns of a
+ matrix, of which the upper triangle is supplied;
+ if UPLO = 'L', CLATRD reduces the first NB rows and columns of a
+ matrix, of which the lower triangle is supplied.
+
+ This is an auxiliary routine called by CHETRD.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>UPLO</I> 
+<P>
+
+<PRE>
+          UPLO is CHARACTER*1
+          Specifies whether the upper or lower triangular part of the
+          Hermitian matrix A is stored:
+          = 'U': Upper triangular
+          = 'L': Lower triangular
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrix A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NB</I> 
+<P>
+
+<PRE>
+          NB is INTEGER
+          The number of rows and columns to be reduced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is COMPLEX array, dimension (LDA,N)
+          On entry, the Hermitian matrix A.  If UPLO = 'U', the leading
+          n-by-n upper triangular part of A contains the upper
+          triangular part of the matrix A, and the strictly lower
+          triangular part of A is not referenced.  If UPLO = 'L', the
+          leading n-by-n lower triangular part of A contains the lower
+          triangular part of the matrix A, and the strictly upper
+          triangular part of A is not referenced.
+          On exit:
+          if UPLO = 'U', the last NB columns have been reduced to
+            tridiagonal form, with the diagonal elements overwriting
+            the diagonal elements of A; the elements above the diagonal
+            with the array TAU, represent the unitary matrix Q as a
+            product of elementary reflectors;
+          if UPLO = 'L', the first NB columns have been reduced to
+            tridiagonal form, with the diagonal elements overwriting
+            the diagonal elements of A; the elements below the diagonal
+            with the array TAU, represent the  unitary matrix Q as a
+            product of elementary reflectors.
+          See Further Details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A.  LDA &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>E</I> 
+<P>
+
+<PRE>
+          E is REAL array, dimension (N-1)
+          If UPLO = 'U', E(n-nb:n-1) contains the superdiagonal
+          elements of the last NB columns of the reduced matrix;
+          if UPLO = 'L', E(1:nb) contains the subdiagonal elements of
+          the first NB columns of the reduced matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TAU</I> 
+<P>
+
+<PRE>
+          TAU is COMPLEX array, dimension (N-1)
+          The scalar factors of the elementary reflectors, stored in
+          TAU(n-nb:n-1) if UPLO = 'U', and in TAU(1:nb) if UPLO = 'L'.
+          See Further Details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>W</I> 
+<P>
+
+<PRE>
+          W is COMPLEX array, dimension (LDW,NB)
+          The n-by-nb matrix W required to update the unreduced part
+          of A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDW</I> 
+<P>
+
+<PRE>
+          LDW is INTEGER
+          The leading dimension of the array W. LDW &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  If UPLO = 'U', the matrix Q is represented as a product of elementary
+  reflectors
+
+     Q = <A HREF="/cgi-bin/man/man2html?n+H">H</A>(n) H(n-1) . . . H(n-nb+1).
+
+  Each H(i) has the form
+
+     H(i) = I - tau * v * v**H
+
+  where tau is a complex scalar, and v is a complex vector with
+  v(i:n) = 0 and v(i-1) = 1; v(1:i-1) is stored on exit in A(1:i-1,i),
+  and tau in TAU(i-1).
+
+  If UPLO = 'L', the matrix Q is represented as a product of elementary
+  reflectors
+
+     Q = <A HREF="/cgi-bin/man/man2html?1+H">H</A>(1) <A HREF="/cgi-bin/man/man2html?2+H">H</A>(2) . . . H(nb).
+
+  Each H(i) has the form
+
+     H(i) = I - tau * v * v**H
+
+  where tau is a complex scalar, and v is a complex vector with
+  v(1:i) = 0 and v(i+1) = 1; v(i+1:n) is stored on exit in A(i+1:n,i),
+  and tau in TAU(i).
+
+  The elements of the vectors v together form the n-by-nb matrix V
+  which is needed, with W, to apply the transformation to the unreduced
+  part of the matrix, using a Hermitian rank-2k update of the form:
+  A := A - V*W**H - W*V**H.
+
+  The contents of A on exit are illustrated by the following examples
+  with n = 5 and nb = 2:
+
+  if UPLO = 'U':                       if UPLO = 'L':
+
+    (  a   a   a   v4  v5 )              (  d                  )
+    (      a   a   v4  v5 )              (  1   d              )
+    (          a   1   v5 )              (  v1  1   a          )
+    (              d   1  )              (  v1  v2  a   a      )
+    (                  d  )              (  v1  v2  a   a   a  )
+
+  where d denotes a diagonal element of the reduced matrix, a denotes
+  an element of the original matrix that is unchanged, and vi denotes
+  an element of the vector defining H(i).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 200 of file clatrd.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine clatrd (characterUPLO, integerN, integerNB, complex, dimension( lda, * )A, integerLDA, real, dimension( * )E, complex, dimension( * )TAU, complex, dimension( ldw, * )W, integerLDW)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:03 GMT, February 12, 2014
+</BODY>
+</HTML>

@@ -1,0 +1,231 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dladiv.f</TITLE>
+</HEAD><BODY>
+<H1>dladiv.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dladiv.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>dladiv</B> (A, B, C, D, P, Q)
+
+<BR>
+
+<I></I><B>DLADIV</B> performs complex division in real arithmetic, avoiding unnecessary overflow. 
+
+<BR>
+
+subroutine <B>dladiv1</B> (A, B, C, D, P, Q)
+
+<BR>
+
+<BR>
+
+DOUBLE PRECISION function <B>dladiv2</B> (A, B, C, D, R, T)
+
+<BR>
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dladiv (double precisionA, double precisionB, double precisionC, double precisionD, double precisionP, double precisionQ)</H3>
+
+<P>
+<P>
+
+<B>DLADIV</B> performs complex division in real arithmetic, avoiding unnecessary overflow.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ DLADIV performs complex division in  real arithmetic
+
+                       a + i*b
+            p + i*q = ---------
+                       c + i*d
+
+ The algorithm is due to Michael Baudin and Robert L. Smith
+ and can be found in the paper
+ &quot;A Robust Complex Division in Scilab&quot;
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>A</I> 
+<P>
+
+<PRE>
+          A is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>C</I> 
+<P>
+
+<PRE>
+          C is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is DOUBLE PRECISION
+          The scalars a, b, c, and d in the above expression.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>P</I> 
+<P>
+
+<PRE>
+          P is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Q</I> 
+<P>
+
+<PRE>
+          Q is DOUBLE PRECISION
+          The scalars p and q in the above expression.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+January 2013 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 92 of file dladiv.f.
+<A NAME="lbAG">&nbsp;</A>
+<H3>subroutine dladiv1 (double precisionA, double precisionB, double precisionC, double precisionD, double precisionP, double precisionQ)</H3>
+
+<P>
+<P>
+
+Definition at line 178 of file dladiv.f.
+<A NAME="lbAH">&nbsp;</A>
+<H3>DOUBLE PRECISION function dladiv2 (double precisionA, double precisionB, double precisionC, double precisionD, double precisionR, double precisionT)</H3>
+
+<P>
+<P>
+
+Definition at line 216 of file dladiv.f.
+<A NAME="lbAI">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dladiv (double precisionA, double precisionB, double precisionC, double precisionD, double precisionP, double precisionQ)</A><DD>
+<DT><A HREF="#lbAG">subroutine dladiv1 (double precisionA, double precisionB, double precisionC, double precisionD, double precisionP, double precisionQ)</A><DD>
+<DT><A HREF="#lbAH">DOUBLE PRECISION function dladiv2 (double precisionA, double precisionB, double precisionC, double precisionD, double precisionR, double precisionT)</A><DD>
+</DL>
+<DT><A HREF="#lbAI">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:50 GMT, February 12, 2014
+</BODY>
+</HTML>

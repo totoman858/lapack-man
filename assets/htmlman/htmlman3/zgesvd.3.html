@@ -1,0 +1,372 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of zgesvd.f</TITLE>
+</HEAD><BODY>
+<H1>zgesvd.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+zgesvd.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>zgesvd</B> (JOBU, JOBVT, M, N, A, LDA, S, U, LDU, VT, LDVT, WORK, LWORK, RWORK, INFO)
+
+<BR>
+
+<I></I><B> ZGESVD computes the singular value decomposition (SVD) for GE matrices</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine zgesvd (characterJOBU, characterJOBVT, integerM, integerN, complex*16, dimension( lda, * )A, integerLDA, double precision, dimension( * )S, complex*16, dimension( ldu, * )U, integerLDU, complex*16, dimension( ldvt, * )VT, integerLDVT, complex*16, dimension( * )WORK, integerLWORK, double precision, dimension( * )RWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B> ZGESVD computes the singular value decomposition (SVD) for GE matrices</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZGESVD computes the singular value decomposition (SVD) of a complex
+ M-by-N matrix A, optionally computing the left and/or right singular
+ vectors. The SVD is written
+
+      A = U * SIGMA * conjugate-transpose(V)
+
+ where SIGMA is an M-by-N matrix which is zero except for its
+ min(m,n) diagonal elements, U is an M-by-M unitary matrix, and
+ V is an N-by-N unitary matrix.  The diagonal elements of SIGMA
+ are the singular values of A; they are real and non-negative, and
+ are returned in descending order.  The first min(m,n) columns of
+ U and V are the left and right singular vectors of A.
+
+ Note that the routine returns V**H, not V.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>JOBU</I> 
+<P>
+
+<PRE>
+          JOBU is CHARACTER*1
+          Specifies options for computing all or part of the matrix U:
+          = 'A':  all M columns of U are returned in array U:
+          = 'S':  the first min(m,n) columns of U (the left singular
+                  vectors) are returned in the array U;
+          = 'O':  the first min(m,n) columns of U (the left singular
+                  vectors) are overwritten on the array A;
+          = 'N':  no columns of U (no left singular vectors) are
+                  computed.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>JOBVT</I> 
+<P>
+
+<PRE>
+          JOBVT is CHARACTER*1
+          Specifies options for computing all or part of the matrix
+          V**H:
+          = 'A':  all N rows of V**H are returned in the array VT;
+          = 'S':  the first min(m,n) rows of V**H (the right singular
+                  vectors) are returned in the array VT;
+          = 'O':  the first min(m,n) rows of V**H (the right singular
+                  vectors) are overwritten on the array A;
+          = 'N':  no rows of V**H (no right singular vectors) are
+                  computed.
+
+          JOBVT and JOBU cannot both be 'O'.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The number of rows of the input matrix A.  M &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of columns of the input matrix A.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is COMPLEX*16 array, dimension (LDA,N)
+          On entry, the M-by-N matrix A.
+          On exit,
+          if JOBU = 'O',  A is overwritten with the first min(m,n)
+                          columns of U (the left singular vectors,
+                          stored columnwise);
+          if JOBVT = 'O', A is overwritten with the first min(m,n)
+                          rows of V**H (the right singular vectors,
+                          stored rowwise);
+          if JOBU .ne. 'O' and JOBVT .ne. 'O', the contents of A
+                          are destroyed.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A.  LDA &gt;= max(1,M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>S</I> 
+<P>
+
+<PRE>
+          S is DOUBLE PRECISION array, dimension (min(M,N))
+          The singular values of A, sorted so that S(i) &gt;= S(i+1).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>U</I> 
+<P>
+
+<PRE>
+          U is COMPLEX*16 array, dimension (LDU,UCOL)
+          (LDU,M) if JOBU = 'A' or (LDU,min(M,N)) if JOBU = 'S'.
+          If JOBU = 'A', U contains the M-by-M unitary matrix U;
+          if JOBU = 'S', U contains the first min(m,n) columns of U
+          (the left singular vectors, stored columnwise);
+          if JOBU = 'N' or 'O', U is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDU</I> 
+<P>
+
+<PRE>
+          LDU is INTEGER
+          The leading dimension of the array U.  LDU &gt;= 1; if
+          JOBU = 'S' or 'A', LDU &gt;= M.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VT</I> 
+<P>
+
+<PRE>
+          VT is COMPLEX*16 array, dimension (LDVT,N)
+          If JOBVT = 'A', VT contains the N-by-N unitary matrix
+          V**H;
+          if JOBVT = 'S', VT contains the first min(m,n) rows of
+          V**H (the right singular vectors, stored rowwise);
+          if JOBVT = 'N' or 'O', VT is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDVT</I> 
+<P>
+
+<PRE>
+          LDVT is INTEGER
+          The leading dimension of the array VT.  LDVT &gt;= 1; if
+          JOBVT = 'A', LDVT &gt;= N; if JOBVT = 'S', LDVT &gt;= min(M,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
+          On exit, if INFO = 0, <A HREF="/cgi-bin/man/man2html?1+WORK">WORK</A>(1) returns the optimal LWORK.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LWORK</I> 
+<P>
+
+<PRE>
+          LWORK is INTEGER
+          The dimension of the array WORK.
+          LWORK &gt;=  MAX(1,2*MIN(M,N)+MAX(M,N)).
+          For good performance, LWORK should generally be larger.
+
+          If LWORK = -1, then a workspace query is assumed; the routine
+          only calculates the optimal size of the WORK array, returns
+          this value as the first entry of the WORK array, and no error
+          message related to LWORK is issued by XERBLA.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RWORK</I> 
+<P>
+
+<PRE>
+          RWORK is DOUBLE PRECISION array, dimension (5*min(M,N))
+          On exit, if INFO &gt; 0, RWORK(1:MIN(M,N)-1) contains the
+          unconverged superdiagonal elements of an upper bidiagonal
+          matrix B whose diagonal is in S (not necessarily sorted).
+          B satisfies A = U * B * VT, so it has the same singular
+          values as A, and singular vectors related by U and VT.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit.
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value.
+          &gt; 0:  if ZBDSQR did not converge, INFO specifies how many
+                superdiagonals of an intermediate bidiagonal form B
+                did not converge to zero. See the description of RWORK
+                above for details.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+April 2012 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 214 of file zgesvd.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine zgesvd (characterJOBU, characterJOBVT, integerM, integerN, complex*16, dimension( lda, * )A, integerLDA, double precision, dimension( * )S, complex*16, dimension( ldu, * )U, integerLDU, complex*16, dimension( ldvt, * )VT, integerLDVT, complex*16, dimension( * )WORK, integerLWORK, double precision, dimension( * )RWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:37 GMT, February 12, 2014
+</BODY>
+</HTML>

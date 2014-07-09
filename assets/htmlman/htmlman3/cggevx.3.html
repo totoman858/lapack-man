@@ -1,0 +1,614 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of cggevx.f</TITLE>
+</HEAD><BODY>
+<H1>cggevx.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+cggevx.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>cggevx</B> (BALANC, JOBVL, JOBVR, SENSE, N, A, LDA, B, LDB, ALPHA, BETA, VL, LDVL, VR, LDVR, ILO, IHI, LSCALE, RSCALE, ABNRM, BBNRM, RCONDE, RCONDV, WORK, LWORK, RWORK, IWORK, BWORK, INFO)
+
+<BR>
+
+<I></I><B> CGGEVX computes the eigenvalues and, optionally, the left and/or right eigenvectors for GE matrices</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine cggevx (characterBALANC, characterJOBVL, characterJOBVR, characterSENSE, integerN, complex, dimension( lda, * )A, integerLDA, complex, dimension( ldb, * )B, integerLDB, complex, dimension( * )ALPHA, complex, dimension( * )BETA, complex, dimension( ldvl, * )VL, integerLDVL, complex, dimension( ldvr, * )VR, integerLDVR, integerILO, integerIHI, real, dimension( * )LSCALE, real, dimension( * )RSCALE, realABNRM, realBBNRM, real, dimension( * )RCONDE, real, dimension( * )RCONDV, complex, dimension( * )WORK, integerLWORK, real, dimension( * )RWORK, integer, dimension( * )IWORK, logical, dimension( * )BWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B> CGGEVX computes the eigenvalues and, optionally, the left and/or right eigenvectors for GE matrices</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ CGGEVX computes for a pair of N-by-N complex nonsymmetric matrices
+ (A,B) the generalized eigenvalues, and optionally, the left and/or
+ right generalized eigenvectors.
+
+ Optionally, it also computes a balancing transformation to improve
+ the conditioning of the eigenvalues and eigenvectors (ILO, IHI,
+ LSCALE, RSCALE, ABNRM, and BBNRM), reciprocal condition numbers for
+ the eigenvalues (RCONDE), and reciprocal condition numbers for the
+ right eigenvectors (RCONDV).
+
+ A generalized eigenvalue for a pair of matrices (A,B) is a scalar
+ lambda or a ratio alpha/beta = lambda, such that A - lambda*B is
+ singular. It is usually represented as the pair (alpha,beta), as
+ there is a reasonable interpretation for beta=0, and even for both
+ being zero.
+
+ The right eigenvector v(j) corresponding to the eigenvalue lambda(j)
+ of (A,B) satisfies
+                  A * v(j) = lambda(j) * B * v(j) .
+ The left eigenvector u(j) corresponding to the eigenvalue lambda(j)
+ of (A,B) satisfies
+                  u(j)**H * A  = lambda(j) * u(j)**H * B.
+ where u(j)**H is the conjugate-transpose of u(j).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>BALANC</I> 
+<P>
+
+<PRE>
+          BALANC is CHARACTER*1
+          Specifies the balance option to be performed:
+          = 'N':  do not diagonally scale or permute;
+          = 'P':  permute only;
+          = 'S':  scale only;
+          = 'B':  both permute and scale.
+          Computed reciprocal condition numbers will be for the
+          matrices after permuting and/or balancing. Permuting does
+          not change condition numbers (in exact arithmetic), but
+          balancing does.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>JOBVL</I> 
+<P>
+
+<PRE>
+          JOBVL is CHARACTER*1
+          = 'N':  do not compute the left generalized eigenvectors;
+          = 'V':  compute the left generalized eigenvectors.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>JOBVR</I> 
+<P>
+
+<PRE>
+          JOBVR is CHARACTER*1
+          = 'N':  do not compute the right generalized eigenvectors;
+          = 'V':  compute the right generalized eigenvectors.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SENSE</I> 
+<P>
+
+<PRE>
+          SENSE is CHARACTER*1
+          Determines which reciprocal condition numbers are computed.
+          = 'N': none are computed;
+          = 'E': computed for eigenvalues only;
+          = 'V': computed for eigenvectors only;
+          = 'B': computed for eigenvalues and eigenvectors.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrices A, B, VL, and VR.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is COMPLEX array, dimension (LDA, N)
+          On entry, the matrix A in the pair (A,B).
+          On exit, A has been overwritten. If JOBVL='V' or JOBVR='V'
+          or both, then A contains the first part of the complex Schur
+          form of the &quot;balanced&quot; versions of the input A and B.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of A.  LDA &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is COMPLEX array, dimension (LDB, N)
+          On entry, the matrix B in the pair (A,B).
+          On exit, B has been overwritten. If JOBVL='V' or JOBVR='V'
+          or both, then B contains the second part of the complex
+          Schur form of the &quot;balanced&quot; versions of the input A and B.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDB</I> 
+<P>
+
+<PRE>
+          LDB is INTEGER
+          The leading dimension of B.  LDB &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ALPHA</I> 
+<P>
+
+<PRE>
+          ALPHA is COMPLEX array, dimension (N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>BETA</I> 
+<P>
+
+<PRE>
+          BETA is COMPLEX array, dimension (N)
+          On exit, ALPHA(j)/BETA(j), j=1,...,N, will be the generalized
+          eigenvalues.
+
+          Note: the quotient ALPHA(j)/BETA(j) ) may easily over- or
+          underflow, and BETA(j) may even be zero.  Thus, the user
+          should avoid naively computing the ratio ALPHA/BETA.
+          However, ALPHA will be always less than and usually
+          comparable with norm(A) in magnitude, and BETA always less
+          than and usually comparable with norm(B).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VL</I> 
+<P>
+
+<PRE>
+          VL is COMPLEX array, dimension (LDVL,N)
+          If JOBVL = 'V', the left generalized eigenvectors u(j) are
+          stored one after another in the columns of VL, in the same
+          order as their eigenvalues.
+          Each eigenvector will be scaled so the largest component
+          will have abs(real part) + abs(imag. part) = 1.
+          Not referenced if JOBVL = 'N'.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDVL</I> 
+<P>
+
+<PRE>
+          LDVL is INTEGER
+          The leading dimension of the matrix VL. LDVL &gt;= 1, and
+          if JOBVL = 'V', LDVL &gt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VR</I> 
+<P>
+
+<PRE>
+          VR is COMPLEX array, dimension (LDVR,N)
+          If JOBVR = 'V', the right generalized eigenvectors v(j) are
+          stored one after another in the columns of VR, in the same
+          order as their eigenvalues.
+          Each eigenvector will be scaled so the largest component
+          will have abs(real part) + abs(imag. part) = 1.
+          Not referenced if JOBVR = 'N'.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDVR</I> 
+<P>
+
+<PRE>
+          LDVR is INTEGER
+          The leading dimension of the matrix VR. LDVR &gt;= 1, and
+          if JOBVR = 'V', LDVR &gt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ILO</I> 
+<P>
+
+<PRE>
+          ILO is INTEGER
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IHI</I> 
+<P>
+
+<PRE>
+          IHI is INTEGER
+          ILO and IHI are integer values such that on exit
+          A(i,j) = 0 and B(i,j) = 0 if i &gt; j and
+          j = 1,...,ILO-1 or i = IHI+1,...,N.
+          If BALANC = 'N' or 'S', ILO = 1 and IHI = N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LSCALE</I> 
+<P>
+
+<PRE>
+          LSCALE is REAL array, dimension (N)
+          Details of the permutations and scaling factors applied
+          to the left side of A and B.  If PL(j) is the index of the
+          row interchanged with row j, and DL(j) is the scaling
+          factor applied to row j, then
+            LSCALE(j) = PL(j)  for j = 1,...,ILO-1
+                      = DL(j)  for j = ILO,...,IHI
+                      = PL(j)  for j = IHI+1,...,N.
+          The order in which the interchanges are made is N to IHI+1,
+          then 1 to ILO-1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RSCALE</I> 
+<P>
+
+<PRE>
+          RSCALE is REAL array, dimension (N)
+          Details of the permutations and scaling factors applied
+          to the right side of A and B.  If PR(j) is the index of the
+          column interchanged with column j, and DR(j) is the scaling
+          factor applied to column j, then
+            RSCALE(j) = PR(j)  for j = 1,...,ILO-1
+                      = DR(j)  for j = ILO,...,IHI
+                      = PR(j)  for j = IHI+1,...,N
+          The order in which the interchanges are made is N to IHI+1,
+          then 1 to ILO-1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ABNRM</I> 
+<P>
+
+<PRE>
+          ABNRM is REAL
+          The one-norm of the balanced matrix A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>BBNRM</I> 
+<P>
+
+<PRE>
+          BBNRM is REAL
+          The one-norm of the balanced matrix B.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RCONDE</I> 
+<P>
+
+<PRE>
+          RCONDE is REAL array, dimension (N)
+          If SENSE = 'E' or 'B', the reciprocal condition numbers of
+          the eigenvalues, stored in consecutive elements of the array.
+          If SENSE = 'N' or 'V', RCONDE is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RCONDV</I> 
+<P>
+
+<PRE>
+          RCONDV is REAL array, dimension (N)
+          If SENSE = 'V' or 'B', the estimated reciprocal condition
+          numbers of the eigenvectors, stored in consecutive elements
+          of the array. If the eigenvalues cannot be reordered to
+          compute RCONDV(j), RCONDV(j) is set to 0; this can only occur
+          when the true value would be very small anyway. 
+          If SENSE = 'N' or 'E', RCONDV is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is COMPLEX array, dimension (MAX(1,LWORK))
+          On exit, if INFO = 0, <A HREF="/cgi-bin/man/man2html?1+WORK">WORK</A>(1) returns the optimal LWORK.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LWORK</I> 
+<P>
+
+<PRE>
+          LWORK is INTEGER
+          The dimension of the array WORK. LWORK &gt;= max(1,2*N).
+          If SENSE = 'E', LWORK &gt;= max(1,4*N).
+          If SENSE = 'V' or 'B', LWORK &gt;= max(1,2*N*N+2*N).
+
+          If LWORK = -1, then a workspace query is assumed; the routine
+          only calculates the optimal size of the WORK array, returns
+          this value as the first entry of the WORK array, and no error
+          message related to LWORK is issued by XERBLA.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RWORK</I> 
+<P>
+
+<PRE>
+          RWORK is REAL array, dimension (lrwork)
+          lrwork must be at least max(1,6*N) if BALANC = 'S' or 'B',
+          and at least max(1,2*N) otherwise.
+          Real workspace.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IWORK</I> 
+<P>
+
+<PRE>
+          IWORK is INTEGER array, dimension (N+2)
+          If SENSE = 'E', IWORK is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>BWORK</I> 
+<P>
+
+<PRE>
+          BWORK is LOGICAL array, dimension (N)
+          If SENSE = 'N', BWORK is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value.
+          = 1,...,N:
+                The QZ iteration failed.  No eigenvectors have been
+                calculated, but ALPHA(j) and BETA(j) should be correct
+                for j=INFO+1,...,N.
+          &gt; N:  =N+1: other than QZ iteration failed in CHGEQZ.
+                =N+2: error return from CTGEVC.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+April 2012 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  Balancing a matrix pair (A,B) includes, first, permuting rows and
+  columns to isolate eigenvalues, second, applying diagonal similarity
+  transformation to the rows and columns to make the rows and columns
+  as close in norm as possible. The computed reciprocal condition
+  numbers correspond to the balanced matrix. Permuting rows and columns
+  will not change the condition numbers (in exact arithmetic) but
+  diagonal scaling will.  For further explanation of balancing, see
+  section 4.11.1.2 of LAPACK Users' Guide.
+
+  An approximate error bound on the chordal distance between the i-th
+  computed generalized eigenvalue w and the corresponding exact
+  eigenvalue lambda is
+
+       chord(w, lambda) &lt;= EPS * norm(ABNRM, BBNRM) / RCONDE(I)
+
+  An approximate error bound for the angle between the i-th computed
+  eigenvector VL(i) or VR(i) is given by
+
+       EPS * norm(ABNRM, BBNRM) / DIF(i).
+
+  For further explanation of the reciprocal condition numbers RCONDE
+  and RCONDV, see section 4.11 of LAPACK User's Guide.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 372 of file cggevx.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine cggevx (characterBALANC, characterJOBVL, characterJOBVR, characterSENSE, integerN, complex, dimension( lda, * )A, integerLDA, complex, dimension( ldb, * )B, integerLDB, complex, dimension( * )ALPHA, complex, dimension( * )BETA, complex, dimension( ldvl, * )VL, integerLDVL, complex, dimension( ldvr, * )VR, integerLDVR, integerILO, integerIHI, real, dimension( * )LSCALE, real, dimension( * )RSCALE, realABNRM, realBBNRM, real, dimension( * )RCONDE, real, dimension( * )RCONDV, complex, dimension( * )WORK, integerLWORK, real, dimension( * )RWORK, integer, dimension( * )IWORK, logical, dimension( * )BWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:48 GMT, February 12, 2014
+</BODY>
+</HTML>

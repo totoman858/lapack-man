@@ -1,0 +1,211 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dlasq2.f</TITLE>
+</HEAD><BODY>
+<H1>dlasq2.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dlasq2.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>dlasq2</B> (N, Z, INFO)
+
+<BR>
+
+<I></I><B>DLASQ2</B> computes all the eigenvalues of the symmetric positive definite tridiagonal matrix associated with the qd Array Z to high relative accuracy. Used by sbdsqr and sstegr. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dlasq2 (integerN, double precision, dimension( * )Z, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>DLASQ2</B> computes all the eigenvalues of the symmetric positive definite tridiagonal matrix associated with the qd Array Z to high relative accuracy. Used by sbdsqr and sstegr.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ DLASQ2 computes all the eigenvalues of the symmetric positive 
+ definite tridiagonal matrix associated with the qd array Z to high
+ relative accuracy are computed to high relative accuracy, in the
+ absence of denormalization, underflow and overflow.
+
+ To see the relation of Z to the tridiagonal matrix, let L be a
+ unit lower bidiagonal matrix with subdiagonals Z(2,4,6,,..) and
+ let U be an upper bidiagonal matrix with 1's above and diagonal
+ Z(1,3,5,,..). The tridiagonal is L*U or, if you prefer, the
+ symmetric tridiagonal to which it is similar.
+
+ Note : DLASQ2 defines a logical variable, IEEE, which is true
+ on machines which follow ieee-754 floating-point standard in their
+ handling of infinities and NaNs, and false otherwise. This variable
+ is passed to DLASQ3.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+        The number of rows and columns in the matrix. N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is DOUBLE PRECISION array, dimension ( 4*N )
+        On entry Z holds the qd array. On exit, entries 1 to N hold
+        the eigenvalues in decreasing order, Z( 2*N+1 ) holds the
+        trace, and Z( 2*N+2 ) holds the sum of the eigenvalues. If
+        N &gt; 2, then Z( 2*N+3 ) holds the iteration count, Z( 2*N+4 )
+        holds NDIVS/NIN^2, and Z( 2*N+5 ) holds the percentage of
+        shifts that failed.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+        = 0: successful exit
+        &lt; 0: if the i-th argument is a scalar and had an illegal
+             value, then INFO = -i, if the i-th argument is an
+             array and the j-entry had an illegal value, then
+             INFO = -(i*100+j)
+        &gt; 0: the algorithm failed
+              = 1, a split was marked by a positive value in E
+              = 2, current block of Z not diagonalized after 100*N
+                   iterations (in inner while loop).  On exit Z holds
+                   a qd array with the same eigenvalues as the given Z.
+              = 3, termination criterion of outer while loop not met 
+                   (program created more than N unreduced blocks)
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  Local Variables: I0:N0 defines a current unreduced segment of Z.
+  The shifts are accumulated in SIGMA. Iteration count is in ITER.
+  Ping-pong is controlled by PP (alternates between 0 and 1).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 113 of file dlasq2.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dlasq2 (integerN, double precision, dimension( * )Z, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:36 GMT, February 12, 2014
+</BODY>
+</HTML>

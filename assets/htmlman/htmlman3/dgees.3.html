@@ -1,0 +1,370 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dgees.f</TITLE>
+</HEAD><BODY>
+<H1>dgees.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dgees.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>dgees</B> (JOBVS, SORT, SELECT, N, A, LDA, SDIM, WR, WI, VS, LDVS, WORK, LWORK, BWORK, INFO)
+
+<BR>
+
+<I></I><B> DGEES computes the eigenvalues, the Schur form, and, optionally, the matrix of Schur vectors for GE matrices</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dgees (characterJOBVS, characterSORT, logical, externalSELECT, integerN, double precision, dimension( lda, * )A, integerLDA, integerSDIM, double precision, dimension( * )WR, double precision, dimension( * )WI, double precision, dimension( ldvs, * )VS, integerLDVS, double precision, dimension( * )WORK, integerLWORK, logical, dimension( * )BWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B> DGEES computes the eigenvalues, the Schur form, and, optionally, the matrix of Schur vectors for GE matrices</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ DGEES computes for an N-by-N real nonsymmetric matrix A, the
+ eigenvalues, the real Schur form T, and, optionally, the matrix of
+ Schur vectors Z.  This gives the Schur factorization A = Z*T*(Z**T).
+
+ Optionally, it also orders the eigenvalues on the diagonal of the
+ real Schur form so that selected eigenvalues are at the top left.
+ The leading columns of Z then form an orthonormal basis for the
+ invariant subspace corresponding to the selected eigenvalues.
+
+ A matrix is in real Schur form if it is upper quasi-triangular with
+ 1-by-1 and 2-by-2 blocks. 2-by-2 blocks will be standardized in the
+ form
+         [  a  b  ]
+         [  c  a  ]
+
+ where b*c &lt; 0. The eigenvalues of such a block are a +- sqrt(bc).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>JOBVS</I> 
+<P>
+
+<PRE>
+          JOBVS is CHARACTER*1
+          = 'N': Schur vectors are not computed;
+          = 'V': Schur vectors are computed.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SORT</I> 
+<P>
+
+<PRE>
+          SORT is CHARACTER*1
+          Specifies whether or not to order the eigenvalues on the
+          diagonal of the Schur form.
+          = 'N': Eigenvalues are not ordered;
+          = 'S': Eigenvalues are ordered (see SELECT).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SELECT</I> 
+<P>
+
+<PRE>
+          SELECT is a LOGICAL FUNCTION of two DOUBLE PRECISION arguments
+          SELECT must be declared EXTERNAL in the calling subroutine.
+          If SORT = 'S', SELECT is used to select eigenvalues to sort
+          to the top left of the Schur form.
+          If SORT = 'N', SELECT is not referenced.
+          An eigenvalue WR(j)+sqrt(-1)*WI(j) is selected if
+          SELECT(WR(j),WI(j)) is true; i.e., if either one of a complex
+          conjugate pair of eigenvalues is selected, then both complex
+          eigenvalues are selected.
+          Note that a selected complex eigenvalue may no longer
+          satisfy SELECT(WR(j),WI(j)) = .TRUE. after ordering, since
+          ordering may change the value of complex eigenvalues
+          (especially if the eigenvalue is ill-conditioned); in this
+          case INFO is set to N+2 (see INFO below).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrix A. N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is DOUBLE PRECISION array, dimension (LDA,N)
+          On entry, the N-by-N matrix A.
+          On exit, A has been overwritten by its real Schur form T.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A.  LDA &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SDIM</I> 
+<P>
+
+<PRE>
+          SDIM is INTEGER
+          If SORT = 'N', SDIM = 0.
+          If SORT = 'S', SDIM = number of eigenvalues (after sorting)
+                         for which SELECT is true. (Complex conjugate
+                         pairs for which SELECT is true for either
+                         eigenvalue count as 2.)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WR</I> 
+<P>
+
+<PRE>
+          WR is DOUBLE PRECISION array, dimension (N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WI</I> 
+<P>
+
+<PRE>
+          WI is DOUBLE PRECISION array, dimension (N)
+          WR and WI contain the real and imaginary parts,
+          respectively, of the computed eigenvalues in the same order
+          that they appear on the diagonal of the output Schur form T.
+          Complex conjugate pairs of eigenvalues will appear
+          consecutively with the eigenvalue having the positive
+          imaginary part first.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VS</I> 
+<P>
+
+<PRE>
+          VS is DOUBLE PRECISION array, dimension (LDVS,N)
+          If JOBVS = 'V', VS contains the orthogonal matrix Z of Schur
+          vectors.
+          If JOBVS = 'N', VS is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDVS</I> 
+<P>
+
+<PRE>
+          LDVS is INTEGER
+          The leading dimension of the array VS.  LDVS &gt;= 1; if
+          JOBVS = 'V', LDVS &gt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is DOUBLE PRECISION array, dimension (MAX(1,LWORK))
+          On exit, if INFO = 0, <A HREF="/cgi-bin/man/man2html?1+WORK">WORK</A>(1) contains the optimal LWORK.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LWORK</I> 
+<P>
+
+<PRE>
+          LWORK is INTEGER
+          The dimension of the array WORK.  LWORK &gt;= max(1,3*N).
+          For good performance, LWORK must generally be larger.
+
+          If LWORK = -1, then a workspace query is assumed; the routine
+          only calculates the optimal size of the WORK array, returns
+          this value as the first entry of the WORK array, and no error
+          message related to LWORK is issued by XERBLA.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>BWORK</I> 
+<P>
+
+<PRE>
+          BWORK is LOGICAL array, dimension (N)
+          Not referenced if SORT = 'N'.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0: successful exit
+          &lt; 0: if INFO = -i, the i-th argument had an illegal value.
+          &gt; 0: if INFO = i, and i is
+             &lt;= N: the QR algorithm failed to compute all the
+                   eigenvalues; elements 1:ILO-1 and i+1:N of WR and WI
+                   contain those eigenvalues which have converged; if
+                   JOBVS = 'V', VS contains the matrix which reduces A
+                   to its partially converged Schur form.
+             = N+1: the eigenvalues could not be reordered because some
+                   eigenvalues were too close to separate (the problem
+                   is very ill-conditioned);
+             = N+2: after reordering, roundoff changed values of some
+                   complex eigenvalues so that leading eigenvalues in
+                   the Schur form no longer satisfy SELECT=.TRUE.  This
+                   could also be caused by underflow due to scaling.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 216 of file dgees.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dgees (characterJOBVS, characterSORT, logical, externalSELECT, integerN, double precision, dimension( lda, * )A, integerLDA, integerSDIM, double precision, dimension( * )WR, double precision, dimension( * )WI, double precision, dimension( ldvs, * )VS, integerLDVS, double precision, dimension( * )WORK, integerLWORK, logical, dimension( * )BWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:05 GMT, February 12, 2014
+</BODY>
+</HTML>

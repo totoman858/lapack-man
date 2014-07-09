@@ -1,0 +1,498 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of shgeqz.f</TITLE>
+</HEAD><BODY>
+<H1>shgeqz.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+shgeqz.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>shgeqz</B> (JOB, COMPQ, COMPZ, N, ILO, IHI, H, LDH, T, LDT, ALPHAR, ALPHAI, BETA, Q, LDQ, Z, LDZ, WORK, LWORK, INFO)
+
+<BR>
+
+<I></I><B>SHGEQZ</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine shgeqz (characterJOB, characterCOMPQ, characterCOMPZ, integerN, integerILO, integerIHI, real, dimension( ldh, * )H, integerLDH, real, dimension( ldt, * )T, integerLDT, real, dimension( * )ALPHAR, real, dimension( * )ALPHAI, real, dimension( * )BETA, real, dimension( ldq, * )Q, integerLDQ, real, dimension( ldz, * )Z, integerLDZ, real, dimension( * )WORK, integerLWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>SHGEQZ</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ SHGEQZ computes the eigenvalues of a real matrix pair (H,T),
+ where H is an upper Hessenberg matrix and T is upper triangular,
+ using the double-shift QZ method.
+ Matrix pairs of this type are produced by the reduction to
+ generalized upper Hessenberg form of a real matrix pair (A,B):
+
+    A = Q1*H*Z1**T,  B = Q1*T*Z1**T,
+
+ as computed by SGGHRD.
+
+ If JOB='S', then the Hessenberg-triangular pair (H,T) is
+ also reduced to generalized Schur form,
+ 
+    H = Q*S*Z**T,  T = Q*P*Z**T,
+ 
+ where Q and Z are orthogonal matrices, P is an upper triangular
+ matrix, and S is a quasi-triangular matrix with 1-by-1 and 2-by-2
+ diagonal blocks.
+
+ The 1-by-1 blocks correspond to real eigenvalues of the matrix pair
+ (H,T) and the 2-by-2 blocks correspond to complex conjugate pairs of
+ eigenvalues.
+
+ Additionally, the 2-by-2 upper triangular diagonal blocks of P
+ corresponding to 2-by-2 blocks of S are reduced to positive diagonal
+ form, i.e., if S(j+1,j) is non-zero, then P(j+1,j) = P(j,j+1) = 0,
+ P(j,j) &gt; 0, and P(j+1,j+1) &gt; 0.
+
+ Optionally, the orthogonal matrix Q from the generalized Schur
+ factorization may be postmultiplied into an input matrix Q1, and the
+ orthogonal matrix Z may be postmultiplied into an input matrix Z1.
+ If Q1 and Z1 are the orthogonal matrices from SGGHRD that reduced
+ the matrix pair (A,B) to generalized upper Hessenberg form, then the
+ output matrices Q1*Q and Z1*Z are the orthogonal factors from the
+ generalized Schur factorization of (A,B):
+
+    A = (Q1*Q)*S*(Z1*Z)**T,  B = (Q1*Q)*P*(Z1*Z)**T.
+ 
+ To avoid overflow, eigenvalues of the matrix pair (H,T) (equivalently,
+ of (A,B)) are computed as a pair of values (alpha,beta), where alpha is
+ complex and beta real.
+ If beta is nonzero, lambda = alpha / beta is an eigenvalue of the
+ generalized nonsymmetric eigenvalue problem (GNEP)
+    A*x = lambda*B*x
+ and if alpha is nonzero, mu = beta / alpha is an eigenvalue of the
+ alternate form of the GNEP
+    mu*A*y = B*y.
+ Real eigenvalues can be read directly from the generalized Schur
+ form: 
+   alpha = S(i,i), beta = P(i,i).
+
+ Ref: C.B. Moler &amp; G.W. Stewart, &quot;An Algorithm for Generalized Matrix
+      Eigenvalue Problems&quot;, SIAM J. Numer. Anal., 10(1973),
+      pp. 241--256.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>JOB</I> 
+<P>
+
+<PRE>
+          JOB is CHARACTER*1
+          = 'E': Compute eigenvalues only;
+          = 'S': Compute eigenvalues and the Schur form. 
+</PRE>
+
+<P>
+
+<BR>
+
+<I>COMPQ</I> 
+<P>
+
+<PRE>
+          COMPQ is CHARACTER*1
+          = 'N': Left Schur vectors (Q) are not computed;
+          = 'I': Q is initialized to the unit matrix and the matrix Q
+                 of left Schur vectors of (H,T) is returned;
+          = 'V': Q must contain an orthogonal matrix Q1 on entry and
+                 the product Q1*Q is returned.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>COMPZ</I> 
+<P>
+
+<PRE>
+          COMPZ is CHARACTER*1
+          = 'N': Right Schur vectors (Z) are not computed;
+          = 'I': Z is initialized to the unit matrix and the matrix Z
+                 of right Schur vectors of (H,T) is returned;
+          = 'V': Z must contain an orthogonal matrix Z1 on entry and
+                 the product Z1*Z is returned.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrices H, T, Q, and Z.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ILO</I> 
+<P>
+
+<PRE>
+          ILO is INTEGER
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IHI</I> 
+<P>
+
+<PRE>
+          IHI is INTEGER
+          ILO and IHI mark the rows and columns of H which are in
+          Hessenberg form.  It is assumed that A is already upper
+          triangular in rows and columns 1:ILO-1 and IHI+1:N.
+          If N &gt; 0, 1 &lt;= ILO &lt;= IHI &lt;= N; if N = 0, ILO=1 and IHI=0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>H</I> 
+<P>
+
+<PRE>
+          H is REAL array, dimension (LDH, N)
+          On entry, the N-by-N upper Hessenberg matrix H.
+          On exit, if JOB = 'S', H contains the upper quasi-triangular
+          matrix S from the generalized Schur factorization.
+          If JOB = 'E', the diagonal blocks of H match those of S, but
+          the rest of H is unspecified.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDH</I> 
+<P>
+
+<PRE>
+          LDH is INTEGER
+          The leading dimension of the array H.  LDH &gt;= max( 1, N ).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>T</I> 
+<P>
+
+<PRE>
+          T is REAL array, dimension (LDT, N)
+          On entry, the N-by-N upper triangular matrix T.
+          On exit, if JOB = 'S', T contains the upper triangular
+          matrix P from the generalized Schur factorization;
+          2-by-2 diagonal blocks of P corresponding to 2-by-2 blocks of S
+          are reduced to positive diagonal form, i.e., if H(j+1,j) is
+          non-zero, then T(j+1,j) = T(j,j+1) = 0, T(j,j) &gt; 0, and
+          T(j+1,j+1) &gt; 0.
+          If JOB = 'E', the diagonal blocks of T match those of P, but
+          the rest of T is unspecified.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDT</I> 
+<P>
+
+<PRE>
+          LDT is INTEGER
+          The leading dimension of the array T.  LDT &gt;= max( 1, N ).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ALPHAR</I> 
+<P>
+
+<PRE>
+          ALPHAR is REAL array, dimension (N)
+          The real parts of each scalar alpha defining an eigenvalue
+          of GNEP.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ALPHAI</I> 
+<P>
+
+<PRE>
+          ALPHAI is REAL array, dimension (N)
+          The imaginary parts of each scalar alpha defining an
+          eigenvalue of GNEP.
+          If ALPHAI(j) is zero, then the j-th eigenvalue is real; if
+          positive, then the j-th and (j+1)-st eigenvalues are a
+          complex conjugate pair, with ALPHAI(j+1) = -ALPHAI(j).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>BETA</I> 
+<P>
+
+<PRE>
+          BETA is REAL array, dimension (N)
+          The scalars beta that define the eigenvalues of GNEP.
+          Together, the quantities alpha = (ALPHAR(j),ALPHAI(j)) and
+          beta = BETA(j) represent the j-th eigenvalue of the matrix
+          pair (A,B), in one of the forms lambda = alpha/beta or
+          mu = beta/alpha.  Since either lambda or mu may overflow,
+          they should not, in general, be computed.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Q</I> 
+<P>
+
+<PRE>
+          Q is REAL array, dimension (LDQ, N)
+          On entry, if COMPZ = 'V', the orthogonal matrix Q1 used in
+          the reduction of (A,B) to generalized Hessenberg form.
+          On exit, if COMPZ = 'I', the orthogonal matrix of left Schur
+          vectors of (H,T), and if COMPZ = 'V', the orthogonal matrix
+          of left Schur vectors of (A,B).
+          Not referenced if COMPZ = 'N'.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDQ</I> 
+<P>
+
+<PRE>
+          LDQ is INTEGER
+          The leading dimension of the array Q.  LDQ &gt;= 1.
+          If COMPQ='V' or 'I', then LDQ &gt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is REAL array, dimension (LDZ, N)
+          On entry, if COMPZ = 'V', the orthogonal matrix Z1 used in
+          the reduction of (A,B) to generalized Hessenberg form.
+          On exit, if COMPZ = 'I', the orthogonal matrix of
+          right Schur vectors of (H,T), and if COMPZ = 'V', the
+          orthogonal matrix of right Schur vectors of (A,B).
+          Not referenced if COMPZ = 'N'.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDZ</I> 
+<P>
+
+<PRE>
+          LDZ is INTEGER
+          The leading dimension of the array Z.  LDZ &gt;= 1.
+          If COMPZ='V' or 'I', then LDZ &gt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is REAL array, dimension (MAX(1,LWORK))
+          On exit, if INFO &gt;= 0, <A HREF="/cgi-bin/man/man2html?1+WORK">WORK</A>(1) returns the optimal LWORK.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LWORK</I> 
+<P>
+
+<PRE>
+          LWORK is INTEGER
+          The dimension of the array WORK.  LWORK &gt;= max(1,N).
+
+          If LWORK = -1, then a workspace query is assumed; the routine
+          only calculates the optimal size of the WORK array, returns
+          this value as the first entry of the WORK array, and no error
+          message related to LWORK is issued by XERBLA.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0: successful exit
+          &lt; 0: if INFO = -i, the i-th argument had an illegal value
+          = 1,...,N: the QZ iteration did not converge.  (H,T) is not
+                     in Schur form, but ALPHAR(i), ALPHAI(i), and
+                     BETA(i), i=INFO+1,...,N should be correct.
+          = N+1,...,2*N: the shift calculation failed.  (H,T) is not
+                     in Schur form, but ALPHAR(i), ALPHAI(i), and
+                     BETA(i), i=INFO-N+1,...,N should be correct.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2013 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  Iteration counters:
+
+  JITER  -- counts iterations.
+  IITER  -- counts iterations run since ILAST was last
+            changed.  This is therefore reset only when a 1-by-1 or
+            2-by-2 block deflates off the bottom.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 303 of file shgeqz.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine shgeqz (characterJOB, characterCOMPQ, characterCOMPZ, integerN, integerILO, integerIHI, real, dimension( ldh, * )H, integerLDH, real, dimension( ldt, * )T, integerLDT, real, dimension( * )ALPHAR, real, dimension( * )ALPHAI, real, dimension( * )BETA, real, dimension( ldq, * )Q, integerLDQ, real, dimension( ldz, * )Z, integerLDZ, real, dimension( * )WORK, integerLWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:44 GMT, February 12, 2014
+</BODY>
+</HTML>

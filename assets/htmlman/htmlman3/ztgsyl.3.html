@@ -1,0 +1,484 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of ztgsyl.f</TITLE>
+</HEAD><BODY>
+<H1>ztgsyl.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+ztgsyl.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>ztgsyl</B> (TRANS, IJOB, M, N, A, LDA, B, LDB, C, LDC, D, LDD, E, LDE, F, LDF, SCALE, DIF, WORK, LWORK, IWORK, INFO)
+
+<BR>
+
+<I></I><B>ZTGSYL</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine ztgsyl (characterTRANS, integerIJOB, integerM, integerN, complex*16, dimension( lda, * )A, integerLDA, complex*16, dimension( ldb, * )B, integerLDB, complex*16, dimension( ldc, * )C, integerLDC, complex*16, dimension( ldd, * )D, integerLDD, complex*16, dimension( lde, * )E, integerLDE, complex*16, dimension( ldf, * )F, integerLDF, double precisionSCALE, double precisionDIF, complex*16, dimension( * )WORK, integerLWORK, integer, dimension( * )IWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>ZTGSYL</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZTGSYL solves the generalized Sylvester equation:
+
+             A * R - L * B = scale * C            (1)
+             D * R - L * E = scale * F
+
+ where R and L are unknown m-by-n matrices, (A, D), (B, E) and
+ (C, F) are given matrix pairs of size m-by-m, n-by-n and m-by-n,
+ respectively, with complex entries. A, B, D and E are upper
+ triangular (i.e., (A,D) and (B,E) in generalized Schur form).
+
+ The solution (R, L) overwrites (C, F). 0 &lt;= SCALE &lt;= 1
+ is an output scaling factor chosen to avoid overflow.
+
+ In matrix notation (1) is equivalent to solve Zx = scale*b, where Z
+ is defined as
+
+        Z = [ kron(In, A)  -kron(B**H, Im) ]        (2)
+            [ kron(In, D)  -kron(E**H, Im) ],
+
+ Here Ix is the identity matrix of size x and X**H is the conjugate
+ transpose of X. Kron(X, Y) is the Kronecker product between the
+ matrices X and Y.
+
+ If TRANS = 'C', y in the conjugate transposed system Z**H *y = scale*b
+ is solved for, which is equivalent to solve for R and L in
+
+             A**H * R + D**H * L = scale * C           (3)
+             R * B**H + L * E**H = scale * -F
+
+ This case (TRANS = 'C') is used to compute an one-norm-based estimate
+ of Dif[(A,D), (B,E)], the separation between the matrix pairs (A,D)
+ and (B,E), using ZLACON.
+
+ If IJOB &gt;= 1, ZTGSYL computes a Frobenius norm-based estimate of
+ Dif[(A,D),(B,E)]. That is, the reciprocal of a lower bound on the
+ reciprocal of the smallest singular value of Z.
+
+ This is a level-3 BLAS algorithm.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>TRANS</I> 
+<P>
+
+<PRE>
+          TRANS is CHARACTER*1
+          = 'N': solve the generalized sylvester equation (1).
+          = 'C': solve the &quot;conjugate transposed&quot; system (3).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IJOB</I> 
+<P>
+
+<PRE>
+          IJOB is INTEGER
+          Specifies what kind of functionality to be performed.
+          =0: solve (1) only.
+          =1: The functionality of 0 and 3.
+          =2: The functionality of 0 and 4.
+          =3: Only an estimate of Dif[(A,D), (B,E)] is computed.
+              (look ahead strategy is used).
+          =4: Only an estimate of Dif[(A,D), (B,E)] is computed.
+              (ZGECON on sub-systems is used).
+          Not referenced if TRANS = 'C'.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The order of the matrices A and D, and the row dimension of
+          the matrices C, F, R and L.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrices B and E, and the column dimension
+          of the matrices C, F, R and L.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is COMPLEX*16 array, dimension (LDA, M)
+          The upper triangular matrix A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A. LDA &gt;= max(1, M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is COMPLEX*16 array, dimension (LDB, N)
+          The upper triangular matrix B.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDB</I> 
+<P>
+
+<PRE>
+          LDB is INTEGER
+          The leading dimension of the array B. LDB &gt;= max(1, N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>C</I> 
+<P>
+
+<PRE>
+          C is COMPLEX*16 array, dimension (LDC, N)
+          On entry, C contains the right-hand-side of the first matrix
+          equation in (1) or (3).
+          On exit, if IJOB = 0, 1 or 2, C has been overwritten by
+          the solution R. If IJOB = 3 or 4 and TRANS = 'N', C holds R,
+          the solution achieved during the computation of the
+          Dif-estimate.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDC</I> 
+<P>
+
+<PRE>
+          LDC is INTEGER
+          The leading dimension of the array C. LDC &gt;= max(1, M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is COMPLEX*16 array, dimension (LDD, M)
+          The upper triangular matrix D.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDD</I> 
+<P>
+
+<PRE>
+          LDD is INTEGER
+          The leading dimension of the array D. LDD &gt;= max(1, M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>E</I> 
+<P>
+
+<PRE>
+          E is COMPLEX*16 array, dimension (LDE, N)
+          The upper triangular matrix E.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDE</I> 
+<P>
+
+<PRE>
+          LDE is INTEGER
+          The leading dimension of the array E. LDE &gt;= max(1, N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>F</I> 
+<P>
+
+<PRE>
+          F is COMPLEX*16 array, dimension (LDF, N)
+          On entry, F contains the right-hand-side of the second matrix
+          equation in (1) or (3).
+          On exit, if IJOB = 0, 1 or 2, F has been overwritten by
+          the solution L. If IJOB = 3 or 4 and TRANS = 'N', F holds L,
+          the solution achieved during the computation of the
+          Dif-estimate.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDF</I> 
+<P>
+
+<PRE>
+          LDF is INTEGER
+          The leading dimension of the array F. LDF &gt;= max(1, M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DIF</I> 
+<P>
+
+<PRE>
+          DIF is DOUBLE PRECISION
+          On exit DIF is the reciprocal of a lower bound of the
+          reciprocal of the Dif-function, i.e. DIF is an upper bound of
+          Dif[(A,D), (B,E)] = sigma-min(Z), where Z as in (2).
+          IF IJOB = 0 or TRANS = 'C', DIF is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SCALE</I> 
+<P>
+
+<PRE>
+          SCALE is DOUBLE PRECISION
+          On exit SCALE is the scaling factor in (1) or (3).
+          If 0 &lt; SCALE &lt; 1, C and F hold the solutions R and L, resp.,
+          to a slightly perturbed system but the input matrices A, B,
+          D and E have not been changed. If SCALE = 0, R and L will
+          hold the solutions to the homogenious system with C = F = 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
+          On exit, if INFO = 0, <A HREF="/cgi-bin/man/man2html?1+WORK">WORK</A>(1) returns the optimal LWORK.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LWORK</I> 
+<P>
+
+<PRE>
+          LWORK is INTEGER
+          The dimension of the array WORK. LWORK &gt; = 1.
+          If IJOB = 1 or 2 and TRANS = 'N', LWORK &gt;= max(1,2*M*N).
+
+          If LWORK = -1, then a workspace query is assumed; the routine
+          only calculates the optimal size of the WORK array, returns
+          this value as the first entry of the WORK array, and no error
+          message related to LWORK is issued by XERBLA.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IWORK</I> 
+<P>
+
+<PRE>
+          IWORK is INTEGER array, dimension (M+N+2)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+            =0: successful exit
+            &lt;0: If INFO = -i, the i-th argument had an illegal value.
+            &gt;0: (A, D) and (B, E) have common or very close
+                eigenvalues.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Bo Kagstrom and Peter Poromaa, Department of Computing Science, Umea University, S-901 87 Umea, Sweden. 
+</DL>
+
+<P>
+
+<B>References: </B>
+<DL COMPACT><DT><DD>
+[1] B. Kagstrom and P. Poromaa, LAPACK-Style Algorithms and Software for Solving the Generalized Sylvester Equation and Estimating the Separation between Regular Matrix Pairs, Report UMINF - 93.23, Department of Computing Science, Umea University, S-901 87 Umea, Sweden, December 1993, Revised April 1994, Also as LAPACK Working Note 75. To appear in ACM Trans. on Math. Software, Vol 22, No 1, 1996. 
+<BR>
+
+<BR>&nbsp;[2]&nbsp;B.&nbsp;Kagstrom,&nbsp;A&nbsp;Perturbation&nbsp;Analysis&nbsp;of&nbsp;the&nbsp;Generalized&nbsp;Sylvester&nbsp;Equation&nbsp;(AR&nbsp;-&nbsp;LB,&nbsp;DR&nbsp;-&nbsp;LE&nbsp;)&nbsp;=&nbsp;(C,&nbsp;F),&nbsp;SIAM&nbsp;J.&nbsp;Matrix&nbsp;Anal.&nbsp;Appl.,&nbsp;<A HREF="/cgi-bin/man/man2html?4+15">15</A>(4):1045-1060,&nbsp;1994.&nbsp;
+<BR>
+
+<BR>&nbsp;[3]&nbsp;B.&nbsp;Kagstrom&nbsp;and&nbsp;L.&nbsp;Westin,&nbsp;Generalized&nbsp;Schur&nbsp;Methods&nbsp;with&nbsp;Condition&nbsp;Estimators&nbsp;for&nbsp;Solving&nbsp;the&nbsp;Generalized&nbsp;Sylvester&nbsp;Equation,&nbsp;IEEE&nbsp;Transactions&nbsp;on&nbsp;Automatic&nbsp;Control,&nbsp;Vol.&nbsp;34,&nbsp;No.&nbsp;7,&nbsp;July&nbsp;1989,&nbsp;pp&nbsp;745-751.&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 294 of file ztgsyl.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine ztgsyl (characterTRANS, integerIJOB, integerM, integerN, complex*16, dimension( lda, * )A, integerLDA, complex*16, dimension( ldb, * )B, integerLDB, complex*16, dimension( ldc, * )C, integerLDC, complex*16, dimension( ldd, * )D, integerLDD, complex*16, dimension( lde, * )E, integerLDE, complex*16, dimension( ldf, * )F, integerLDF, double precisionSCALE, double precisionDIF, complex*16, dimension( * )WORK, integerLWORK, integer, dimension( * )IWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:08 GMT, February 12, 2014
+</BODY>
+</HTML>

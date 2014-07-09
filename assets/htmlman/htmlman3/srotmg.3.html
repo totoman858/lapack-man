@@ -1,0 +1,199 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of srotmg.f</TITLE>
+</HEAD><BODY>
+<H1>srotmg.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+srotmg.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>srotmg</B> (SD1, SD2, SX1, SY1, SPARAM)
+
+<BR>
+
+<I></I><B>SROTMG</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine srotmg (realSD1, realSD2, realSX1, realSY1, real, <A HREF="/cgi-bin/man/man2html?5+dimension">dimension</A>(5)SPARAM)</H3>
+
+<P>
+<P>
+
+<B>SROTMG</B> <B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+    CONSTRUCT THE MODIFIED GIVENS TRANSFORMATION MATRIX H WHICH ZEROS
+    THE SECOND COMPONENT OF THE 2-VECTOR  (SQRT(SD1)*SX1,SQRT(SD2)*&gt;    SY2)**T.
+    WITH <A HREF="/cgi-bin/man/man2html?1+SPARAM">SPARAM</A>(1)=SFLAG, H HAS ONE OF THE FOLLOWING FORMS..
+
+    SFLAG=-1.E0     SFLAG=0.E0        SFLAG=1.E0     SFLAG=-2.E0
+
+      (SH11  SH12)    (1.E0  SH12)    (SH11  1.E0)    (1.E0  0.E0)
+    H=(          )    (          )    (          )    (          )
+      (SH21  SH22),   (SH21  1.E0),   (-1.E0 SH22),   (0.E0  1.E0).
+    LOCATIONS 2-4 OF SPARAM CONTAIN SH11,SH21,SH12, AND SH22
+    RESPECTIVELY. (VALUES OF 1.E0, -1.E0, OR 0.E0 IMPLIED BY THE
+    VALUE OF <A HREF="/cgi-bin/man/man2html?1+SPARAM">SPARAM</A>(1) ARE NOT STORED IN SPARAM.)
+
+    THE VALUES OF GAMSQ AND RGAMSQ SET IN THE DATA STATEMENT MAY BE
+    INEXACT.  THIS IS OK AS THEY ARE ONLY USED FOR TESTING THE SIZE
+    OF SD1 AND SD2.  ALL ACTUAL SCALING OF DATA IS DONE USING GAM.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>SD1</I> 
+<P>
+
+<PRE>
+          SD1 is REAL
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SD2</I> 
+<P>
+
+<PRE>
+          SD2 is REAL
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SX1</I> 
+<P>
+
+<PRE>
+          SX1 is REAL
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SY1</I> 
+<P>
+
+<PRE>
+          SY1 is REAL
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SPARAM</I> 
+<P>
+
+<PRE>
+          SPARAM is REAL array, dimension 5
+     <A HREF="/cgi-bin/man/man2html?1+SPARAM">SPARAM</A>(1)=SFLAG
+     <A HREF="/cgi-bin/man/man2html?2+SPARAM">SPARAM</A>(2)=SH11
+     <A HREF="/cgi-bin/man/man2html?3+SPARAM">SPARAM</A>(3)=SH21
+     <A HREF="/cgi-bin/man/man2html?4+SPARAM">SPARAM</A>(4)=SH12
+     <A HREF="/cgi-bin/man/man2html?5+SPARAM">SPARAM</A>(5)=SH22
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 91 of file srotmg.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine srotmg (realSD1, realSD2, realSX1, realSY1, real, dimension(5)SPARAM)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:01 GMT, February 12, 2014
+</BODY>
+</HTML>

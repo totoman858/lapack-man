@@ -1,0 +1,274 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of slaexc.f</TITLE>
+</HEAD><BODY>
+<H1>slaexc.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+slaexc.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>slaexc</B> (WANTQ, N, T, LDT, Q, LDQ, J1, N1, N2, WORK, INFO)
+
+<BR>
+
+<I></I><B>SLAEXC</B> swaps adjacent diagonal blocks of a real upper quasi-triangular matrix in Schur canonical form, by an orthogonal similarity transformation. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine slaexc (logicalWANTQ, integerN, real, dimension( ldt, * )T, integerLDT, real, dimension( ldq, * )Q, integerLDQ, integerJ1, integerN1, integerN2, real, dimension( * )WORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>SLAEXC</B> swaps adjacent diagonal blocks of a real upper quasi-triangular matrix in Schur canonical form, by an orthogonal similarity transformation.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ SLAEXC swaps adjacent diagonal blocks T11 and T22 of order 1 or 2 in
+ an upper quasi-triangular matrix T by an orthogonal similarity
+ transformation.
+
+ T must be in Schur canonical form, that is, block upper triangular
+ with 1-by-1 and 2-by-2 diagonal blocks; each 2-by-2 diagonal block
+ has its diagonal elemnts equal and its off-diagonal elements of
+ opposite sign.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>WANTQ</I> 
+<P>
+
+<PRE>
+          WANTQ is LOGICAL
+          = .TRUE. : accumulate the transformation in the matrix Q;
+          = .FALSE.: do not accumulate the transformation.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrix T. N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>T</I> 
+<P>
+
+<PRE>
+          T is REAL array, dimension (LDT,N)
+          On entry, the upper quasi-triangular matrix T, in Schur
+          canonical form.
+          On exit, the updated matrix T, again in Schur canonical form.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDT</I> 
+<P>
+
+<PRE>
+          LDT is INTEGER
+          The leading dimension of the array T. LDT &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Q</I> 
+<P>
+
+<PRE>
+          Q is REAL array, dimension (LDQ,N)
+          On entry, if WANTQ is .TRUE., the orthogonal matrix Q.
+          On exit, if WANTQ is .TRUE., the updated matrix Q.
+          If WANTQ is .FALSE., Q is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDQ</I> 
+<P>
+
+<PRE>
+          LDQ is INTEGER
+          The leading dimension of the array Q.
+          LDQ &gt;= 1; and if WANTQ is .TRUE., LDQ &gt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>J1</I> 
+<P>
+
+<PRE>
+          J1 is INTEGER
+          The index of the first row of the first block T11.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N1</I> 
+<P>
+
+<PRE>
+          N1 is INTEGER
+          The order of the first block T11. N1 = 0, 1 or 2.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N2</I> 
+<P>
+
+<PRE>
+          N2 is INTEGER
+          The order of the second block T22. N2 = 0, 1 or 2.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is REAL array, dimension (N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0: successful exit
+          = 1: the transformed matrix T would be too far from Schur
+               form; the blocks are not swapped and T and Q are
+               unchanged.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 138 of file slaexc.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine slaexc (logicalWANTQ, integerN, real, dimension( ldt, * )T, integerLDT, real, dimension( ldq, * )Q, integerLDQ, integerJ1, integerN1, integerN2, real, dimension( * )WORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:35 GMT, February 12, 2014
+</BODY>
+</HTML>

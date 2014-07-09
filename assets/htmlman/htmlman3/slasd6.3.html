@@ -1,0 +1,532 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of slasd6.f</TITLE>
+</HEAD><BODY>
+<H1>slasd6.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+slasd6.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>slasd6</B> (ICOMPQ, NL, NR, SQRE, D, VF, VL, ALPHA, BETA, IDXQ, PERM, GIVPTR, GIVCOL, LDGCOL, GIVNUM, LDGNUM, POLES, DIFL, DIFR, Z, K, C, S, WORK, IWORK, INFO)
+
+<BR>
+
+<I></I><B>SLASD6</B> computes the SVD of an updated upper bidiagonal matrix obtained by merging two smaller ones by appending a row. Used by sbdsdc. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine slasd6 (integerICOMPQ, integerNL, integerNR, integerSQRE, real, dimension( * )D, real, dimension( * )VF, real, dimension( * )VL, realALPHA, realBETA, integer, dimension( * )IDXQ, integer, dimension( * )PERM, integerGIVPTR, integer, dimension( ldgcol, * )GIVCOL, integerLDGCOL, real, dimension( ldgnum, * )GIVNUM, integerLDGNUM, real, dimension( ldgnum, * )POLES, real, dimension( * )DIFL, real, dimension( * )DIFR, real, dimension( * )Z, integerK, realC, realS, real, dimension( * )WORK, integer, dimension( * )IWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>SLASD6</B> computes the SVD of an updated upper bidiagonal matrix obtained by merging two smaller ones by appending a row. Used by sbdsdc.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ SLASD6 computes the SVD of an updated upper bidiagonal matrix B
+ obtained by merging two smaller ones by appending a row. This
+ routine is used only for the problem which requires all singular
+ values and optionally singular vector matrices in factored form.
+ B is an N-by-M matrix with N = NL + NR + 1 and M = N + SQRE.
+ A related subroutine, SLASD1, handles the case in which all singular
+ values and singular vectors of the bidiagonal matrix are desired.
+
+ SLASD6 computes the SVD as follows:
+
+               ( D1(in)    0    0       0 )
+   B = U(in) * (   Z1**T   a   Z2**T    b ) * VT(in)
+               (   0       0   D2(in)   0 )
+
+     = U(out) * ( D(out) 0) * VT(out)
+
+ where Z**T = (Z1**T a Z2**T b) = u**T VT**T, and u is a vector of dimension M
+ with ALPHA and BETA in the NL+1 and NL+2 th entries and zeros
+ elsewhere; and the entry b is empty if SQRE = 0.
+
+ The singular values of B can be computed using D1, D2, the first
+ components of all the right singular vectors of the lower block, and
+ the last components of all the right singular vectors of the upper
+ block. These components are stored and updated in VF and VL,
+ respectively, in SLASD6. Hence U and VT are not explicitly
+ referenced.
+
+ The singular values are stored in D. The algorithm consists of two
+ stages:
+
+       The first stage consists of deflating the size of the problem
+       when there are multiple singular values or if there is a zero
+       in the Z vector. For each such occurence the dimension of the
+       secular equation problem is reduced by one. This stage is
+       performed by the routine SLASD7.
+
+       The second stage consists of calculating the updated
+       singular values. This is done by finding the roots of the
+       secular equation via the routine SLASD4 (as called by SLASD8).
+       This routine also updates VF and VL and computes the distances
+       between the updated singular values and the old singular
+       values.
+
+ SLASD6 is called from SLASDA.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>ICOMPQ</I> 
+<P>
+
+<PRE>
+          ICOMPQ is INTEGER
+         Specifies whether singular vectors are to be computed in
+         factored form:
+         = 0: Compute singular values only.
+         = 1: Compute singular vectors in factored form as well.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NL</I> 
+<P>
+
+<PRE>
+          NL is INTEGER
+         The row dimension of the upper block.  NL &gt;= 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NR</I> 
+<P>
+
+<PRE>
+          NR is INTEGER
+         The row dimension of the lower block.  NR &gt;= 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SQRE</I> 
+<P>
+
+<PRE>
+          SQRE is INTEGER
+         = 0: the lower block is an NR-by-NR square matrix.
+         = 1: the lower block is an NR-by-(NR+1) rectangular matrix.
+
+         The bidiagonal matrix has row dimension N = NL + NR + 1,
+         and column dimension M = N + SQRE.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is REAL array, dimension (NL+NR+1).
+         On entry D(1:NL,1:NL) contains the singular values of the
+         upper block, and D(NL+2:N) contains the singular values
+         of the lower block. On exit D(1:N) contains the singular
+         values of the modified matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VF</I> 
+<P>
+
+<PRE>
+          VF is REAL array, dimension (M)
+         On entry, VF(1:NL+1) contains the first components of all
+         right singular vectors of the upper block; and VF(NL+2:M)
+         contains the first components of all right singular vectors
+         of the lower block. On exit, VF contains the first components
+         of all right singular vectors of the bidiagonal matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VL</I> 
+<P>
+
+<PRE>
+          VL is REAL array, dimension (M)
+         On entry, VL(1:NL+1) contains the  last components of all
+         right singular vectors of the upper block; and VL(NL+2:M)
+         contains the last components of all right singular vectors of
+         the lower block. On exit, VL contains the last components of
+         all right singular vectors of the bidiagonal matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ALPHA</I> 
+<P>
+
+<PRE>
+          ALPHA is REAL
+         Contains the diagonal element associated with the added row.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>BETA</I> 
+<P>
+
+<PRE>
+          BETA is REAL
+         Contains the off-diagonal element associated with the added
+         row.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IDXQ</I> 
+<P>
+
+<PRE>
+          IDXQ is INTEGER array, dimension (N)
+         This contains the permutation which will reintegrate the
+         subproblem just solved back into sorted order, i.e.
+         D( IDXQ( I = 1, N ) ) will be in ascending order.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>PERM</I> 
+<P>
+
+<PRE>
+          PERM is INTEGER array, dimension ( N )
+         The permutations (from deflation and sorting) to be applied
+         to each block. Not referenced if ICOMPQ = 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>GIVPTR</I> 
+<P>
+
+<PRE>
+          GIVPTR is INTEGER
+         The number of Givens rotations which took place in this
+         subproblem. Not referenced if ICOMPQ = 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>GIVCOL</I> 
+<P>
+
+<PRE>
+          GIVCOL is INTEGER array, dimension ( LDGCOL, 2 )
+         Each pair of numbers indicates a pair of columns to take place
+         in a Givens rotation. Not referenced if ICOMPQ = 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDGCOL</I> 
+<P>
+
+<PRE>
+          LDGCOL is INTEGER
+         leading dimension of GIVCOL, must be at least N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>GIVNUM</I> 
+<P>
+
+<PRE>
+          GIVNUM is REAL array, dimension ( LDGNUM, 2 )
+         Each number indicates the C or S value to be used in the
+         corresponding Givens rotation. Not referenced if ICOMPQ = 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDGNUM</I> 
+<P>
+
+<PRE>
+          LDGNUM is INTEGER
+         The leading dimension of GIVNUM and POLES, must be at least N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>POLES</I> 
+<P>
+
+<PRE>
+          POLES is REAL array, dimension ( LDGNUM, 2 )
+         On exit, POLES(1,*) is an array containing the new singular
+         values obtained from solving the secular equation, and
+         POLES(2,*) is an array containing the poles in the secular
+         equation. Not referenced if ICOMPQ = 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DIFL</I> 
+<P>
+
+<PRE>
+          DIFL is REAL array, dimension ( N )
+         On exit, DIFL(I) is the distance between I-th updated
+         (undeflated) singular value and the I-th (undeflated) old
+         singular value.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DIFR</I> 
+<P>
+
+<PRE>
+          DIFR is REAL array,
+                  dimension ( LDGNUM, 2 ) if ICOMPQ = 1 and
+                  dimension ( N ) if ICOMPQ = 0.
+         On exit, DIFR(I, 1) is the distance between I-th updated
+         (undeflated) singular value and the I+1-th (undeflated) old
+         singular value.
+
+         If ICOMPQ = 1, DIFR(1:K,2) is an array containing the
+         normalizing factors for the right singular vector matrix.
+
+         See SLASD8 for details on DIFL and DIFR.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is REAL array, dimension ( M )
+         The first elements of this array contain the components
+         of the deflation-adjusted updating row vector.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>K</I> 
+<P>
+
+<PRE>
+          K is INTEGER
+         Contains the dimension of the non-deflated matrix,
+         This is the order of the related secular equation. 1 &lt;= K &lt;=N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>C</I> 
+<P>
+
+<PRE>
+          C is REAL
+         C contains garbage if SQRE =0 and the C-value of a Givens
+         rotation related to the right null space if SQRE = 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>S</I> 
+<P>
+
+<PRE>
+          S is REAL
+         S contains garbage if SQRE =0 and the S-value of a Givens
+         rotation related to the right null space if SQRE = 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is REAL array, dimension ( 4 * M )
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IWORK</I> 
+<P>
+
+<PRE>
+          IWORK is INTEGER array, dimension ( 3 * N )
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit.
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value.
+          &gt; 0:  if INFO = 1, a singular value did not converge
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Ming Gu and Huan Ren, Computer Science Division, University of California at Berkeley, USA 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 312 of file slasd6.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine slasd6 (integerICOMPQ, integerNL, integerNR, integerSQRE, real, dimension( * )D, real, dimension( * )VF, real, dimension( * )VL, realALPHA, realBETA, integer, dimension( * )IDXQ, integer, dimension( * )PERM, integerGIVPTR, integer, dimension( ldgcol, * )GIVCOL, integerLDGCOL, real, dimension( ldgnum, * )GIVNUM, integerLDGNUM, real, dimension( ldgnum, * )POLES, real, dimension( * )DIFL, real, dimension( * )DIFR, real, dimension( * )Z, integerK, realC, realS, real, dimension( * )WORK, integer, dimension( * )IWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:06 GMT, February 12, 2014
+</BODY>
+</HTML>

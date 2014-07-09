@@ -1,0 +1,366 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dlabrd.f</TITLE>
+</HEAD><BODY>
+<H1>dlabrd.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dlabrd.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>dlabrd</B> (M, N, NB, A, LDA, D, E, TAUQ, TAUP, X, LDX, Y, LDY)
+
+<BR>
+
+<I></I><B>DLABRD</B> reduces the first nb rows and columns of a general matrix to a bidiagonal form. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dlabrd (integerM, integerN, integerNB, double precision, dimension( lda, * )A, integerLDA, double precision, dimension( * )D, double precision, dimension( * )E, double precision, dimension( * )TAUQ, double precision, dimension( * )TAUP, double precision, dimension( ldx, * )X, integerLDX, double precision, dimension( ldy, * )Y, integerLDY)</H3>
+
+<P>
+<P>
+
+<B>DLABRD</B> reduces the first nb rows and columns of a general matrix to a bidiagonal form.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ DLABRD reduces the first NB rows and columns of a real general
+ m by n matrix A to upper or lower bidiagonal form by an orthogonal
+ transformation Q**T * A * P, and returns the matrices X and Y which
+ are needed to apply the transformation to the unreduced part of A.
+
+ If m &gt;= n, A is reduced to upper bidiagonal form; if m &lt; n, to lower
+ bidiagonal form.
+
+ This is an auxiliary routine called by DGEBRD
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The number of rows in the matrix A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of columns in the matrix A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NB</I> 
+<P>
+
+<PRE>
+          NB is INTEGER
+          The number of leading rows and columns of A to be reduced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is DOUBLE PRECISION array, dimension (LDA,N)
+          On entry, the m by n general matrix to be reduced.
+          On exit, the first NB rows and columns of the matrix are
+          overwritten; the rest of the array is unchanged.
+          If m &gt;= n, elements on and below the diagonal in the first NB
+            columns, with the array TAUQ, represent the orthogonal
+            matrix Q as a product of elementary reflectors; and
+            elements above the diagonal in the first NB rows, with the
+            array TAUP, represent the orthogonal matrix P as a product
+            of elementary reflectors.
+          If m &lt; n, elements below the diagonal in the first NB
+            columns, with the array TAUQ, represent the orthogonal
+            matrix Q as a product of elementary reflectors, and
+            elements on and above the diagonal in the first NB rows,
+            with the array TAUP, represent the orthogonal matrix P as
+            a product of elementary reflectors.
+          See Further Details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A.  LDA &gt;= max(1,M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is DOUBLE PRECISION array, dimension (NB)
+          The diagonal elements of the first NB rows and columns of
+          the reduced matrix.  D(i) = A(i,i).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>E</I> 
+<P>
+
+<PRE>
+          E is DOUBLE PRECISION array, dimension (NB)
+          The off-diagonal elements of the first NB rows and columns of
+          the reduced matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TAUQ</I> 
+<P>
+
+<PRE>
+          TAUQ is DOUBLE PRECISION array dimension (NB)
+          The scalar factors of the elementary reflectors which
+          represent the orthogonal matrix Q. See Further Details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TAUP</I> 
+<P>
+
+<PRE>
+          TAUP is DOUBLE PRECISION array, dimension (NB)
+          The scalar factors of the elementary reflectors which
+          represent the orthogonal matrix P. See Further Details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X</I> 
+<P>
+
+<PRE>
+          X is DOUBLE PRECISION array, dimension (LDX,NB)
+          The m-by-nb matrix X required to update the unreduced part
+          of A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDX</I> 
+<P>
+
+<PRE>
+          LDX is INTEGER
+          The leading dimension of the array X. LDX &gt;= max(1,M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Y</I> 
+<P>
+
+<PRE>
+          Y is DOUBLE PRECISION array, dimension (LDY,NB)
+          The n-by-nb matrix Y required to update the unreduced part
+          of A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDY</I> 
+<P>
+
+<PRE>
+          LDY is INTEGER
+          The leading dimension of the array Y. LDY &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  The matrices Q and P are represented as products of elementary
+  reflectors:
+
+     Q = <A HREF="/cgi-bin/man/man2html?1+H">H</A>(1) <A HREF="/cgi-bin/man/man2html?2+H">H</A>(2) . . . H(nb)  and  P = <A HREF="/cgi-bin/man/man2html?1+G">G</A>(1) <A HREF="/cgi-bin/man/man2html?2+G">G</A>(2) . . . G(nb)
+
+  Each H(i) and G(i) has the form:
+
+     H(i) = I - tauq * v * v**T  and G(i) = I - taup * u * u**T
+
+  where tauq and taup are real scalars, and v and u are real vectors.
+
+  If m &gt;= n, v(1:i-1) = 0, v(i) = 1, and v(i:m) is stored on exit in
+  A(i:m,i); u(1:i) = 0, u(i+1) = 1, and u(i+1:n) is stored on exit in
+  A(i,i+1:n); tauq is stored in TAUQ(i) and taup in TAUP(i).
+
+  If m &lt; n, v(1:i) = 0, v(i+1) = 1, and v(i+1:m) is stored on exit in
+  A(i+2:m,i); u(1:i-1) = 0, u(i) = 1, and u(i:n) is stored on exit in
+  A(i,i+1:n); tauq is stored in TAUQ(i) and taup in TAUP(i).
+
+  The elements of the vectors v and u together form the m-by-nb matrix
+  V and the nb-by-n matrix U**T which are needed, with X and Y, to apply
+  the transformation to the unreduced part of the matrix, using a block
+  update of the form:  A := A - V*Y**T - X*U**T.
+
+  The contents of A on exit are illustrated by the following examples
+  with nb = 2:
+
+  m = 6 and n = 5 (m &gt; n):          m = 5 and n = 6 (m &lt; n):
+
+    (  1   1   u1  u1  u1 )           (  1   u1  u1  u1  u1  u1 )
+    (  v1  1   1   u2  u2 )           (  1   1   u2  u2  u2  u2 )
+    (  v1  v2  a   a   a  )           (  v1  1   a   a   a   a  )
+    (  v1  v2  a   a   a  )           (  v1  v2  a   a   a   a  )
+    (  v1  v2  a   a   a  )           (  v1  v2  a   a   a   a  )
+    (  v1  v2  a   a   a  )
+
+  where a denotes an element of the original matrix which is unchanged,
+  vi denotes an element of the vector defining H(i), and ui an element
+  of the vector defining G(i).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 210 of file dlabrd.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dlabrd (integerM, integerN, integerNB, double precision, dimension( lda, * )A, integerLDA, double precision, dimension( * )D, double precision, dimension( * )E, double precision, dimension( * )TAUQ, double precision, dimension( * )TAUP, double precision, dimension( ldx, * )X, integerLDX, double precision, dimension( ldy, * )Y, integerLDY)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:36 GMT, February 12, 2014
+</BODY>
+</HTML>

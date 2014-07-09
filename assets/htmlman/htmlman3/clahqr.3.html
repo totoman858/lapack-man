@@ -1,0 +1,351 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of clahqr.f</TITLE>
+</HEAD><BODY>
+<H1>clahqr.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+clahqr.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>clahqr</B> (WANTT, WANTZ, N, ILO, IHI, H, LDH, W, ILOZ, IHIZ, Z, LDZ, INFO)
+
+<BR>
+
+<I></I><B>CLAHQR</B> computes the eigenvalues and Schur factorization of an upper Hessenberg matrix, using the double-shift/single-shift QR algorithm. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine clahqr (logicalWANTT, logicalWANTZ, integerN, integerILO, integerIHI, complex, dimension( ldh, * )H, integerLDH, complex, dimension( * )W, integerILOZ, integerIHIZ, complex, dimension( ldz, * )Z, integerLDZ, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>CLAHQR</B> computes the eigenvalues and Schur factorization of an upper Hessenberg matrix, using the double-shift/single-shift QR algorithm.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+    CLAHQR is an auxiliary routine called by CHSEQR to update the
+    eigenvalues and Schur decomposition already computed by CHSEQR, by
+    dealing with the Hessenberg submatrix in rows and columns ILO to
+    IHI.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>WANTT</I> 
+<P>
+
+<PRE>
+          WANTT is LOGICAL
+          = .TRUE. : the full Schur form T is required;
+          = .FALSE.: only eigenvalues are required.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WANTZ</I> 
+<P>
+
+<PRE>
+          WANTZ is LOGICAL
+          = .TRUE. : the matrix of Schur vectors Z is required;
+          = .FALSE.: Schur vectors are not required.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrix H.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ILO</I> 
+<P>
+
+<PRE>
+          ILO is INTEGER
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IHI</I> 
+<P>
+
+<PRE>
+          IHI is INTEGER
+          It is assumed that H is already upper triangular in rows and
+          columns IHI+1:N, and that H(ILO,ILO-1) = 0 (unless ILO = 1).
+          CLAHQR works primarily with the Hessenberg submatrix in rows
+          and columns ILO to IHI, but applies transformations to all of
+          H if WANTT is .TRUE..
+          1 &lt;= ILO &lt;= max(1,IHI); IHI &lt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>H</I> 
+<P>
+
+<PRE>
+          H is COMPLEX array, dimension (LDH,N)
+          On entry, the upper Hessenberg matrix H.
+          On exit, if INFO is zero and if WANTT is .TRUE., then H
+          is upper triangular in rows and columns ILO:IHI.  If INFO
+          is zero and if WANTT is .FALSE., then the contents of H
+          are unspecified on exit.  The output state of H in case
+          INF is positive is below under the description of INFO.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDH</I> 
+<P>
+
+<PRE>
+          LDH is INTEGER
+          The leading dimension of the array H. LDH &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>W</I> 
+<P>
+
+<PRE>
+          W is COMPLEX array, dimension (N)
+          The computed eigenvalues ILO to IHI are stored in the
+          corresponding elements of W. If WANTT is .TRUE., the
+          eigenvalues are stored in the same order as on the diagonal
+          of the Schur form returned in H, with W(i) = H(i,i).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ILOZ</I> 
+<P>
+
+<PRE>
+          ILOZ is INTEGER
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IHIZ</I> 
+<P>
+
+<PRE>
+          IHIZ is INTEGER
+          Specify the rows of Z to which transformations must be
+          applied if WANTZ is .TRUE..
+          1 &lt;= ILOZ &lt;= ILO; IHI &lt;= IHIZ &lt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is COMPLEX array, dimension (LDZ,N)
+          If WANTZ is .TRUE., on entry Z must contain the current
+          matrix Z of transformations accumulated by CHSEQR, and on
+          exit Z has been updated; transformations are applied only to
+          the submatrix Z(ILOZ:IHIZ,ILO:IHI).
+          If WANTZ is .FALSE., Z is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDZ</I> 
+<P>
+
+<PRE>
+          LDZ is INTEGER
+          The leading dimension of the array Z. LDZ &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+           =   0: successful exit
+          .GT. 0: if INFO = i, CLAHQR failed to compute all the
+                  eigenvalues ILO to IHI in a total of 30 iterations
+                  per eigenvalue; elements i+1:ihi of W contain
+                  those eigenvalues which have been successfully
+                  computed.
+
+                  If INFO .GT. 0 and WANTT is .FALSE., then on exit,
+                  the remaining unconverged eigenvalues are the
+                  eigenvalues of the upper Hessenberg matrix
+                  rows and columns ILO thorugh INFO of the final,
+                  output value of H.
+
+                  If INFO .GT. 0 and WANTT is .TRUE., then on exit
+          (*)       (initial value of H)*U  = U*(final value of H)
+                  where U is an orthognal matrix.    The final
+                  value of H is upper Hessenberg and triangular in
+                  rows and columns INFO+1 through IHI.
+
+                  If INFO .GT. 0 and WANTZ is .TRUE., then on exit
+                      (final value of Z)  = (initial value of Z)*U
+                  where U is the orthogonal matrix in (*)
+                  (regardless of the value of WANTT.)
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+     02-96 Based on modifications by
+     David Day, Sandia National Laboratory, USA
+
+     12-04 Further modifications by
+     Ralph Byers, University of Kansas, USA
+     This is a modified version of CLAHQR from LAPACK version 3.0.
+     It is (1) more robust against overflow and underflow and
+     (2) adopts the more conservative Ahues &amp; Tisseur stopping
+     criterion (LAWN 122, 1997).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 195 of file clahqr.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine clahqr (logicalWANTT, logicalWANTZ, integerN, integerILO, integerIHI, complex, dimension( ldh, * )H, integerLDH, complex, dimension( * )W, integerILOZ, integerIHIZ, complex, dimension( ldz, * )Z, integerLDZ, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:45 GMT, February 12, 2014
+</BODY>
+</HTML>

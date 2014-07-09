@@ -1,0 +1,394 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of zgbrfs.f</TITLE>
+</HEAD><BODY>
+<H1>zgbrfs.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+zgbrfs.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>zgbrfs</B> (TRANS, N, KL, KU, NRHS, AB, LDAB, AFB, LDAFB, IPIV, B, LDB, X, LDX, FERR, BERR, WORK, RWORK, INFO)
+
+<BR>
+
+<I></I><B>ZGBRFS</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine zgbrfs (characterTRANS, integerN, integerKL, integerKU, integerNRHS, complex*16, dimension( ldab, * )AB, integerLDAB, complex*16, dimension( ldafb, * )AFB, integerLDAFB, integer, dimension( * )IPIV, complex*16, dimension( ldb, * )B, integerLDB, complex*16, dimension( ldx, * )X, integerLDX, double precision, dimension( * )FERR, double precision, dimension( * )BERR, complex*16, dimension( * )WORK, double precision, dimension( * )RWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>ZGBRFS</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZGBRFS improves the computed solution to a system of linear
+ equations when the coefficient matrix is banded, and provides
+ error bounds and backward error estimates for the solution.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>TRANS</I> 
+<P>
+
+<PRE>
+          TRANS is CHARACTER*1
+          Specifies the form of the system of equations:
+          = 'N':  A * X = B     (No transpose)
+          = 'T':  A**T * X = B  (Transpose)
+          = 'C':  A**H * X = B  (Conjugate transpose)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrix A.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>KL</I> 
+<P>
+
+<PRE>
+          KL is INTEGER
+          The number of subdiagonals within the band of A.  KL &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>KU</I> 
+<P>
+
+<PRE>
+          KU is INTEGER
+          The number of superdiagonals within the band of A.  KU &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NRHS</I> 
+<P>
+
+<PRE>
+          NRHS is INTEGER
+          The number of right hand sides, i.e., the number of columns
+          of the matrices B and X.  NRHS &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>AB</I> 
+<P>
+
+<PRE>
+          AB is COMPLEX*16 array, dimension (LDAB,N)
+          The original band matrix A, stored in rows 1 to KL+KU+1.
+          The j-th column of A is stored in the j-th column of the
+          array AB as follows:
+          AB(ku+1+i-j,j) = A(i,j) for max(1,j-ku)&lt;=i&lt;=min(n,j+kl).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDAB</I> 
+<P>
+
+<PRE>
+          LDAB is INTEGER
+          The leading dimension of the array AB.  LDAB &gt;= KL+KU+1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>AFB</I> 
+<P>
+
+<PRE>
+          AFB is COMPLEX*16 array, dimension (LDAFB,N)
+          Details of the LU factorization of the band matrix A, as
+          computed by ZGBTRF.  U is stored as an upper triangular band
+          matrix with KL+KU superdiagonals in rows 1 to KL+KU+1, and
+          the multipliers used during the factorization are stored in
+          rows KL+KU+2 to 2*KL+KU+1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDAFB</I> 
+<P>
+
+<PRE>
+          LDAFB is INTEGER
+          The leading dimension of the array AFB.  LDAFB &gt;= 2*KL*KU+1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IPIV</I> 
+<P>
+
+<PRE>
+          IPIV is INTEGER array, dimension (N)
+          The pivot indices from ZGBTRF; for 1&lt;=i&lt;=N, row i of the
+          matrix was interchanged with row IPIV(i).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is COMPLEX*16 array, dimension (LDB,NRHS)
+          The right hand side matrix B.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDB</I> 
+<P>
+
+<PRE>
+          LDB is INTEGER
+          The leading dimension of the array B.  LDB &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X</I> 
+<P>
+
+<PRE>
+          X is COMPLEX*16 array, dimension (LDX,NRHS)
+          On entry, the solution matrix X, as computed by ZGBTRS.
+          On exit, the improved solution matrix X.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDX</I> 
+<P>
+
+<PRE>
+          LDX is INTEGER
+          The leading dimension of the array X.  LDX &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>FERR</I> 
+<P>
+
+<PRE>
+          FERR is DOUBLE PRECISION array, dimension (NRHS)
+          The estimated forward error bound for each solution vector
+          X(j) (the j-th column of the solution matrix X).
+          If XTRUE is the true solution corresponding to X(j), FERR(j)
+          is an estimated upper bound for the magnitude of the largest
+          element in (X(j) - XTRUE) divided by the magnitude of the
+          largest element in X(j).  The estimate is as reliable as
+          the estimate for RCOND, and is almost always a slight
+          overestimate of the true error.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>BERR</I> 
+<P>
+
+<PRE>
+          BERR is DOUBLE PRECISION array, dimension (NRHS)
+          The componentwise relative backward error of each solution
+          vector X(j) (i.e., the smallest relative change in
+          any element of A or B that makes X(j) an exact solution).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is COMPLEX*16 array, dimension (2*N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RWORK</I> 
+<P>
+
+<PRE>
+          RWORK is DOUBLE PRECISION array, dimension (N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Internal Parameters: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  ITMAX is the maximum number of steps of iterative refinement.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 205 of file zgbrfs.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine zgbrfs (characterTRANS, integerN, integerKL, integerKU, integerNRHS, complex*16, dimension( ldab, * )AB, integerLDAB, complex*16, dimension( ldafb, * )AFB, integerLDAFB, integer, dimension( * )IPIV, complex*16, dimension( ldb, * )B, integerLDB, complex*16, dimension( ldx, * )X, integerLDX, double precision, dimension( * )FERR, double precision, dimension( * )BERR, complex*16, dimension( * )WORK, double precision, dimension( * )RWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:53 GMT, February 12, 2014
+</BODY>
+</HTML>

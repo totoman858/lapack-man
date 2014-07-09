@@ -1,0 +1,637 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of ztgsen.f</TITLE>
+</HEAD><BODY>
+<H1>ztgsen.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+ztgsen.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>ztgsen</B> (IJOB, WANTQ, WANTZ, SELECT, N, A, LDA, B, LDB, ALPHA, BETA, Q, LDQ, Z, LDZ, M, PL, PR, DIF, WORK, LWORK, IWORK, LIWORK, INFO)
+
+<BR>
+
+<I></I><B>ZTGSEN</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine ztgsen (integerIJOB, logicalWANTQ, logicalWANTZ, logical, dimension( * )SELECT, integerN, complex*16, dimension( lda, * )A, integerLDA, complex*16, dimension( ldb, * )B, integerLDB, complex*16, dimension( * )ALPHA, complex*16, dimension( * )BETA, complex*16, dimension( ldq, * )Q, integerLDQ, complex*16, dimension( ldz, * )Z, integerLDZ, integerM, double precisionPL, double precisionPR, double precision, dimension( * )DIF, complex*16, dimension( * )WORK, integerLWORK, integer, dimension( * )IWORK, integerLIWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>ZTGSEN</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZTGSEN reorders the generalized Schur decomposition of a complex
+ matrix pair (A, B) (in terms of an unitary equivalence trans-
+ formation Q**H * (A, B) * Z), so that a selected cluster of eigenvalues
+ appears in the leading diagonal blocks of the pair (A,B). The leading
+ columns of Q and Z form unitary bases of the corresponding left and
+ right eigenspaces (deflating subspaces). (A, B) must be in
+ generalized Schur canonical form, that is, A and B are both upper
+ triangular.
+
+ ZTGSEN also computes the generalized eigenvalues
+
+          w(j)= ALPHA(j) / BETA(j)
+
+ of the reordered matrix pair (A, B).
+
+ Optionally, the routine computes estimates of reciprocal condition
+ numbers for eigenvalues and eigenspaces. These are Difu[(A11,B11),
+ (A22,B22)] and Difl[(A11,B11), (A22,B22)], i.e. the separation(s)
+ between the matrix pairs (A11, B11) and (A22,B22) that correspond to
+ the selected cluster and the eigenvalues outside the cluster, resp.,
+ and norms of &quot;projections&quot; onto left and right eigenspaces w.r.t.
+ the selected cluster in the (1,1)-block.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>IJOB</I> 
+<P>
+
+<PRE>
+          IJOB is integer
+          Specifies whether condition numbers are required for the
+          cluster of eigenvalues (PL and PR) or the deflating subspaces
+          (Difu and Difl):
+           =0: Only reorder w.r.t. SELECT. No extras.
+           =1: Reciprocal of norms of &quot;projections&quot; onto left and right
+               eigenspaces w.r.t. the selected cluster (PL and PR).
+           =2: Upper bounds on Difu and Difl. F-norm-based estimate
+               (DIF(1:2)).
+           =3: Estimate of Difu and Difl. 1-norm-based estimate
+               (DIF(1:2)).
+               About 5 times as expensive as IJOB = 2.
+           =4: Compute PL, PR and DIF (i.e. 0, 1 and 2 above): Economic
+               version to get it all.
+           =5: Compute PL, PR and DIF (i.e. 0, 1 and 3 above)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WANTQ</I> 
+<P>
+
+<PRE>
+          WANTQ is LOGICAL
+          .TRUE. : update the left transformation matrix Q;
+          .FALSE.: do not update Q.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WANTZ</I> 
+<P>
+
+<PRE>
+          WANTZ is LOGICAL
+          .TRUE. : update the right transformation matrix Z;
+          .FALSE.: do not update Z.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SELECT</I> 
+<P>
+
+<PRE>
+          SELECT is LOGICAL array, dimension (N)
+          SELECT specifies the eigenvalues in the selected cluster. To
+          select an eigenvalue w(j), SELECT(j) must be set to
+          .TRUE..
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrices A and B. N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is COMPLEX*16 array, dimension(LDA,N)
+          On entry, the upper triangular matrix A, in generalized
+          Schur canonical form.
+          On exit, A is overwritten by the reordered matrix A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A. LDA &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is COMPLEX*16 array, dimension(LDB,N)
+          On entry, the upper triangular matrix B, in generalized
+          Schur canonical form.
+          On exit, B is overwritten by the reordered matrix B.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDB</I> 
+<P>
+
+<PRE>
+          LDB is INTEGER
+          The leading dimension of the array B. LDB &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ALPHA</I> 
+<P>
+
+<PRE>
+          ALPHA is COMPLEX*16 array, dimension (N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>BETA</I> 
+<P>
+
+<PRE>
+          BETA is COMPLEX*16 array, dimension (N)
+
+          The diagonal elements of A and B, respectively,
+          when the pair (A,B) has been reduced to generalized Schur
+          form.  ALPHA(i)/BETA(i) i=1,...,N are the generalized
+          eigenvalues.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Q</I> 
+<P>
+
+<PRE>
+          Q is COMPLEX*16 array, dimension (LDQ,N)
+          On entry, if WANTQ = .TRUE., Q is an N-by-N matrix.
+          On exit, Q has been postmultiplied by the left unitary
+          transformation matrix which reorder (A, B); The leading M
+          columns of Q form orthonormal bases for the specified pair of
+          left eigenspaces (deflating subspaces).
+          If WANTQ = .FALSE., Q is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDQ</I> 
+<P>
+
+<PRE>
+          LDQ is INTEGER
+          The leading dimension of the array Q. LDQ &gt;= 1.
+          If WANTQ = .TRUE., LDQ &gt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is COMPLEX*16 array, dimension (LDZ,N)
+          On entry, if WANTZ = .TRUE., Z is an N-by-N matrix.
+          On exit, Z has been postmultiplied by the left unitary
+          transformation matrix which reorder (A, B); The leading M
+          columns of Z form orthonormal bases for the specified pair of
+          left eigenspaces (deflating subspaces).
+          If WANTZ = .FALSE., Z is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDZ</I> 
+<P>
+
+<PRE>
+          LDZ is INTEGER
+          The leading dimension of the array Z. LDZ &gt;= 1.
+          If WANTZ = .TRUE., LDZ &gt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The dimension of the specified pair of left and right
+          eigenspaces, (deflating subspaces) 0 &lt;= M &lt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>PL</I> 
+<P>
+
+<PRE>
+          PL is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>PR</I> 
+<P>
+
+<PRE>
+          PR is DOUBLE PRECISION
+
+          If IJOB = 1, 4 or 5, PL, PR are lower bounds on the
+          reciprocal  of the norm of &quot;projections&quot; onto left and right
+          eigenspace with respect to the selected cluster.
+          0 &lt; PL, PR &lt;= 1.
+          If M = 0 or M = N, PL = PR  = 1.
+          If IJOB = 0, 2 or 3 PL, PR are not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DIF</I> 
+<P>
+
+<PRE>
+          DIF is DOUBLE PRECISION array, dimension (2).
+          If IJOB &gt;= 2, DIF(1:2) store the estimates of Difu and Difl.
+          If IJOB = 2 or 4, DIF(1:2) are F-norm-based upper bounds on
+          Difu and Difl. If IJOB = 3 or 5, DIF(1:2) are 1-norm-based
+          estimates of Difu and Difl, computed using reversed
+          communication with ZLACN2.
+          If M = 0 or N, DIF(1:2) = F-norm([A, B]).
+          If IJOB = 0 or 1, DIF is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
+          On exit, if INFO = 0, <A HREF="/cgi-bin/man/man2html?1+WORK">WORK</A>(1) returns the optimal LWORK.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LWORK</I> 
+<P>
+
+<PRE>
+          LWORK is INTEGER
+          The dimension of the array WORK. LWORK &gt;=  1
+          If IJOB = 1, 2 or 4, LWORK &gt;=  2*M*(N-M)
+          If IJOB = 3 or 5, LWORK &gt;=  4*M*(N-M)
+
+          If LWORK = -1, then a workspace query is assumed; the routine
+          only calculates the optimal size of the WORK array, returns
+          this value as the first entry of the WORK array, and no error
+          message related to LWORK is issued by XERBLA.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IWORK</I> 
+<P>
+
+<PRE>
+          IWORK is INTEGER array, dimension (MAX(1,LIWORK))
+          On exit, if INFO = 0, <A HREF="/cgi-bin/man/man2html?1+IWORK">IWORK</A>(1) returns the optimal LIWORK.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LIWORK</I> 
+<P>
+
+<PRE>
+          LIWORK is INTEGER
+          The dimension of the array IWORK. LIWORK &gt;= 1.
+          If IJOB = 1, 2 or 4, LIWORK &gt;=  N+2;
+          If IJOB = 3 or 5, LIWORK &gt;= MAX(N+2, 2*M*(N-M));
+
+          If LIWORK = -1, then a workspace query is assumed; the
+          routine only calculates the optimal size of the IWORK array,
+          returns this value as the first entry of the IWORK array, and
+          no error message related to LIWORK is issued by XERBLA.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+            =0: Successful exit.
+            &lt;0: If INFO = -i, the i-th argument had an illegal value.
+            =1: Reordering of (A, B) failed because the transformed
+                matrix pair (A, B) would be too far from generalized
+                Schur form; the problem is very ill-conditioned.
+                (A, B) may have been partially reordered.
+                If requested, 0 is returned in DIF(*), PL and PR.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  ZTGSEN first collects the selected eigenvalues by computing unitary
+  U and W that move them to the top left corner of (A, B). In other
+  words, the selected eigenvalues are the eigenvalues of (A11, B11) in
+
+              U**H*(A, B)*W = (A11 A12) (B11 B12) n1
+                              ( 0  A22),( 0  B22) n2
+                                n1  n2    n1  n2
+
+  where N = n1+n2 and U**H means the conjugate transpose of U. The first
+  n1 columns of U and W span the specified pair of left and right
+  eigenspaces (deflating subspaces) of (A, B).
+
+  If (A, B) has been obtained from the generalized real Schur
+  decomposition of a matrix pair (C, D) = Q*(A, B)*Z**H, then the
+  reordered generalized Schur form of (C, D) is given by
+
+           (C, D) = (Q*U)*(U**H *(A, B)*W)*(Z*W)**H,
+
+  and the first n1 columns of Q*U and Z*W span the corresponding
+  deflating subspaces of (C, D) (Q and Z store Q*U and Z*W, resp.).
+
+  Note that if the selected eigenvalue is sufficiently ill-conditioned,
+  then its value may differ significantly from its value before
+  reordering.
+
+  The reciprocal condition numbers of the left and right eigenspaces
+  spanned by the first n1 columns of U and W (or Q*U and Z*W) may
+  be returned in DIF(1:2), corresponding to Difu and Difl, resp.
+
+  The Difu and Difl are defined as:
+
+       Difu[(A11, B11), (A22, B22)] = sigma-min( Zu )
+  and
+       Difl[(A11, B11), (A22, B22)] = Difu[(A22, B22), (A11, B11)],
+
+  where sigma-min(Zu) is the smallest singular value of the
+  (2*n1*n2)-by-(2*n1*n2) matrix
+
+       Zu = [ kron(In2, A11)  -kron(A22**H, In1) ]
+            [ kron(In2, B11)  -kron(B22**H, In1) ].
+
+  Here, Inx is the identity matrix of size nx and A22**H is the
+  conjugate transpose of A22. kron(X, Y) is the Kronecker product between
+  the matrices X and Y.
+
+  When <A HREF="/cgi-bin/man/man2html?2+DIF">DIF</A>(2) is small, small changes in (A, B) can cause large changes
+  in the deflating subspace. An approximate (asymptotic) bound on the
+  maximum angular error in the computed deflating subspaces is
+
+       EPS * norm((A, B)) / <A HREF="/cgi-bin/man/man2html?2+DIF">DIF</A>(2),
+
+  where EPS is the machine precision.
+
+  The reciprocal norm of the projectors on the left and right
+  eigenspaces associated with (A11, B11) may be returned in PL and PR.
+  They are computed as follows. First we compute L and R so that
+  P*(A, B)*Q is block diagonal, where
+
+       P = ( I -L ) n1           Q = ( I R ) n1
+           ( 0  I ) n2    and        ( 0 I ) n2
+             n1 n2                    n1 n2
+
+  and (L, R) is the solution to the generalized Sylvester equation
+
+       A11*R - L*A22 = -A12
+       B11*R - L*B22 = -B12
+
+  Then PL = (F-norm(L)**2+1)**(-1/2) and PR = (F-norm(R)**2+1)**(-1/2).
+  An approximate (asymptotic) bound on the average absolute error of
+  the selected eigenvalues is
+
+       EPS * norm((A, B)) / PL.
+
+  There are also global error bounds which valid for perturbations up
+  to a certain restriction:  A lower bound (x) on the smallest
+  F-norm(E,F) for which an eigenvalue of (A11, B11) may move and
+  coalesce with an eigenvalue of (A22, B22) under perturbation (E,F),
+  (i.e. (A + E, B + F), is
+
+   x = min(Difu,Difl)/((1/(PL*PL)+1/(PR*PR))**(1/2)+2*max(1/PL,1/PR)).
+
+  An approximate bound on x can be computed from DIF(1:2), PL and PR.
+
+  If y = ( F-norm(E,F) / x) &lt;= 1, the angles between the perturbed
+  (L', R') and unperturbed (L, R) left and right deflating subspaces
+  associated with the selected cluster in the (1,1)-blocks can be
+  bounded as
+
+   max-angle(L, L') &lt;= arctan( y * PL / (1 - y * (1 - PL * PL)**(1/2))
+   max-angle(R, R') &lt;= arctan( y * PR / (1 - y * (1 - PR * PR)**(1/2))
+
+  See LAPACK User's Guide section 4.11 or the following references
+  for more information.
+
+  Note that if the default method for computing the Frobenius-norm-
+  based estimate DIF is not wanted (see ZLATDF), then the parameter
+  IDIFJB (see below) should be changed from 3 to 4 (routine ZLATDF
+  (IJOB = 2 will be used)). See ZTGSYL for more details.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Bo Kagstrom and Peter Poromaa, Department of Computing Science, Umea University, S-901 87 Umea, Sweden. 
+</DL>
+
+<P>
+
+<B>References: </B>
+<DL COMPACT><DT><DD>
+[1] B. Kagstrom; A Direct Method for Reordering Eigenvalues in the Generalized Real Schur Form of a Regular Matrix Pair (A, B), in M.S. Moonen et al (eds), Linear Algebra for Large Scale and Real-Time Applications, Kluwer Academic Publ. 1993, pp 195-218. 
+<BR>
+
+<BR>&nbsp;[2]&nbsp;B.&nbsp;Kagstrom&nbsp;and&nbsp;P.&nbsp;Poromaa;&nbsp;Computing&nbsp;Eigenspaces&nbsp;with&nbsp;Specified&nbsp;Eigenvalues&nbsp;of&nbsp;a&nbsp;Regular&nbsp;Matrix&nbsp;Pair&nbsp;(A,&nbsp;B)&nbsp;and&nbsp;Condition&nbsp;Estimation:&nbsp;Theory,&nbsp;Algorithms&nbsp;and&nbsp;Software,&nbsp;Report&nbsp;UMINF&nbsp;-&nbsp;94.04,&nbsp;Department&nbsp;of&nbsp;Computing&nbsp;Science,&nbsp;Umea&nbsp;University,&nbsp;S-901&nbsp;87&nbsp;Umea,&nbsp;Sweden,&nbsp;1994.&nbsp;Also&nbsp;as&nbsp;LAPACK&nbsp;Working&nbsp;Note&nbsp;87.&nbsp;To&nbsp;appear&nbsp;in&nbsp;Numerical&nbsp;Algorithms,&nbsp;1996.&nbsp;
+<BR>
+
+<BR>&nbsp;[3]&nbsp;B.&nbsp;Kagstrom&nbsp;and&nbsp;P.&nbsp;Poromaa,&nbsp;LAPACK-Style&nbsp;Algorithms&nbsp;and&nbsp;Software&nbsp;for&nbsp;Solving&nbsp;the&nbsp;Generalized&nbsp;Sylvester&nbsp;Equation&nbsp;and&nbsp;Estimating&nbsp;the&nbsp;Separation&nbsp;between&nbsp;Regular&nbsp;Matrix&nbsp;Pairs,&nbsp;Report&nbsp;UMINF&nbsp;-&nbsp;93.23,&nbsp;Department&nbsp;of&nbsp;Computing&nbsp;Science,&nbsp;Umea&nbsp;University,&nbsp;S-901&nbsp;87&nbsp;Umea,&nbsp;Sweden,&nbsp;December&nbsp;1993,&nbsp;Revised&nbsp;April&nbsp;1994,&nbsp;Also&nbsp;as&nbsp;LAPACK&nbsp;working&nbsp;Note&nbsp;75.&nbsp;To&nbsp;appear&nbsp;in&nbsp;ACM&nbsp;Trans.&nbsp;on&nbsp;Math.&nbsp;Software,&nbsp;Vol&nbsp;22,&nbsp;No&nbsp;1,&nbsp;1996.&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 432 of file ztgsen.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine ztgsen (integerIJOB, logicalWANTQ, logicalWANTZ, logical, dimension( * )SELECT, integerN, complex*16, dimension( lda, * )A, integerLDA, complex*16, dimension( ldb, * )B, integerLDB, complex*16, dimension( * )ALPHA, complex*16, dimension( * )BETA, complex*16, dimension( ldq, * )Q, integerLDQ, complex*16, dimension( ldz, * )Z, integerLDZ, integerM, double precisionPL, double precisionPR, double precision, dimension( * )DIF, complex*16, dimension( * )WORK, integerLWORK, integer, dimension( * )IWORK, integerLIWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:50 GMT, February 12, 2014
+</BODY>
+</HTML>

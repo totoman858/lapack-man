@@ -1,0 +1,271 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of sger.f</TITLE>
+</HEAD><BODY>
+<H1>sger.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+sger.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>sger</B> (M, N, ALPHA, X, INCX, Y, INCY, A, LDA)
+
+<BR>
+
+<I></I><B>SGER</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine sger (integerM, integerN, realALPHA, real, dimension(*)X, integerINCX, real, dimension(*)Y, integerINCY, real, dimension(lda,*)A, integerLDA)</H3>
+
+<P>
+<P>
+
+<B>SGER</B> <B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ SGER   performs the rank 1 operation
+
+    A := alpha*x*y**T + A,
+
+ where alpha is a scalar, x is an m element vector, y is an n element
+ vector and A is an m by n matrix.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+           On entry, M specifies the number of rows of the matrix A.
+           M must be at least zero.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+           On entry, N specifies the number of columns of the matrix A.
+           N must be at least zero.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ALPHA</I> 
+<P>
+
+<PRE>
+          ALPHA is REAL
+           On entry, ALPHA specifies the scalar alpha.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X</I> 
+<P>
+
+<PRE>
+          X is REAL array of dimension at least
+           ( 1 + ( m - 1 )*abs( INCX ) ).
+           Before entry, the incremented array X must contain the m
+           element vector x.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INCX</I> 
+<P>
+
+<PRE>
+          INCX is INTEGER
+           On entry, INCX specifies the increment for the elements of
+           X. INCX must not be zero.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Y</I> 
+<P>
+
+<PRE>
+          Y is REAL array of dimension at least
+           ( 1 + ( n - 1 )*abs( INCY ) ).
+           Before entry, the incremented array Y must contain the n
+           element vector y.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INCY</I> 
+<P>
+
+<PRE>
+          INCY is INTEGER
+           On entry, INCY specifies the increment for the elements of
+           Y. INCY must not be zero.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is REAL array of DIMENSION ( LDA, n ).
+           Before entry, the leading m by n part of the array A must
+           contain the matrix of coefficients. On exit, A is
+           overwritten by the updated matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+           On entry, LDA specifies the first dimension of A as declared
+           in the calling (sub) program. LDA must be at least
+           max( 1, m ).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  Level 2 Blas routine.
+
+  -- Written on 22-October-1986.
+     Jack Dongarra, Argonne National Lab.
+     Jeremy Du Croz, Nag Central Office.
+     Sven Hammarling, Nag Central Office.
+     Richard Hanson, Sandia National Labs.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 131 of file sger.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine sger (integerM, integerN, realALPHA, real, dimension(*)X, integerINCX, real, dimension(*)Y, integerINCY, real, dimension(lda,*)A, integerLDA)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:53 GMT, February 12, 2014
+</BODY>
+</HTML>

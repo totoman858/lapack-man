@@ -1,0 +1,461 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of zspsvx.f</TITLE>
+</HEAD><BODY>
+<H1>zspsvx.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+zspsvx.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>zspsvx</B> (FACT, UPLO, N, NRHS, AP, AFP, IPIV, B, LDB, X, LDX, RCOND, FERR, BERR, WORK, RWORK, INFO)
+
+<BR>
+
+<I></I><B> ZSPSVX computes the solution to system of linear equations A * X = B for OTHER matrices</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine zspsvx (characterFACT, characterUPLO, integerN, integerNRHS, complex*16, dimension( * )AP, complex*16, dimension( * )AFP, integer, dimension( * )IPIV, complex*16, dimension( ldb, * )B, integerLDB, complex*16, dimension( ldx, * )X, integerLDX, double precisionRCOND, double precision, dimension( * )FERR, double precision, dimension( * )BERR, complex*16, dimension( * )WORK, double precision, dimension( * )RWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B> ZSPSVX computes the solution to system of linear equations A * X = B for OTHER matrices</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZSPSVX uses the diagonal pivoting factorization A = U*D*U**T or
+ A = L*D*L**T to compute the solution to a complex system of linear
+ equations A * X = B, where A is an N-by-N symmetric matrix stored
+ in packed format and X and B are N-by-NRHS matrices.
+
+ Error bounds on the solution and a condition estimate are also
+ provided.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Description: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ The following steps are performed:
+
+ 1. If FACT = 'N', the diagonal pivoting method is used to factor A as
+       A = U * D * U**T,  if UPLO = 'U', or
+       A = L * D * L**T,  if UPLO = 'L',
+    where U (or L) is a product of permutation and unit upper (lower)
+    triangular matrices and D is symmetric and block diagonal with
+    1-by-1 and 2-by-2 diagonal blocks.
+
+ 2. If some D(i,i)=0, so that D is exactly singular, then the routine
+    returns with INFO = i. Otherwise, the factored form of A is used
+    to estimate the condition number of the matrix A.  If the
+    reciprocal of the condition number is less than machine precision,
+    INFO = N+1 is returned as a warning, but the routine still goes on
+    to solve for X and compute error bounds as described below.
+
+ 3. The system of equations is solved for X using the factored form
+    of A.
+
+ 4. Iterative refinement is applied to improve the computed solution
+    matrix and calculate error bounds and backward error estimates
+    for it.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>FACT</I> 
+<P>
+
+<PRE>
+          FACT is CHARACTER*1
+          Specifies whether or not the factored form of A has been
+          supplied on entry.
+          = 'F':  On entry, AFP and IPIV contain the factored form
+                  of A.  AP, AFP and IPIV will not be modified.
+          = 'N':  The matrix A will be copied to AFP and factored.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>UPLO</I> 
+<P>
+
+<PRE>
+          UPLO is CHARACTER*1
+          = 'U':  Upper triangle of A is stored;
+          = 'L':  Lower triangle of A is stored.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of linear equations, i.e., the order of the
+          matrix A.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NRHS</I> 
+<P>
+
+<PRE>
+          NRHS is INTEGER
+          The number of right hand sides, i.e., the number of columns
+          of the matrices B and X.  NRHS &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>AP</I> 
+<P>
+
+<PRE>
+          AP is COMPLEX*16 array, dimension (N*(N+1)/2)
+          The upper or lower triangle of the symmetric matrix A, packed
+          columnwise in a linear array.  The j-th column of A is stored
+          in the array AP as follows:
+          if UPLO = 'U', AP(i + (j-1)*j/2) = A(i,j) for 1&lt;=i&lt;=j;
+          if UPLO = 'L', AP(i + (j-1)*(2*n-j)/2) = A(i,j) for j&lt;=i&lt;=n.
+          See below for further details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>AFP</I> 
+<P>
+
+<PRE>
+          AFP is COMPLEX*16 array, dimension (N*(N+1)/2)
+          If FACT = 'F', then AFP is an input argument and on entry
+          contains the block diagonal matrix D and the multipliers used
+          to obtain the factor U or L from the factorization
+          A = U*D*U**T or A = L*D*L**T as computed by ZSPTRF, stored as
+          a packed triangular matrix in the same storage format as A.
+
+          If FACT = 'N', then AFP is an output argument and on exit
+          contains the block diagonal matrix D and the multipliers used
+          to obtain the factor U or L from the factorization
+          A = U*D*U**T or A = L*D*L**T as computed by ZSPTRF, stored as
+          a packed triangular matrix in the same storage format as A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IPIV</I> 
+<P>
+
+<PRE>
+          IPIV is INTEGER array, dimension (N)
+          If FACT = 'F', then IPIV is an input argument and on entry
+          contains details of the interchanges and the block structure
+          of D, as determined by ZSPTRF.
+          If IPIV(k) &gt; 0, then rows and columns k and IPIV(k) were
+          interchanged and D(k,k) is a 1-by-1 diagonal block.
+          If UPLO = 'U' and IPIV(k) = IPIV(k-1) &lt; 0, then rows and
+          columns k-1 and -IPIV(k) were interchanged and D(k-1:k,k-1:k)
+          is a 2-by-2 diagonal block.  If UPLO = 'L' and IPIV(k) =
+          IPIV(k+1) &lt; 0, then rows and columns k+1 and -IPIV(k) were
+          interchanged and D(k:k+1,k:k+1) is a 2-by-2 diagonal block.
+
+          If FACT = 'N', then IPIV is an output argument and on exit
+          contains details of the interchanges and the block structure
+          of D, as determined by ZSPTRF.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is COMPLEX*16 array, dimension (LDB,NRHS)
+          The N-by-NRHS right hand side matrix B.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDB</I> 
+<P>
+
+<PRE>
+          LDB is INTEGER
+          The leading dimension of the array B.  LDB &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X</I> 
+<P>
+
+<PRE>
+          X is COMPLEX*16 array, dimension (LDX,NRHS)
+          If INFO = 0 or INFO = N+1, the N-by-NRHS solution matrix X.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDX</I> 
+<P>
+
+<PRE>
+          LDX is INTEGER
+          The leading dimension of the array X.  LDX &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RCOND</I> 
+<P>
+
+<PRE>
+          RCOND is DOUBLE PRECISION
+          The estimate of the reciprocal condition number of the matrix
+          A.  If RCOND is less than the machine precision (in
+          particular, if RCOND = 0), the matrix is singular to working
+          precision.  This condition is indicated by a return code of
+          INFO &gt; 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>FERR</I> 
+<P>
+
+<PRE>
+          FERR is DOUBLE PRECISION array, dimension (NRHS)
+          The estimated forward error bound for each solution vector
+          X(j) (the j-th column of the solution matrix X).
+          If XTRUE is the true solution corresponding to X(j), FERR(j)
+          is an estimated upper bound for the magnitude of the largest
+          element in (X(j) - XTRUE) divided by the magnitude of the
+          largest element in X(j).  The estimate is as reliable as
+          the estimate for RCOND, and is almost always a slight
+          overestimate of the true error.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>BERR</I> 
+<P>
+
+<PRE>
+          BERR is DOUBLE PRECISION array, dimension (NRHS)
+          The componentwise relative backward error of each solution
+          vector X(j) (i.e., the smallest relative change in
+          any element of A or B that makes X(j) an exact solution).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is COMPLEX*16 array, dimension (2*N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RWORK</I> 
+<P>
+
+<PRE>
+          RWORK is DOUBLE PRECISION array, dimension (N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0: successful exit
+          &lt; 0: if INFO = -i, the i-th argument had an illegal value
+          &gt; 0:  if INFO = i, and i is
+                &lt;= N:  D(i,i) is exactly zero.  The factorization
+                       has been completed but the factor D is exactly
+                       singular, so the solution and error bounds could
+                       not be computed. RCOND = 0 is returned.
+                = N+1: D is nonsingular, but RCOND is less than machine
+                       precision, meaning that the matrix is singular
+                       to working precision.  Nevertheless, the
+                       solution and error bounds are computed because
+                       there are a number of situations where the
+                       computed solution can be more accurate than the
+                       value of RCOND would suggest.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+April 2012 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  The packed storage scheme is illustrated by the following example
+  when N = 4, UPLO = 'U':
+
+  Two-dimensional storage of the symmetric matrix A:
+
+     a11 a12 a13 a14
+         a22 a23 a24
+             a33 a34     (aij = aji)
+                 a44
+
+  Packed storage of the upper triangle of A:
+
+  AP = [ a11, a12, a22, a13, a23, a33, a14, a24, a34, a44 ]
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 277 of file zspsvx.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine zspsvx (characterFACT, characterUPLO, integerN, integerNRHS, complex*16, dimension( * )AP, complex*16, dimension( * )AFP, integer, dimension( * )IPIV, complex*16, dimension( ldb, * )B, integerLDB, complex*16, dimension( ldx, * )X, integerLDX, double precisionRCOND, double precision, dimension( * )FERR, double precision, dimension( * )BERR, complex*16, dimension( * )WORK, double precision, dimension( * )RWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:41 GMT, February 12, 2014
+</BODY>
+</HTML>

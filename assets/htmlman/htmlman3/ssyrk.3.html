@@ -1,0 +1,315 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of ssyrk.f</TITLE>
+</HEAD><BODY>
+<H1>ssyrk.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+ssyrk.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>ssyrk</B> (UPLO, TRANS, N, K, ALPHA, A, LDA, BETA, C, LDC)
+
+<BR>
+
+<I></I><B>SSYRK</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine ssyrk (characterUPLO, characterTRANS, integerN, integerK, realALPHA, real, dimension(lda,*)A, integerLDA, realBETA, real, dimension(ldc,*)C, integerLDC)</H3>
+
+<P>
+<P>
+
+<B>SSYRK</B> <B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ SSYRK  performs one of the symmetric rank k operations
+
+    C := alpha*A*A**T + beta*C,
+
+ or
+
+    C := alpha*A**T*A + beta*C,
+
+ where  alpha and beta  are scalars, C is an  n by n  symmetric matrix
+ and  A  is an  n by k  matrix in the first case and a  k by n  matrix
+ in the second case.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>UPLO</I> 
+<P>
+
+<PRE>
+          UPLO is CHARACTER*1
+           On  entry,   UPLO  specifies  whether  the  upper  or  lower
+           triangular  part  of the  array  C  is to be  referenced  as
+           follows:
+
+              UPLO = 'U' or 'u'   Only the  upper triangular part of  C
+                                  is to be referenced.
+
+              UPLO = 'L' or 'l'   Only the  lower triangular part of  C
+                                  is to be referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TRANS</I> 
+<P>
+
+<PRE>
+          TRANS is CHARACTER*1
+           On entry,  TRANS  specifies the operation to be performed as
+           follows:
+
+              TRANS = 'N' or 'n'   C := alpha*A*A**T + beta*C.
+
+              TRANS = 'T' or 't'   C := alpha*A**T*A + beta*C.
+
+              TRANS = 'C' or 'c'   C := alpha*A**T*A + beta*C.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+           On entry,  N specifies the order of the matrix C.  N must be
+           at least zero.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>K</I> 
+<P>
+
+<PRE>
+          K is INTEGER
+           On entry with  TRANS = 'N' or 'n',  K  specifies  the number
+           of  columns   of  the   matrix   A,   and  on   entry   with
+           TRANS = 'T' or 't' or 'C' or 'c',  K  specifies  the  number
+           of rows of the matrix  A.  K must be at least zero.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ALPHA</I> 
+<P>
+
+<PRE>
+          ALPHA is REAL
+           On entry, ALPHA specifies the scalar alpha.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is REAL array of DIMENSION ( LDA, ka ), where ka is
+           k  when  TRANS = 'N' or 'n',  and is  n  otherwise.
+           Before entry with  TRANS = 'N' or 'n',  the  leading  n by k
+           part of the array  A  must contain the matrix  A,  otherwise
+           the leading  k by n  part of the array  A  must contain  the
+           matrix A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+           On entry, LDA specifies the first dimension of A as declared
+           in  the  calling  (sub)  program.   When  TRANS = 'N' or 'n'
+           then  LDA must be at least  max( 1, n ), otherwise  LDA must
+           be at least  max( 1, k ).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>BETA</I> 
+<P>
+
+<PRE>
+          BETA is REAL
+           On entry, BETA specifies the scalar beta.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>C</I> 
+<P>
+
+<PRE>
+          C is REAL array of DIMENSION ( LDC, n ).
+           Before entry  with  UPLO = 'U' or 'u',  the leading  n by n
+           upper triangular part of the array C must contain the upper
+           triangular part  of the  symmetric matrix  and the strictly
+           lower triangular part of C is not referenced.  On exit, the
+           upper triangular part of the array  C is overwritten by the
+           upper triangular part of the updated matrix.
+           Before entry  with  UPLO = 'L' or 'l',  the leading  n by n
+           lower triangular part of the array C must contain the lower
+           triangular part  of the  symmetric matrix  and the strictly
+           upper triangular part of C is not referenced.  On exit, the
+           lower triangular part of the array  C is overwritten by the
+           lower triangular part of the updated matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDC</I> 
+<P>
+
+<PRE>
+          LDC is INTEGER
+           On entry, LDC specifies the first dimension of C as declared
+           in  the  calling  (sub)  program.   LDC  must  be  at  least
+           max( 1, n ).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  Level 3 Blas routine.
+
+  -- Written on 8-February-1989.
+     Jack Dongarra, Argonne National Laboratory.
+     Iain Duff, AERE Harwell.
+     Jeremy Du Croz, Numerical Algorithms Group Ltd.
+     Sven Hammarling, Numerical Algorithms Group Ltd.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 170 of file ssyrk.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine ssyrk (characterUPLO, characterTRANS, integerN, integerK, realALPHA, real, dimension(lda,*)A, integerLDA, realBETA, real, dimension(ldc,*)C, integerLDC)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:45 GMT, February 12, 2014
+</BODY>
+</HTML>

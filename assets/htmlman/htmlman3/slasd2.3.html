@@ -1,0 +1,472 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of slasd2.f</TITLE>
+</HEAD><BODY>
+<H1>slasd2.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+slasd2.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>slasd2</B> (NL, NR, SQRE, K, D, Z, ALPHA, BETA, U, LDU, VT, LDVT, DSIGMA, U2, LDU2, VT2, LDVT2, IDXP, IDX, IDXC, IDXQ, COLTYP, INFO)
+
+<BR>
+
+<I></I><B>SLASD2</B> merges the two sets of singular values together into a single sorted set. Used by sbdsdc. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine slasd2 (integerNL, integerNR, integerSQRE, integerK, real, dimension( * )D, real, dimension( * )Z, realALPHA, realBETA, real, dimension( ldu, * )U, integerLDU, real, dimension( ldvt, * )VT, integerLDVT, real, dimension( * )DSIGMA, real, dimension( ldu2, * )U2, integerLDU2, real, dimension( ldvt2, * )VT2, integerLDVT2, integer, dimension( * )IDXP, integer, dimension( * )IDX, integer, dimension( * )IDXC, integer, dimension( * )IDXQ, integer, dimension( * )COLTYP, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>SLASD2</B> merges the two sets of singular values together into a single sorted set. Used by sbdsdc.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ SLASD2 merges the two sets of singular values together into a single
+ sorted set.  Then it tries to deflate the size of the problem.
+ There are two ways in which deflation can occur:  when two or more
+ singular values are close together or if there is a tiny entry in the
+ Z vector.  For each such occurrence the order of the related secular
+ equation problem is reduced by one.
+
+ SLASD2 is called from SLASD1.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>NL</I> 
+<P>
+
+<PRE>
+          NL is INTEGER
+         The row dimension of the upper block.  NL &gt;= 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NR</I> 
+<P>
+
+<PRE>
+          NR is INTEGER
+         The row dimension of the lower block.  NR &gt;= 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SQRE</I> 
+<P>
+
+<PRE>
+          SQRE is INTEGER
+         = 0: the lower block is an NR-by-NR square matrix.
+         = 1: the lower block is an NR-by-(NR+1) rectangular matrix.
+
+         The bidiagonal matrix has N = NL + NR + 1 rows and
+         M = N + SQRE &gt;= N columns.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>K</I> 
+<P>
+
+<PRE>
+          K is INTEGER
+         Contains the dimension of the non-deflated matrix,
+         This is the order of the related secular equation. 1 &lt;= K &lt;=N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is REAL array, dimension (N)
+         On entry D contains the singular values of the two submatrices
+         to be combined.  On exit D contains the trailing (N-K) updated
+         singular values (those which were deflated) sorted into
+         increasing order.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is REAL array, dimension (N)
+         On exit Z contains the updating row vector in the secular
+         equation.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ALPHA</I> 
+<P>
+
+<PRE>
+          ALPHA is REAL
+         Contains the diagonal element associated with the added row.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>BETA</I> 
+<P>
+
+<PRE>
+          BETA is REAL
+         Contains the off-diagonal element associated with the added
+         row.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>U</I> 
+<P>
+
+<PRE>
+          U is REAL array, dimension (LDU,N)
+         On entry U contains the left singular vectors of two
+         submatrices in the two square blocks with corners at (1,1),
+         (NL, NL), and (NL+2, NL+2), (N,N).
+         On exit U contains the trailing (N-K) updated left singular
+         vectors (those which were deflated) in its last N-K columns.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDU</I> 
+<P>
+
+<PRE>
+          LDU is INTEGER
+         The leading dimension of the array U.  LDU &gt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VT</I> 
+<P>
+
+<PRE>
+          VT is REAL array, dimension (LDVT,M)
+         On entry VT**T contains the right singular vectors of two
+         submatrices in the two square blocks with corners at (1,1),
+         (NL+1, NL+1), and (NL+2, NL+2), (M,M).
+         On exit VT**T contains the trailing (N-K) updated right singular
+         vectors (those which were deflated) in its last N-K columns.
+         In case SQRE =1, the last row of VT spans the right null
+         space.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDVT</I> 
+<P>
+
+<PRE>
+          LDVT is INTEGER
+         The leading dimension of the array VT.  LDVT &gt;= M.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DSIGMA</I> 
+<P>
+
+<PRE>
+          DSIGMA is REAL array, dimension (N)
+         Contains a copy of the diagonal elements (K-1 singular values
+         and one zero) in the secular equation.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>U2</I> 
+<P>
+
+<PRE>
+          U2 is REAL array, dimension (LDU2,N)
+         Contains a copy of the first K-1 left singular vectors which
+         will be used by SLASD3 in a matrix multiply (SGEMM) to solve
+         for the new left singular vectors. U2 is arranged into four
+         blocks. The first block contains a column with 1 at NL+1 and
+         zero everywhere else; the second block contains non-zero
+         entries only at and above NL; the third contains non-zero
+         entries only below NL+1; and the fourth is dense.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDU2</I> 
+<P>
+
+<PRE>
+          LDU2 is INTEGER
+         The leading dimension of the array U2.  LDU2 &gt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VT2</I> 
+<P>
+
+<PRE>
+          VT2 is REAL array, dimension (LDVT2,N)
+         VT2**T contains a copy of the first K right singular vectors
+         which will be used by SLASD3 in a matrix multiply (SGEMM) to
+         solve for the new right singular vectors. VT2 is arranged into
+         three blocks. The first block contains a row that corresponds
+         to the special 0 diagonal element in SIGMA; the second block
+         contains non-zeros only at and before NL +1; the third block
+         contains non-zeros only at and after  NL +2.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDVT2</I> 
+<P>
+
+<PRE>
+          LDVT2 is INTEGER
+         The leading dimension of the array VT2.  LDVT2 &gt;= M.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IDXP</I> 
+<P>
+
+<PRE>
+          IDXP is INTEGER array, dimension (N)
+         This will contain the permutation used to place deflated
+         values of D at the end of the array. On output IDXP(2:K)
+         points to the nondeflated D-values and IDXP(K+1:N)
+         points to the deflated singular values.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IDX</I> 
+<P>
+
+<PRE>
+          IDX is INTEGER array, dimension (N)
+         This will contain the permutation used to sort the contents of
+         D into ascending order.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IDXC</I> 
+<P>
+
+<PRE>
+          IDXC is INTEGER array, dimension (N)
+         This will contain the permutation used to arrange the columns
+         of the deflated U matrix into three groups:  the first group
+         contains non-zero entries only at and above NL, the second
+         contains non-zero entries only below NL+2, and the third is
+         dense.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IDXQ</I> 
+<P>
+
+<PRE>
+          IDXQ is INTEGER array, dimension (N)
+         This contains the permutation which separately sorts the two
+         sub-problems in D into ascending order.  Note that entries in
+         the first hlaf of this permutation must first be moved one
+         position backward; and entries in the second half
+         must first have NL+1 added to their values.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>COLTYP</I> 
+<P>
+
+<PRE>
+          COLTYP is INTEGER array, dimension (N)
+         As workspace, this will contain a label which will indicate
+         which of the following types a column in the U2 matrix or a
+         row in the VT2 matrix is:
+         1 : non-zero in the upper half only
+         2 : non-zero in the lower half only
+         3 : dense
+         4 : deflated
+
+         On exit, it is an array of dimension 4, with COLTYP(I) being
+         the dimension of the I-th type columns.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit.
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Ming Gu and Huan Ren, Computer Science Division, University of California at Berkeley, USA 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 268 of file slasd2.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine slasd2 (integerNL, integerNR, integerSQRE, integerK, real, dimension( * )D, real, dimension( * )Z, realALPHA, realBETA, real, dimension( ldu, * )U, integerLDU, real, dimension( ldvt, * )VT, integerLDVT, real, dimension( * )DSIGMA, real, dimension( ldu2, * )U2, integerLDU2, real, dimension( ldvt2, * )VT2, integerLDVT2, integer, dimension( * )IDXP, integer, dimension( * )IDX, integer, dimension( * )IDXC, integer, dimension( * )IDXQ, integer, dimension( * )COLTYP, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:38 GMT, February 12, 2014
+</BODY>
+</HTML>

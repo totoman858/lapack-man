@@ -1,0 +1,508 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of chegvx.f</TITLE>
+</HEAD><BODY>
+<H1>chegvx.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+chegvx.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>chegvx</B> (ITYPE, JOBZ, RANGE, UPLO, N, A, LDA, B, LDB, VL, VU, IL, IU, ABSTOL, M, W, Z, LDZ, WORK, LWORK, RWORK, IWORK, IFAIL, INFO)
+
+<BR>
+
+<I></I><B>CHEGST</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine chegvx (integerITYPE, characterJOBZ, characterRANGE, characterUPLO, integerN, complex, dimension( lda, * )A, integerLDA, complex, dimension( ldb, * )B, integerLDB, realVL, realVU, integerIL, integerIU, realABSTOL, integerM, real, dimension( * )W, complex, dimension( ldz, * )Z, integerLDZ, complex, dimension( * )WORK, integerLWORK, real, dimension( * )RWORK, integer, dimension( * )IWORK, integer, dimension( * )IFAIL, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>CHEGST</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ CHEGVX computes selected eigenvalues, and optionally, eigenvectors
+ of a complex generalized Hermitian-definite eigenproblem, of the form
+ A*x=(lambda)*B*x,  A*Bx=(lambda)*x,  or B*A*x=(lambda)*x.  Here A and
+ B are assumed to be Hermitian and B is also positive definite.
+ Eigenvalues and eigenvectors can be selected by specifying either a
+ range of values or a range of indices for the desired eigenvalues.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>ITYPE</I> 
+<P>
+
+<PRE>
+          ITYPE is INTEGER
+          Specifies the problem type to be solved:
+          = 1:  A*x = (lambda)*B*x
+          = 2:  A*B*x = (lambda)*x
+          = 3:  B*A*x = (lambda)*x
+</PRE>
+
+<P>
+
+<BR>
+
+<I>JOBZ</I> 
+<P>
+
+<PRE>
+          JOBZ is CHARACTER*1
+          = 'N':  Compute eigenvalues only;
+          = 'V':  Compute eigenvalues and eigenvectors.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RANGE</I> 
+<P>
+
+<PRE>
+          RANGE is CHARACTER*1
+          = 'A': all eigenvalues will be found.
+          = 'V': all eigenvalues in the half-open interval (VL,VU]
+                 will be found.
+          = 'I': the IL-th through IU-th eigenvalues will be found.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>UPLO</I> 
+<P>
+
+<PRE>
+          UPLO is CHARACTER*1
+          = 'U':  Upper triangles of A and B are stored;
+          = 'L':  Lower triangles of A and B are stored.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrices A and B.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is COMPLEX array, dimension (LDA, N)
+          On entry, the Hermitian matrix A.  If UPLO = 'U', the
+          leading N-by-N upper triangular part of A contains the
+          upper triangular part of the matrix A.  If UPLO = 'L',
+          the leading N-by-N lower triangular part of A contains
+          the lower triangular part of the matrix A.
+
+          On exit,  the lower triangle (if UPLO='L') or the upper
+          triangle (if UPLO='U') of A, including the diagonal, is
+          destroyed.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A.  LDA &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is COMPLEX array, dimension (LDB, N)
+          On entry, the Hermitian matrix B.  If UPLO = 'U', the
+          leading N-by-N upper triangular part of B contains the
+          upper triangular part of the matrix B.  If UPLO = 'L',
+          the leading N-by-N lower triangular part of B contains
+          the lower triangular part of the matrix B.
+
+          On exit, if INFO &lt;= N, the part of B containing the matrix is
+          overwritten by the triangular factor U or L from the Cholesky
+          factorization B = U**H*U or B = L*L**H.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDB</I> 
+<P>
+
+<PRE>
+          LDB is INTEGER
+          The leading dimension of the array B.  LDB &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VL</I> 
+<P>
+
+<PRE>
+          VL is REAL
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VU</I> 
+<P>
+
+<PRE>
+          VU is REAL
+
+          If RANGE='V', the lower and upper bounds of the interval to
+          be searched for eigenvalues. VL &lt; VU.
+          Not referenced if RANGE = 'A' or 'I'.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IL</I> 
+<P>
+
+<PRE>
+          IL is INTEGER
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IU</I> 
+<P>
+
+<PRE>
+          IU is INTEGER
+
+          If RANGE='I', the indices (in ascending order) of the
+          smallest and largest eigenvalues to be returned.
+          1 &lt;= IL &lt;= IU &lt;= N, if N &gt; 0; IL = 1 and IU = 0 if N = 0.
+          Not referenced if RANGE = 'A' or 'V'.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ABSTOL</I> 
+<P>
+
+<PRE>
+          ABSTOL is REAL
+          The absolute error tolerance for the eigenvalues.
+          An approximate eigenvalue is accepted as converged
+          when it is determined to lie in an interval [a,b]
+          of width less than or equal to
+
+                  ABSTOL + EPS *   max( |a|,|b| ) ,
+
+          where EPS is the machine precision.  If ABSTOL is less than
+          or equal to zero, then  EPS*|T|  will be used in its place,
+          where |T| is the 1-norm of the tridiagonal matrix obtained
+          by reducing C to tridiagonal form, where C is the symmetric
+          matrix of the standard symmetric problem to which the
+          generalized problem is transformed.
+
+          Eigenvalues will be computed most accurately when ABSTOL is
+          set to twice the underflow threshold 2*SLAMCH('S'), not zero.
+          If this routine returns with INFO&gt;0, indicating that some
+          eigenvectors did not converge, try setting ABSTOL to
+          2*SLAMCH('S').
+</PRE>
+
+<P>
+
+<BR>
+
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The total number of eigenvalues found.  0 &lt;= M &lt;= N.
+          If RANGE = 'A', M = N, and if RANGE = 'I', M = IU-IL+1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>W</I> 
+<P>
+
+<PRE>
+          W is REAL array, dimension (N)
+          The first M elements contain the selected
+          eigenvalues in ascending order.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is COMPLEX array, dimension (LDZ, max(1,M))
+          If JOBZ = 'N', then Z is not referenced.
+          If JOBZ = 'V', then if INFO = 0, the first M columns of Z
+          contain the orthonormal eigenvectors of the matrix A
+          corresponding to the selected eigenvalues, with the i-th
+          column of Z holding the eigenvector associated with W(i).
+          The eigenvectors are normalized as follows:
+          if ITYPE = 1 or 2, Z**T*B*Z = I;
+          if ITYPE = 3, Z**T*inv(B)*Z = I.
+
+          If an eigenvector fails to converge, then that column of Z
+          contains the latest approximation to the eigenvector, and the
+          index of the eigenvector is returned in IFAIL.
+          Note: the user must ensure that at least max(1,M) columns are
+          supplied in the array Z; if RANGE = 'V', the exact value of M
+          is not known in advance and an upper bound must be used.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDZ</I> 
+<P>
+
+<PRE>
+          LDZ is INTEGER
+          The leading dimension of the array Z.  LDZ &gt;= 1, and if
+          JOBZ = 'V', LDZ &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is COMPLEX array, dimension (MAX(1,LWORK))
+          On exit, if INFO = 0, <A HREF="/cgi-bin/man/man2html?1+WORK">WORK</A>(1) returns the optimal LWORK.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LWORK</I> 
+<P>
+
+<PRE>
+          LWORK is INTEGER
+          The length of the array WORK.  LWORK &gt;= max(1,2*N).
+          For optimal efficiency, LWORK &gt;= (NB+1)*N,
+          where NB is the blocksize for CHETRD returned by ILAENV.
+
+          If LWORK = -1, then a workspace query is assumed; the routine
+          only calculates the optimal size of the WORK array, returns
+          this value as the first entry of the WORK array, and no error
+          message related to LWORK is issued by XERBLA.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RWORK</I> 
+<P>
+
+<PRE>
+          RWORK is REAL array, dimension (7*N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IWORK</I> 
+<P>
+
+<PRE>
+          IWORK is INTEGER array, dimension (5*N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IFAIL</I> 
+<P>
+
+<PRE>
+          IFAIL is INTEGER array, dimension (N)
+          If JOBZ = 'V', then if INFO = 0, the first M elements of
+          IFAIL are zero.  If INFO &gt; 0, then IFAIL contains the
+          indices of the eigenvectors that failed to converge.
+          If JOBZ = 'N', then IFAIL is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value
+          &gt; 0:  CPOTRF or CHEEVX returned an error code:
+             &lt;= N:  if INFO = i, CHEEVX failed to converge;
+                    i eigenvectors failed to converge.  Their indices
+                    are stored in array IFAIL.
+             &gt; N:   if INFO = N + i, for 1 &lt;= i &lt;= N, then the leading
+                    minor of order i of B is not positive definite.
+                    The factorization of B could not be completed and
+                    no eigenvalues or eigenvectors were computed.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Mark Fahey, Department of Mathematics, Univ. of Kentucky, USA 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 297 of file chegvx.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine chegvx (integerITYPE, characterJOBZ, characterRANGE, characterUPLO, integerN, complex, dimension( lda, * )A, integerLDA, complex, dimension( ldb, * )B, integerLDB, realVL, realVU, integerIL, integerIU, realABSTOL, integerM, real, dimension( * )W, complex, dimension( ldz, * )Z, integerLDZ, complex, dimension( * )WORK, integerLWORK, real, dimension( * )RWORK, integer, dimension( * )IWORK, integer, dimension( * )IFAIL, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:54 GMT, February 12, 2014
+</BODY>
+</HTML>

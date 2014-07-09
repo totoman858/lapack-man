@@ -1,0 +1,286 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of slag2.f</TITLE>
+</HEAD><BODY>
+<H1>slag2.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+slag2.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>slag2</B> (A, LDA, B, LDB, SAFMIN, SCALE1, SCALE2, WR1, WR2, WI)
+
+<BR>
+
+<I></I><B>SLAG2</B> computes the eigenvalues of a 2-by-2 generalized eigenvalue problem, with scaling as necessary to avoid over-/underflow. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine slag2 (real, dimension( lda, * )A, integerLDA, real, dimension( ldb, * )B, integerLDB, realSAFMIN, realSCALE1, realSCALE2, realWR1, realWR2, realWI)</H3>
+
+<P>
+<P>
+
+<B>SLAG2</B> computes the eigenvalues of a 2-by-2 generalized eigenvalue problem, with scaling as necessary to avoid over-/underflow.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ SLAG2 computes the eigenvalues of a 2 x 2 generalized eigenvalue
+ problem  A - w B, with scaling as necessary to avoid over-/underflow.
+
+ The scaling factor &quot;s&quot; results in a modified eigenvalue equation
+
+     s A - w B
+
+ where  s  is a non-negative scaling factor chosen so that  w,  w B,
+ and  s A  do not overflow and, if possible, do not underflow, either.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>A</I> 
+<P>
+
+<PRE>
+          A is REAL array, dimension (LDA, 2)
+          On entry, the 2 x 2 matrix A.  It is assumed that its 1-norm
+          is less than 1/SAFMIN.  Entries less than
+          sqrt(SAFMIN)*norm(A) are subject to being treated as zero.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A.  LDA &gt;= 2.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is REAL array, dimension (LDB, 2)
+          On entry, the 2 x 2 upper triangular matrix B.  It is
+          assumed that the one-norm of B is less than 1/SAFMIN.  The
+          diagonals should be at least sqrt(SAFMIN) times the largest
+          element of B (in absolute value); if a diagonal is smaller
+          than that, then  +/- sqrt(SAFMIN) will be used instead of
+          that diagonal.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDB</I> 
+<P>
+
+<PRE>
+          LDB is INTEGER
+          The leading dimension of the array B.  LDB &gt;= 2.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SAFMIN</I> 
+<P>
+
+<PRE>
+          SAFMIN is REAL
+          The smallest positive number s.t. 1/SAFMIN does not
+          overflow.  (This should always be SLAMCH('S') -- it is an
+          argument in order to avoid having to call SLAMCH frequently.)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SCALE1</I> 
+<P>
+
+<PRE>
+          SCALE1 is REAL
+          A scaling factor used to avoid over-/underflow in the
+          eigenvalue equation which defines the first eigenvalue.  If
+          the eigenvalues are complex, then the eigenvalues are
+          ( WR1  +/-  WI i ) / SCALE1  (which may lie outside the
+          exponent range of the machine), SCALE1=SCALE2, and SCALE1
+          will always be positive.  If the eigenvalues are real, then
+          the first (real) eigenvalue is  WR1 / SCALE1 , but this may
+          overflow or underflow, and in fact, SCALE1 may be zero or
+          less than the underflow threshhold if the exact eigenvalue
+          is sufficiently large.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SCALE2</I> 
+<P>
+
+<PRE>
+          SCALE2 is REAL
+          A scaling factor used to avoid over-/underflow in the
+          eigenvalue equation which defines the second eigenvalue.  If
+          the eigenvalues are complex, then SCALE2=SCALE1.  If the
+          eigenvalues are real, then the second (real) eigenvalue is
+          WR2 / SCALE2 , but this may overflow or underflow, and in
+          fact, SCALE2 may be zero or less than the underflow
+          threshhold if the exact eigenvalue is sufficiently large.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WR1</I> 
+<P>
+
+<PRE>
+          WR1 is REAL
+          If the eigenvalue is real, then WR1 is SCALE1 times the
+          eigenvalue closest to the (2,2) element of A B**(-1).  If the
+          eigenvalue is complex, then WR1=WR2 is SCALE1 times the real
+          part of the eigenvalues.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WR2</I> 
+<P>
+
+<PRE>
+          WR2 is REAL
+          If the eigenvalue is real, then WR2 is SCALE2 times the
+          other eigenvalue.  If the eigenvalue is complex, then
+          WR1=WR2 is SCALE1 times the real part of the eigenvalues.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WI</I> 
+<P>
+
+<PRE>
+          WI is REAL
+          If the eigenvalue is real, then WI is zero.  If the
+          eigenvalue is complex, then WI is SCALE1 times the imaginary
+          part of the eigenvalues.  WI will always be non-negative.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 156 of file slag2.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine slag2 (real, dimension( lda, * )A, integerLDA, real, dimension( ldb, * )B, integerLDB, realSAFMIN, realSCALE1, realSCALE2, realWR1, realWR2, realWI)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:02 GMT, February 12, 2014
+</BODY>
+</HTML>

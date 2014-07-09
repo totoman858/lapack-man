@@ -1,0 +1,326 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of sstedc.f</TITLE>
+</HEAD><BODY>
+<H1>sstedc.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+sstedc.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>sstedc</B> (COMPZ, N, D, E, Z, LDZ, WORK, LWORK, IWORK, LIWORK, INFO)
+
+<BR>
+
+<I></I><B>SSTEBZ</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine sstedc (characterCOMPZ, integerN, real, dimension( * )D, real, dimension( * )E, real, dimension( ldz, * )Z, integerLDZ, real, dimension( * )WORK, integerLWORK, integer, dimension( * )IWORK, integerLIWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>SSTEBZ</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ SSTEDC computes all eigenvalues and, optionally, eigenvectors of a
+ symmetric tridiagonal matrix using the divide and conquer method.
+ The eigenvectors of a full or band real symmetric matrix can also be
+ found if SSYTRD or SSPTRD or SSBTRD has been used to reduce this
+ matrix to tridiagonal form.
+
+ This code makes very mild assumptions about floating point
+ arithmetic. It will work on machines with a guard digit in
+ add/subtract, or on those binary machines without guard digits
+ which subtract like the Cray X-MP, Cray Y-MP, Cray C-90, or Cray-2.
+ It could conceivably fail on hexadecimal or decimal machines
+ without guard digits, but we know of none.  See SLAED3 for details.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>COMPZ</I> 
+<P>
+
+<PRE>
+          COMPZ is CHARACTER*1
+          = 'N':  Compute eigenvalues only.
+          = 'I':  Compute eigenvectors of tridiagonal matrix also.
+          = 'V':  Compute eigenvectors of original dense symmetric
+                  matrix also.  On entry, Z contains the orthogonal
+                  matrix used to reduce the original matrix to
+                  tridiagonal form.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The dimension of the symmetric tridiagonal matrix.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is REAL array, dimension (N)
+          On entry, the diagonal elements of the tridiagonal matrix.
+          On exit, if INFO = 0, the eigenvalues in ascending order.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>E</I> 
+<P>
+
+<PRE>
+          E is REAL array, dimension (N-1)
+          On entry, the subdiagonal elements of the tridiagonal matrix.
+          On exit, E has been destroyed.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is REAL array, dimension (LDZ,N)
+          On entry, if COMPZ = 'V', then Z contains the orthogonal
+          matrix used in the reduction to tridiagonal form.
+          On exit, if INFO = 0, then if COMPZ = 'V', Z contains the
+          orthonormal eigenvectors of the original symmetric matrix,
+          and if COMPZ = 'I', Z contains the orthonormal eigenvectors
+          of the symmetric tridiagonal matrix.
+          If  COMPZ = 'N', then Z is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDZ</I> 
+<P>
+
+<PRE>
+          LDZ is INTEGER
+          The leading dimension of the array Z.  LDZ &gt;= 1.
+          If eigenvectors are desired, then LDZ &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is REAL array, dimension (MAX(1,LWORK))
+          On exit, if INFO = 0, <A HREF="/cgi-bin/man/man2html?1+WORK">WORK</A>(1) returns the optimal LWORK.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LWORK</I> 
+<P>
+
+<PRE>
+          LWORK is INTEGER
+          The dimension of the array WORK.
+          If COMPZ = 'N' or N &lt;= 1 then LWORK must be at least 1.
+          If COMPZ = 'V' and N &gt; 1 then LWORK must be at least
+                         ( 1 + 3*N + 2*N*lg N + 4*N**2 ),
+                         where lg( N ) = smallest integer k such
+                         that 2**k &gt;= N.
+          If COMPZ = 'I' and N &gt; 1 then LWORK must be at least
+                         ( 1 + 4*N + N**2 ).
+          Note that for COMPZ = 'I' or 'V', then if N is less than or
+          equal to the minimum divide size, usually 25, then LWORK need
+          only be max(1,2*(N-1)).
+
+          If LWORK = -1, then a workspace query is assumed; the routine
+          only calculates the optimal size of the WORK array, returns
+          this value as the first entry of the WORK array, and no error
+          message related to LWORK is issued by XERBLA.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IWORK</I> 
+<P>
+
+<PRE>
+          IWORK is INTEGER array, dimension (MAX(1,LIWORK))
+          On exit, if INFO = 0, <A HREF="/cgi-bin/man/man2html?1+IWORK">IWORK</A>(1) returns the optimal LIWORK.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LIWORK</I> 
+<P>
+
+<PRE>
+          LIWORK is INTEGER
+          The dimension of the array IWORK.
+          If COMPZ = 'N' or N &lt;= 1 then LIWORK must be at least 1.
+          If COMPZ = 'V' and N &gt; 1 then LIWORK must be at least
+                         ( 6 + 6*N + 5*N*lg N ).
+          If COMPZ = 'I' and N &gt; 1 then LIWORK must be at least
+                         ( 3 + 5*N ).
+          Note that for COMPZ = 'I' or 'V', then if N is less than or
+          equal to the minimum divide size, usually 25, then LIWORK
+          need only be 1.
+
+          If LIWORK = -1, then a workspace query is assumed; the
+          routine only calculates the optimal size of the IWORK array,
+          returns this value as the first entry of the IWORK array, and
+          no error message related to LIWORK is issued by XERBLA.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit.
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value.
+          &gt; 0:  The algorithm failed to compute an eigenvalue while
+                working on the submatrix lying in rows and columns
+                INFO/(N+1) through mod(INFO,N+1).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Jeff Rutter, Computer Science Division, University of California at Berkeley, USA 
+<BR>
+
+<BR>&nbsp;Modified&nbsp;by&nbsp;Francoise&nbsp;Tisseur,&nbsp;University&nbsp;of&nbsp;Tennessee&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 188 of file sstedc.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine sstedc (characterCOMPZ, integerN, real, dimension( * )D, real, dimension( * )E, real, dimension( ldz, * )Z, integerLDZ, real, dimension( * )WORK, integerLWORK, integer, dimension( * )IWORK, integerLIWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:44 GMT, February 12, 2014
+</BODY>
+</HTML>

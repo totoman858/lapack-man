@@ -1,0 +1,229 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dlartv.f</TITLE>
+</HEAD><BODY>
+<H1>dlartv.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dlartv.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>dlartv</B> (N, X, INCX, Y, INCY, C, S, INCC)
+
+<BR>
+
+<I></I><B>DLARTV</B> applies a vector of plane rotations with real cosines and real sines to the elements of a pair of vectors. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dlartv (integerN, double precision, dimension( * )X, integerINCX, double precision, dimension( * )Y, integerINCY, double precision, dimension( * )C, double precision, dimension( * )S, integerINCC)</H3>
+
+<P>
+<P>
+
+<B>DLARTV</B> applies a vector of plane rotations with real cosines and real sines to the elements of a pair of vectors.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ DLARTV applies a vector of real plane rotations to elements of the
+ real vectors x and y. For i = 1,2,...,n
+
+    ( x(i) ) := (  c(i)  s(i) ) ( x(i) )
+    ( y(i) )    ( -s(i)  c(i) ) ( y(i) )
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of plane rotations to be applied.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X</I> 
+<P>
+
+<PRE>
+          X is DOUBLE PRECISION array,
+                         dimension (1+(N-1)*INCX)
+          The vector x.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INCX</I> 
+<P>
+
+<PRE>
+          INCX is INTEGER
+          The increment between elements of X. INCX &gt; 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Y</I> 
+<P>
+
+<PRE>
+          Y is DOUBLE PRECISION array,
+                         dimension (1+(N-1)*INCY)
+          The vector y.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INCY</I> 
+<P>
+
+<PRE>
+          INCY is INTEGER
+          The increment between elements of Y. INCY &gt; 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>C</I> 
+<P>
+
+<PRE>
+          C is DOUBLE PRECISION array, dimension (1+(N-1)*INCC)
+          The cosines of the plane rotations.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>S</I> 
+<P>
+
+<PRE>
+          S is DOUBLE PRECISION array, dimension (1+(N-1)*INCC)
+          The sines of the plane rotations.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INCC</I> 
+<P>
+
+<PRE>
+          INCC is INTEGER
+          The increment between elements of C and S. INCC &gt; 0.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 109 of file dlartv.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dlartv (integerN, double precision, dimension( * )X, integerINCX, double precision, dimension( * )Y, integerINCY, double precision, dimension( * )C, double precision, dimension( * )S, integerINCC)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:47 GMT, February 12, 2014
+</BODY>
+</HTML>

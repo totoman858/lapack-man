@@ -1,0 +1,207 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of slamrg.f</TITLE>
+</HEAD><BODY>
+<H1>slamrg.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+slamrg.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>slamrg</B> (N1, N2, A, STRD1, STRD2, INDEX)
+
+<BR>
+
+<I></I><B>SLAMRG</B> creates a permutation list to merge the entries of two independently sorted sets into a single set sorted in ascending order. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine slamrg (integerN1, integerN2, real, dimension( * )A, integerSTRD1, integerSTRD2, integer, dimension( * )INDEX)</H3>
+
+<P>
+<P>
+
+<B>SLAMRG</B> creates a permutation list to merge the entries of two independently sorted sets into a single set sorted in ascending order.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ SLAMRG will create a permutation list which will merge the elements
+ of A (which is composed of two independently sorted sets) into a
+ single set which is sorted in ascending order.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>N1</I> 
+<P>
+
+<PRE>
+          N1 is INTEGER
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N2</I> 
+<P>
+
+<PRE>
+          N2 is INTEGER
+         These arguements contain the respective lengths of the two
+         sorted lists to be merged.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is REAL array, dimension (N1+N2)
+         The first N1 elements of A contain a list of numbers which
+         are sorted in either ascending or descending order.  Likewise
+         for the final N2 elements.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>STRD1</I> 
+<P>
+
+<PRE>
+          STRD1 is INTEGER
+</PRE>
+
+<P>
+
+<BR>
+
+<I>STRD2</I> 
+<P>
+
+<PRE>
+          STRD2 is INTEGER
+         These are the strides to be taken through the array A.
+         Allowable strides are 1 and -1.  They indicate whether a
+         subset of A is sorted in ascending (STRDx = 1) or descending
+         (STRDx = -1) order.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INDEX</I> 
+<P>
+
+<PRE>
+          INDEX is INTEGER array, dimension (N1+N2)
+         On exit this array will contain a permutation such that
+         if B( I ) = A( INDEX( I ) ) for I=1,N1+N2, then B will be
+         sorted in ascending order.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 100 of file slamrg.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine slamrg (integerN1, integerN2, real, dimension( * )A, integerSTRD1, integerSTRD2, integer, dimension( * )INDEX)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:58 GMT, February 12, 2014
+</BODY>
+</HTML>

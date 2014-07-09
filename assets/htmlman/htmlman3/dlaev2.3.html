@@ -1,0 +1,246 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dlaev2.f</TITLE>
+</HEAD><BODY>
+<H1>dlaev2.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dlaev2.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>dlaev2</B> (A, B, C, RT1, RT2, CS1, SN1)
+
+<BR>
+
+<I></I><B>DLAEV2</B> computes the eigenvalues and eigenvectors of a 2-by-2 symmetric/Hermitian matrix. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dlaev2 (double precisionA, double precisionB, double precisionC, double precisionRT1, double precisionRT2, double precisionCS1, double precisionSN1)</H3>
+
+<P>
+<P>
+
+<B>DLAEV2</B> computes the eigenvalues and eigenvectors of a 2-by-2 symmetric/Hermitian matrix.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ DLAEV2 computes the eigendecomposition of a 2-by-2 symmetric matrix
+    [  A   B  ]
+    [  B   C  ].
+ On return, RT1 is the eigenvalue of larger absolute value, RT2 is the
+ eigenvalue of smaller absolute value, and (CS1,SN1) is the unit right
+ eigenvector for RT1, giving the decomposition
+
+    [ CS1  SN1 ] [  A   B  ] [ CS1 -SN1 ]  =  [ RT1  0  ]
+    [-SN1  CS1 ] [  B   C  ] [ SN1  CS1 ]     [  0  RT2 ].
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>A</I> 
+<P>
+
+<PRE>
+          A is DOUBLE PRECISION
+          The (1,1) element of the 2-by-2 matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is DOUBLE PRECISION
+          The (1,2) element and the conjugate of the (2,1) element of
+          the 2-by-2 matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>C</I> 
+<P>
+
+<PRE>
+          C is DOUBLE PRECISION
+          The (2,2) element of the 2-by-2 matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RT1</I> 
+<P>
+
+<PRE>
+          RT1 is DOUBLE PRECISION
+          The eigenvalue of larger absolute value.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RT2</I> 
+<P>
+
+<PRE>
+          RT2 is DOUBLE PRECISION
+          The eigenvalue of smaller absolute value.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>CS1</I> 
+<P>
+
+<PRE>
+          CS1 is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SN1</I> 
+<P>
+
+<PRE>
+          SN1 is DOUBLE PRECISION
+          The vector (CS1, SN1) is a unit right eigenvector for RT1.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  RT1 is accurate to a few ulps barring over/underflow.
+
+  RT2 may be inaccurate if there is massive cancellation in the
+  determinant A*C-B*B; higher precision or correctly rounded or
+  correctly truncated arithmetic would be needed to compute RT2
+  accurately in all cases.
+
+  CS1 and SN1 are accurate to a few ulps barring over/underflow.
+
+  Overflow is possible only if RT1 is within a factor of 5 of overflow.
+  Underflow is harmless if the input data is 0 or exceeds
+     underflow_threshold / macheps.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 121 of file dlaev2.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dlaev2 (double precisionA, double precisionB, double precisionC, double precisionRT1, double precisionRT2, double precisionCS1, double precisionSN1)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:41 GMT, February 12, 2014
+</BODY>
+</HTML>

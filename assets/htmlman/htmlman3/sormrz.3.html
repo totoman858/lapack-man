@@ -1,0 +1,355 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of sormrz.f</TITLE>
+</HEAD><BODY>
+<H1>sormrz.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+sormrz.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>sormrz</B> (SIDE, TRANS, M, N, K, L, A, LDA, TAU, C, LDC, WORK, LWORK, INFO)
+
+<BR>
+
+<I></I><B>SORMRZ</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine sormrz (characterSIDE, characterTRANS, integerM, integerN, integerK, integerL, real, dimension( lda, * )A, integerLDA, real, dimension( * )TAU, real, dimension( ldc, * )C, integerLDC, real, dimension( * )WORK, integerLWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>SORMRZ</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ SORMRZ overwrites the general real M-by-N matrix C with
+
+                 SIDE = 'L'     SIDE = 'R'
+ TRANS = 'N':      Q * C          C * Q
+ TRANS = 'T':      Q**T * C       C * Q**T
+
+ where Q is a real orthogonal matrix defined as the product of k
+ elementary reflectors
+
+       Q = <A HREF="/cgi-bin/man/man2html?1+H">H</A>(1) <A HREF="/cgi-bin/man/man2html?2+H">H</A>(2) . . . H(k)
+
+ as returned by STZRZF. Q is of order M if SIDE = 'L' and of order N
+ if SIDE = 'R'.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>SIDE</I> 
+<P>
+
+<PRE>
+          SIDE is CHARACTER*1
+          = 'L': apply Q or Q**T from the Left;
+          = 'R': apply Q or Q**T from the Right.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TRANS</I> 
+<P>
+
+<PRE>
+          TRANS is CHARACTER*1
+          = 'N':  No transpose, apply Q;
+          = 'T':  Transpose, apply Q**T.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The number of rows of the matrix C. M &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of columns of the matrix C. N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>K</I> 
+<P>
+
+<PRE>
+          K is INTEGER
+          The number of elementary reflectors whose product defines
+          the matrix Q.
+          If SIDE = 'L', M &gt;= K &gt;= 0;
+          if SIDE = 'R', N &gt;= K &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>L</I> 
+<P>
+
+<PRE>
+          L is INTEGER
+          The number of columns of the matrix A containing
+          the meaningful part of the Householder reflectors.
+          If SIDE = 'L', M &gt;= L &gt;= 0, if SIDE = 'R', N &gt;= L &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is REAL array, dimension
+                               (LDA,M) if SIDE = 'L',
+                               (LDA,N) if SIDE = 'R'
+          The i-th row must contain the vector which defines the
+          elementary reflector H(i), for i = 1,2,...,k, as returned by
+          STZRZF in the last k rows of its array argument A.
+          A is modified by the routine but restored on exit.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A. LDA &gt;= max(1,K).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TAU</I> 
+<P>
+
+<PRE>
+          TAU is REAL array, dimension (K)
+          TAU(i) must contain the scalar factor of the elementary
+          reflector H(i), as returned by STZRZF.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>C</I> 
+<P>
+
+<PRE>
+          C is REAL array, dimension (LDC,N)
+          On entry, the M-by-N matrix C.
+          On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDC</I> 
+<P>
+
+<PRE>
+          LDC is INTEGER
+          The leading dimension of the array C. LDC &gt;= max(1,M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is REAL array, dimension (MAX(1,LWORK))
+          On exit, if INFO = 0, <A HREF="/cgi-bin/man/man2html?1+WORK">WORK</A>(1) returns the optimal LWORK.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LWORK</I> 
+<P>
+
+<PRE>
+          LWORK is INTEGER
+          The dimension of the array WORK.
+          If SIDE = 'L', LWORK &gt;= max(1,N);
+          if SIDE = 'R', LWORK &gt;= max(1,M).
+          For optimum performance LWORK &gt;= N*NB if SIDE = 'L', and
+          LWORK &gt;= M*NB if SIDE = 'R', where NB is the optimal
+          blocksize.
+
+          If LWORK = -1, then a workspace query is assumed; the routine
+          only calculates the optimal size of the WORK array, returns
+          this value as the first entry of the WORK array, and no error
+          message related to LWORK is issued by XERBLA.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+A. Petitet, Computer Science Dept., Univ. of Tenn., Knoxville, USA 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ 
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 189 of file sormrz.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine sormrz (characterSIDE, characterTRANS, integerM, integerN, integerK, integerL, real, dimension( lda, * )A, integerLDA, real, dimension( * )TAU, real, dimension( ldc, * )C, integerLDC, real, dimension( * )WORK, integerLWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:37 GMT, February 12, 2014
+</BODY>
+</HTML>

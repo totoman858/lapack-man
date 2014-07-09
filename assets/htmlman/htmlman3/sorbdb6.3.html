@@ -1,0 +1,297 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of sorbdb6.f</TITLE>
+</HEAD><BODY>
+<H1>sorbdb6.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+sorbdb6.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>sorbdb6</B> (M1, M2, N, X1, INCX1, X2, INCX2, Q1, LDQ1, Q2, LDQ2, WORK, LWORK, INFO)
+
+<BR>
+
+<I></I><B>SORBDB6</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine sorbdb6 (integerM1, integerM2, integerN, real, dimension(*)X1, integerINCX1, real, dimension(*)X2, integerINCX2, real, dimension(ldq1,*)Q1, integerLDQ1, real, dimension(ldq2,*)Q2, integerLDQ2, real, dimension(*)WORK, integerLWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>SORBDB6</B> .SH &quot;Purpose:&quot;
+<P>
+
+<P>
+
+<P>
+
+<PRE>
+ SORBDB6 orthogonalizes the column vector
+      X = [ X1 ]
+          [ X2 ]
+ with respect to the columns of
+      Q = [ Q1 ] .
+          [ Q2 ]
+ The columns of Q must be orthonormal.
+
+ If the projection is zero according to Kahan's &quot;twice is enough&quot;
+ criterion, then the zero vector is returned..fi
+
+ 
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD><I>M1</I> 
+
+          M1 is INTEGER
+           The dimension of X1 and the number of rows in Q1. 0 &lt;= M1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>M2</I> 
+<P>
+
+<PRE>
+          M2 is INTEGER
+           The dimension of X2 and the number of rows in Q2. 0 &lt;= M2.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+           The number of columns in Q1 and Q2. 0 &lt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X1</I> 
+<P>
+
+<PRE>
+          X1 is REAL array, dimension (M1)
+           On entry, the top part of the vector to be orthogonalized.
+           On exit, the top part of the projected vector.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INCX1</I> 
+<P>
+
+<PRE>
+          INCX1 is INTEGER
+           Increment for entries of X1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X2</I> 
+<P>
+
+<PRE>
+          X2 is REAL array, dimension (M2)
+           On entry, the bottom part of the vector to be
+           orthogonalized. On exit, the bottom part of the projected
+           vector.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INCX2</I> 
+<P>
+
+<PRE>
+          INCX2 is INTEGER
+           Increment for entries of X2.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Q1</I> 
+<P>
+
+<PRE>
+          Q1 is REAL array, dimension (LDQ1, N)
+           The top part of the orthonormal basis matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDQ1</I> 
+<P>
+
+<PRE>
+          LDQ1 is INTEGER
+           The leading dimension of Q1. LDQ1 &gt;= M1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Q2</I> 
+<P>
+
+<PRE>
+          Q2 is REAL array, dimension (LDQ2, N)
+           The bottom part of the orthonormal basis matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDQ2</I> 
+<P>
+
+<PRE>
+          LDQ2 is INTEGER
+           The leading dimension of Q2. LDQ2 &gt;= M2.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is REAL array, dimension (LWORK)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LWORK</I> 
+<P>
+
+<PRE>
+          LWORK is INTEGER
+           The dimension of the array WORK. LWORK &gt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+           = 0:  successful exit.
+           &lt; 0:  if INFO = -i, the i-th argument had an illegal value.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+July 2012 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 154 of file sorbdb6.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine sorbdb6 (integerM1, integerM2, integerN, real, dimension(*)X1, integerINCX1, real, dimension(*)X2, integerINCX2, real, dimension(ldq1,*)Q1, integerLDQ1, real, dimension(ldq2,*)Q2, integerLDQ2, real, dimension(*)WORK, integerLWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:39 GMT, February 12, 2014
+</BODY>
+</HTML>

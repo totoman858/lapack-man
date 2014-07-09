@@ -1,0 +1,486 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of zlaqr2.f</TITLE>
+</HEAD><BODY>
+<H1>zlaqr2.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+zlaqr2.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>zlaqr2</B> (WANTT, WANTZ, N, KTOP, KBOT, NW, H, LDH, ILOZ, IHIZ, Z, LDZ, NS, ND, SH, V, LDV, NH, T, LDT, NV, WV, LDWV, WORK, LWORK)
+
+<BR>
+
+<I></I><B>ZLAQR2</B> performs the unitary similarity transformation of a Hessenberg matrix to detect and deflate fully converged eigenvalues from a trailing principal submatrix (aggressive early deflation). 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine zlaqr2 (logicalWANTT, logicalWANTZ, integerN, integerKTOP, integerKBOT, integerNW, complex*16, dimension( ldh, * )H, integerLDH, integerILOZ, integerIHIZ, complex*16, dimension( ldz, * )Z, integerLDZ, integerNS, integerND, complex*16, dimension( * )SH, complex*16, dimension( ldv, * )V, integerLDV, integerNH, complex*16, dimension( ldt, * )T, integerLDT, integerNV, complex*16, dimension( ldwv, * )WV, integerLDWV, complex*16, dimension( * )WORK, integerLWORK)</H3>
+
+<P>
+<P>
+
+<B>ZLAQR2</B> performs the unitary similarity transformation of a Hessenberg matrix to detect and deflate fully converged eigenvalues from a trailing principal submatrix (aggressive early deflation).  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+    ZLAQR2 is identical to ZLAQR3 except that it avoids
+    recursion by calling ZLAHQR instead of ZLAQR4.
+
+    Aggressive early deflation:
+
+    ZLAQR2 accepts as input an upper Hessenberg matrix
+    H and performs an unitary similarity transformation
+    designed to detect and deflate fully converged eigenvalues from
+    a trailing principal submatrix.  On output H has been over-
+    written by a new Hessenberg matrix that is a perturbation of
+    an unitary similarity transformation of H.  It is to be
+    hoped that the final version of H has many zero subdiagonal
+    entries.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>WANTT</I> 
+<P>
+
+<PRE>
+          WANTT is LOGICAL
+          If .TRUE., then the Hessenberg matrix H is fully updated
+          so that the triangular Schur factor may be
+          computed (in cooperation with the calling subroutine).
+          If .FALSE., then only enough of H is updated to preserve
+          the eigenvalues.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WANTZ</I> 
+<P>
+
+<PRE>
+          WANTZ is LOGICAL
+          If .TRUE., then the unitary matrix Z is updated so
+          so that the unitary Schur factor may be computed
+          (in cooperation with the calling subroutine).
+          If .FALSE., then Z is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrix H and (if WANTZ is .TRUE.) the
+          order of the unitary matrix Z.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>KTOP</I> 
+<P>
+
+<PRE>
+          KTOP is INTEGER
+          It is assumed that either KTOP = 1 or H(KTOP,KTOP-1)=0.
+          KBOT and KTOP together determine an isolated block
+          along the diagonal of the Hessenberg matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>KBOT</I> 
+<P>
+
+<PRE>
+          KBOT is INTEGER
+          It is assumed without a check that either
+          KBOT = N or H(KBOT+1,KBOT)=0.  KBOT and KTOP together
+          determine an isolated block along the diagonal of the
+          Hessenberg matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NW</I> 
+<P>
+
+<PRE>
+          NW is INTEGER
+          Deflation window size.  1 .LE. NW .LE. (KBOT-KTOP+1).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>H</I> 
+<P>
+
+<PRE>
+          H is COMPLEX*16 array, dimension (LDH,N)
+          On input the initial N-by-N section of H stores the
+          Hessenberg matrix undergoing aggressive early deflation.
+          On output H has been transformed by a unitary
+          similarity transformation, perturbed, and the returned
+          to Hessenberg form that (it is to be hoped) has some
+          zero subdiagonal entries.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDH</I> 
+<P>
+
+<PRE>
+          LDH is integer
+          Leading dimension of H just as declared in the calling
+          subroutine.  N .LE. LDH
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ILOZ</I> 
+<P>
+
+<PRE>
+          ILOZ is INTEGER
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IHIZ</I> 
+<P>
+
+<PRE>
+          IHIZ is INTEGER
+          Specify the rows of Z to which transformations must be
+          applied if WANTZ is .TRUE.. 1 .LE. ILOZ .LE. IHIZ .LE. N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is COMPLEX*16 array, dimension (LDZ,N)
+          IF WANTZ is .TRUE., then on output, the unitary
+          similarity transformation mentioned above has been
+          accumulated into Z(ILOZ:IHIZ,ILO:IHI) from the right.
+          If WANTZ is .FALSE., then Z is unreferenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDZ</I> 
+<P>
+
+<PRE>
+          LDZ is integer
+          The leading dimension of Z just as declared in the
+          calling subroutine.  1 .LE. LDZ.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NS</I> 
+<P>
+
+<PRE>
+          NS is integer
+          The number of unconverged (ie approximate) eigenvalues
+          returned in SR and SI that may be used as shifts by the
+          calling subroutine.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ND</I> 
+<P>
+
+<PRE>
+          ND is integer
+          The number of converged eigenvalues uncovered by this
+          subroutine.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SH</I> 
+<P>
+
+<PRE>
+          SH is COMPLEX*16 array, dimension KBOT
+          On output, approximate eigenvalues that may
+          be used for shifts are stored in SH(KBOT-ND-NS+1)
+          through SR(KBOT-ND).  Converged eigenvalues are
+          stored in SH(KBOT-ND+1) through SH(KBOT).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>V</I> 
+<P>
+
+<PRE>
+          V is COMPLEX*16 array, dimension (LDV,NW)
+          An NW-by-NW work array.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDV</I> 
+<P>
+
+<PRE>
+          LDV is integer scalar
+          The leading dimension of V just as declared in the
+          calling subroutine.  NW .LE. LDV
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NH</I> 
+<P>
+
+<PRE>
+          NH is integer scalar
+          The number of columns of T.  NH.GE.NW.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>T</I> 
+<P>
+
+<PRE>
+          T is COMPLEX*16 array, dimension (LDT,NW)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDT</I> 
+<P>
+
+<PRE>
+          LDT is integer
+          The leading dimension of T just as declared in the
+          calling subroutine.  NW .LE. LDT
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NV</I> 
+<P>
+
+<PRE>
+          NV is integer
+          The number of rows of work array WV available for
+          workspace.  NV.GE.NW.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WV</I> 
+<P>
+
+<PRE>
+          WV is COMPLEX*16 array, dimension (LDWV,NW)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDWV</I> 
+<P>
+
+<PRE>
+          LDWV is integer
+          The leading dimension of W just as declared in the
+          calling subroutine.  NW .LE. LDV
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is COMPLEX*16 array, dimension LWORK.
+          On exit, <A HREF="/cgi-bin/man/man2html?1+WORK">WORK</A>(1) is set to an estimate of the optimal value
+          of LWORK for the given values of N, NW, KTOP and KBOT.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LWORK</I> 
+<P>
+
+<PRE>
+          LWORK is integer
+          The dimension of the work array WORK.  LWORK = 2*NW
+          suffices, but greater efficiency may result from larger
+          values of LWORK.
+
+          If LWORK = -1, then a workspace query is assumed; ZLAQR2
+          only estimates the optimal workspace size for the given
+          values of N, NW, KTOP and KBOT.  The estimate is returned
+          in <A HREF="/cgi-bin/man/man2html?1+WORK">WORK</A>(1).  No error message related to LWORK is issued
+          by XERBLA.  Neither H nor Z are accessed.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Karen Braman and Ralph Byers, Department of Mathematics, University of Kansas, USA 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 269 of file zlaqr2.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine zlaqr2 (logicalWANTT, logicalWANTZ, integerN, integerKTOP, integerKBOT, integerNW, complex*16, dimension( ldh, * )H, integerLDH, integerILOZ, integerIHIZ, complex*16, dimension( ldz, * )Z, integerLDZ, integerNS, integerND, complex*16, dimension( * )SH, complex*16, dimension( ldv, * )V, integerLDV, integerNH, complex*16, dimension( ldt, * )T, integerLDT, integerNV, complex*16, dimension( ldwv, * )WV, integerLDWV, complex*16, dimension( * )WORK, integerLWORK)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:53 GMT, February 12, 2014
+</BODY>
+</HTML>

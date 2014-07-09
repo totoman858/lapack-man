@@ -1,0 +1,180 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of srscl.f</TITLE>
+</HEAD><BODY>
+<H1>srscl.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+srscl.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>srscl</B> (N, SA, SX, INCX)
+
+<BR>
+
+<I></I><B>SRSCL</B> multiplies a vector by the reciprocal of a real scalar. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine srscl (integerN, realSA, real, dimension( * )SX, integerINCX)</H3>
+
+<P>
+<P>
+
+<B>SRSCL</B> multiplies a vector by the reciprocal of a real scalar.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ SRSCL multiplies an n-element real vector x by the real scalar 1/a.
+ This is done without overflow or underflow as long as
+ the final result x/a does not overflow or underflow.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of components of the vector x.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SA</I> 
+<P>
+
+<PRE>
+          SA is REAL
+          The scalar a which is used to divide each component of x.
+          SA must be &gt;= 0, or the subroutine will divide by zero.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SX</I> 
+<P>
+
+<PRE>
+          SX is REAL array, dimension
+                         (1+(N-1)*abs(INCX))
+          The n-element vector x.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INCX</I> 
+<P>
+
+<PRE>
+          INCX is INTEGER
+          The increment between successive values of the vector SX.
+          &gt; 0:  <A HREF="/cgi-bin/man/man2html?1+SX">SX</A>(1) = <A HREF="/cgi-bin/man/man2html?1+X">X</A>(1) and SX(1+(i-1)*INCX) = x(i),     1&lt; i&lt;= n
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 85 of file srscl.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine srscl (integerN, realSA, real, dimension( * )SX, integerINCX)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:32 GMT, February 12, 2014
+</BODY>
+</HTML>

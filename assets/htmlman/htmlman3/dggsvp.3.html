@@ -1,0 +1,463 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dggsvp.f</TITLE>
+</HEAD><BODY>
+<H1>dggsvp.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dggsvp.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>dggsvp</B> (JOBU, JOBV, JOBQ, M, P, N, A, LDA, B, LDB, TOLA, TOLB, K, L, U, LDU, V, LDV, Q, LDQ, IWORK, TAU, WORK, INFO)
+
+<BR>
+
+<I></I><B>DGGSVP</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dggsvp (characterJOBU, characterJOBV, characterJOBQ, integerM, integerP, integerN, double precision, dimension( lda, * )A, integerLDA, double precision, dimension( ldb, * )B, integerLDB, double precisionTOLA, double precisionTOLB, integerK, integerL, double precision, dimension( ldu, * )U, integerLDU, double precision, dimension( ldv, * )V, integerLDV, double precision, dimension( ldq, * )Q, integerLDQ, integer, dimension( * )IWORK, double precision, dimension( * )TAU, double precision, dimension( * )WORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>DGGSVP</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ DGGSVP computes orthogonal matrices U, V and Q such that
+
+                    N-K-L  K    L
+  U**T*A*Q =     K ( 0    A12  A13 )  if M-K-L &gt;= 0;
+                 L ( 0     0   A23 )
+             M-K-L ( 0     0    0  )
+
+                  N-K-L  K    L
+         =     K ( 0    A12  A13 )  if M-K-L &lt; 0;
+             M-K ( 0     0   A23 )
+
+                  N-K-L  K    L
+  V**T*B*Q =   L ( 0     0   B13 )
+             P-L ( 0     0    0  )
+
+ where the K-by-K matrix A12 and L-by-L matrix B13 are nonsingular
+ upper triangular; A23 is L-by-L upper triangular if M-K-L &gt;= 0,
+ otherwise A23 is (M-K)-by-L upper trapezoidal.  K+L = the effective
+ numerical rank of the (M+P)-by-N matrix (A**T,B**T)**T. 
+
+ This decomposition is the preprocessing step for computing the
+ Generalized Singular Value Decomposition (GSVD), see subroutine
+ DGGSVD.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>JOBU</I> 
+<P>
+
+<PRE>
+          JOBU is CHARACTER*1
+          = 'U':  Orthogonal matrix U is computed;
+          = 'N':  U is not computed.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>JOBV</I> 
+<P>
+
+<PRE>
+          JOBV is CHARACTER*1
+          = 'V':  Orthogonal matrix V is computed;
+          = 'N':  V is not computed.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>JOBQ</I> 
+<P>
+
+<PRE>
+          JOBQ is CHARACTER*1
+          = 'Q':  Orthogonal matrix Q is computed;
+          = 'N':  Q is not computed.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The number of rows of the matrix A.  M &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>P</I> 
+<P>
+
+<PRE>
+          P is INTEGER
+          The number of rows of the matrix B.  P &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of columns of the matrices A and B.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is DOUBLE PRECISION array, dimension (LDA,N)
+          On entry, the M-by-N matrix A.
+          On exit, A contains the triangular (or trapezoidal) matrix
+          described in the Purpose section.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A. LDA &gt;= max(1,M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is DOUBLE PRECISION array, dimension (LDB,N)
+          On entry, the P-by-N matrix B.
+          On exit, B contains the triangular matrix described in
+          the Purpose section.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDB</I> 
+<P>
+
+<PRE>
+          LDB is INTEGER
+          The leading dimension of the array B. LDB &gt;= max(1,P).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TOLA</I> 
+<P>
+
+<PRE>
+          TOLA is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TOLB</I> 
+<P>
+
+<PRE>
+          TOLB is DOUBLE PRECISION
+
+          TOLA and TOLB are the thresholds to determine the effective
+          numerical rank of matrix B and a subblock of A. Generally,
+          they are set to
+             TOLA = MAX(M,N)*norm(A)*MACHEPS,
+             TOLB = MAX(P,N)*norm(B)*MACHEPS.
+          The size of TOLA and TOLB may affect the size of backward
+          errors of the decomposition.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>K</I> 
+<P>
+
+<PRE>
+          K is INTEGER
+</PRE>
+
+<P>
+
+<BR>
+
+<I>L</I> 
+<P>
+
+<PRE>
+          L is INTEGER
+
+          On exit, K and L specify the dimension of the subblocks
+          described in Purpose section.
+          K + L = effective numerical rank of (A**T,B**T)**T.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>U</I> 
+<P>
+
+<PRE>
+          U is DOUBLE PRECISION array, dimension (LDU,M)
+          If JOBU = 'U', U contains the orthogonal matrix U.
+          If JOBU = 'N', U is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDU</I> 
+<P>
+
+<PRE>
+          LDU is INTEGER
+          The leading dimension of the array U. LDU &gt;= max(1,M) if
+          JOBU = 'U'; LDU &gt;= 1 otherwise.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>V</I> 
+<P>
+
+<PRE>
+          V is DOUBLE PRECISION array, dimension (LDV,P)
+          If JOBV = 'V', V contains the orthogonal matrix V.
+          If JOBV = 'N', V is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDV</I> 
+<P>
+
+<PRE>
+          LDV is INTEGER
+          The leading dimension of the array V. LDV &gt;= max(1,P) if
+          JOBV = 'V'; LDV &gt;= 1 otherwise.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Q</I> 
+<P>
+
+<PRE>
+          Q is DOUBLE PRECISION array, dimension (LDQ,N)
+          If JOBQ = 'Q', Q contains the orthogonal matrix Q.
+          If JOBQ = 'N', Q is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDQ</I> 
+<P>
+
+<PRE>
+          LDQ is INTEGER
+          The leading dimension of the array Q. LDQ &gt;= max(1,N) if
+          JOBQ = 'Q'; LDQ &gt;= 1 otherwise.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IWORK</I> 
+<P>
+
+<PRE>
+          IWORK is INTEGER array, dimension (N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TAU</I> 
+<P>
+
+<PRE>
+          TAU is DOUBLE PRECISION array, dimension (N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is DOUBLE PRECISION array, dimension (max(3*N,M,P))
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+The subroutine uses LAPACK subroutine DGEQPF for the QR factorization with column pivoting to detect the effective numerical rank of the a matrix. It may be replaced by a better rank determination strategy. 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 253 of file dggsvp.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dggsvp (characterJOBU, characterJOBV, characterJOBQ, integerM, integerP, integerN, double precision, dimension( lda, * )A, integerLDA, double precision, dimension( ldb, * )B, integerLDB, double precisionTOLA, double precisionTOLB, integerK, integerL, double precision, dimension( ldu, * )U, integerLDU, double precision, dimension( ldv, * )V, integerLDV, double precision, dimension( ldq, * )Q, integerLDQ, integer, dimension( * )IWORK, double precision, dimension( * )TAU, double precision, dimension( * )WORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:57 GMT, February 12, 2014
+</BODY>
+</HTML>

@@ -1,0 +1,351 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of sgemm.f</TITLE>
+</HEAD><BODY>
+<H1>sgemm.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+sgemm.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>sgemm</B> (TRANSA, TRANSB, M, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC)
+
+<BR>
+
+<I></I><B>SGEMM</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine sgemm (characterTRANSA, characterTRANSB, integerM, integerN, integerK, realALPHA, real, dimension(lda,*)A, integerLDA, real, dimension(ldb,*)B, integerLDB, realBETA, real, dimension(ldc,*)C, integerLDC)</H3>
+
+<P>
+<P>
+
+<B>SGEMM</B> <B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ SGEMM  performs one of the matrix-matrix operations
+
+    C := alpha*op( A )*op( B ) + beta*C,
+
+ where  op( X ) is one of
+
+    op( X ) = X   or   op( X ) = X**T,
+
+ alpha and beta are scalars, and A, B and C are matrices, with op( A )
+ an m by k matrix,  op( B )  a  k by n matrix and  C an m by n matrix.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>TRANSA</I> 
+<P>
+
+<PRE>
+          TRANSA is CHARACTER*1
+           On entry, TRANSA specifies the form of op( A ) to be used in
+           the matrix multiplication as follows:
+
+              TRANSA = 'N' or 'n',  op( A ) = A.
+
+              TRANSA = 'T' or 't',  op( A ) = A**T.
+
+              TRANSA = 'C' or 'c',  op( A ) = A**T.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TRANSB</I> 
+<P>
+
+<PRE>
+          TRANSB is CHARACTER*1
+           On entry, TRANSB specifies the form of op( B ) to be used in
+           the matrix multiplication as follows:
+
+              TRANSB = 'N' or 'n',  op( B ) = B.
+
+              TRANSB = 'T' or 't',  op( B ) = B**T.
+
+              TRANSB = 'C' or 'c',  op( B ) = B**T.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+           On entry,  M  specifies  the number  of rows  of the  matrix
+           op( A )  and of the  matrix  C.  M  must  be at least  zero.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+           On entry,  N  specifies the number  of columns of the matrix
+           op( B ) and the number of columns of the matrix C. N must be
+           at least zero.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>K</I> 
+<P>
+
+<PRE>
+          K is INTEGER
+           On entry,  K  specifies  the number of columns of the matrix
+           op( A ) and the number of rows of the matrix op( B ). K must
+           be at least  zero.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ALPHA</I> 
+<P>
+
+<PRE>
+          ALPHA is REAL
+           On entry, ALPHA specifies the scalar alpha.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is REAL array of DIMENSION ( LDA, ka ), where ka is
+           k  when  TRANSA = 'N' or 'n',  and is  m  otherwise.
+           Before entry with  TRANSA = 'N' or 'n',  the leading  m by k
+           part of the array  A  must contain the matrix  A,  otherwise
+           the leading  k by m  part of the array  A  must contain  the
+           matrix A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+           On entry, LDA specifies the first dimension of A as declared
+           in the calling (sub) program. When  TRANSA = 'N' or 'n' then
+           LDA must be at least  max( 1, m ), otherwise  LDA must be at
+           least  max( 1, k ).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is REAL array of DIMENSION ( LDB, kb ), where kb is
+           n  when  TRANSB = 'N' or 'n',  and is  k  otherwise.
+           Before entry with  TRANSB = 'N' or 'n',  the leading  k by n
+           part of the array  B  must contain the matrix  B,  otherwise
+           the leading  n by k  part of the array  B  must contain  the
+           matrix B.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDB</I> 
+<P>
+
+<PRE>
+          LDB is INTEGER
+           On entry, LDB specifies the first dimension of B as declared
+           in the calling (sub) program. When  TRANSB = 'N' or 'n' then
+           LDB must be at least  max( 1, k ), otherwise  LDB must be at
+           least  max( 1, n ).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>BETA</I> 
+<P>
+
+<PRE>
+          BETA is REAL
+           On entry,  BETA  specifies the scalar  beta.  When  BETA  is
+           supplied as zero then C need not be set on input.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>C</I> 
+<P>
+
+<PRE>
+          C is REAL array of DIMENSION ( LDC, n ).
+           Before entry, the leading  m by n  part of the array  C must
+           contain the matrix  C,  except when  beta  is zero, in which
+           case C need not be set on entry.
+           On exit, the array  C  is overwritten by the  m by n  matrix
+           ( alpha*op( A )*op( B ) + beta*C ).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDC</I> 
+<P>
+
+<PRE>
+          LDC is INTEGER
+           On entry, LDC specifies the first dimension of C as declared
+           in  the  calling  (sub)  program.   LDC  must  be  at  least
+           max( 1, m ).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  Level 3 Blas routine.
+
+  -- Written on 8-February-1989.
+     Jack Dongarra, Argonne National Laboratory.
+     Iain Duff, AERE Harwell.
+     Jeremy Du Croz, Numerical Algorithms Group Ltd.
+     Sven Hammarling, Numerical Algorithms Group Ltd.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 188 of file sgemm.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine sgemm (characterTRANSA, characterTRANSB, integerM, integerN, integerK, realALPHA, real, dimension(lda,*)A, integerLDA, real, dimension(ldb,*)B, integerLDB, realBETA, real, dimension(ldc,*)C, integerLDC)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:38 GMT, February 12, 2014
+</BODY>
+</HTML>

@@ -1,0 +1,352 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of zcgesv.f</TITLE>
+</HEAD><BODY>
+<H1>zcgesv.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+zcgesv.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>zcgesv</B> (N, NRHS, A, LDA, IPIV, B, LDB, X, LDX, WORK, SWORK, RWORK, ITER, INFO)
+
+<BR>
+
+<I></I><B> ZCGESV computes the solution to system of linear equations A * X = B for GE matrices</B> (mixed precision with iterative refinement) 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine zcgesv (integerN, integerNRHS, complex*16, dimension( lda, * )A, integerLDA, integer, dimension( * )IPIV, complex*16, dimension( ldb, * )B, integerLDB, complex*16, dimension( ldx, * )X, integerLDX, complex*16, dimension( n, * )WORK, complex, dimension( * )SWORK, double precision, dimension( * )RWORK, integerITER, integerINFO)</H3>
+
+<P>
+<P>
+
+<B> ZCGESV computes the solution to system of linear equations A * X = B for GE matrices</B> (mixed precision with iterative refinement)  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZCGESV computes the solution to a complex system of linear equations
+    A * X = B,
+ where A is an N-by-N matrix and X and B are N-by-NRHS matrices.
+
+ ZCGESV first attempts to factorize the matrix in COMPLEX and use this
+ factorization within an iterative refinement procedure to produce a
+ solution with COMPLEX*16 normwise backward error quality (see below).
+ If the approach fails the method switches to a COMPLEX*16
+ factorization and solve.
+
+ The iterative refinement is not going to be a winning strategy if
+ the ratio COMPLEX performance over COMPLEX*16 performance is too
+ small. A reasonable strategy should take the number of right-hand
+ sides and the size of the matrix into account. This might be done
+ with a call to ILAENV in the future. Up to now, we always try
+ iterative refinement.
+
+ The iterative refinement process is stopped if
+     ITER &gt; ITERMAX
+ or for all the RHS we have:
+     RNRM &lt; SQRT(N)*XNRM*ANRM*EPS*BWDMAX
+ where
+     o ITER is the number of the current iteration in the iterative
+       refinement process
+     o RNRM is the infinity-norm of the residual
+     o XNRM is the infinity-norm of the solution
+     o ANRM is the infinity-operator-norm of the matrix A
+     o EPS is the machine epsilon returned by DLAMCH('Epsilon')
+ The value ITERMAX and BWDMAX are fixed to 30 and 1.0D+00
+ respectively.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of linear equations, i.e., the order of the
+          matrix A.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NRHS</I> 
+<P>
+
+<PRE>
+          NRHS is INTEGER
+          The number of right hand sides, i.e., the number of columns
+          of the matrix B.  NRHS &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is COMPLEX*16 array,
+          dimension (LDA,N)
+          On entry, the N-by-N coefficient matrix A.
+          On exit, if iterative refinement has been successfully used
+          (INFO.EQ.0 and ITER.GE.0, see description below), then A is
+          unchanged, if double precision factorization has been used
+          (INFO.EQ.0 and ITER.LT.0, see description below), then the
+          array A contains the factors L and U from the factorization
+          A = P*L*U; the unit diagonal elements of L are not stored.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A.  LDA &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IPIV</I> 
+<P>
+
+<PRE>
+          IPIV is INTEGER array, dimension (N)
+          The pivot indices that define the permutation matrix P;
+          row i of the matrix was interchanged with row IPIV(i).
+          Corresponds either to the single precision factorization
+          (if INFO.EQ.0 and ITER.GE.0) or the double precision
+          factorization (if INFO.EQ.0 and ITER.LT.0).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is COMPLEX*16 array, dimension (LDB,NRHS)
+          The N-by-NRHS right hand side matrix B.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDB</I> 
+<P>
+
+<PRE>
+          LDB is INTEGER
+          The leading dimension of the array B.  LDB &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X</I> 
+<P>
+
+<PRE>
+          X is COMPLEX*16 array, dimension (LDX,NRHS)
+          If INFO = 0, the N-by-NRHS solution matrix X.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDX</I> 
+<P>
+
+<PRE>
+          LDX is INTEGER
+          The leading dimension of the array X.  LDX &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is COMPLEX*16 array, dimension (N*NRHS)
+          This array is used to hold the residual vectors.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SWORK</I> 
+<P>
+
+<PRE>
+          SWORK is COMPLEX array, dimension (N*(N+NRHS))
+          This array is used to use the single precision matrix and the
+          right-hand sides or solutions in single precision.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RWORK</I> 
+<P>
+
+<PRE>
+          RWORK is DOUBLE PRECISION array, dimension (N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ITER</I> 
+<P>
+
+<PRE>
+          ITER is INTEGER
+          &lt; 0: iterative refinement has failed, COMPLEX*16
+               factorization has been performed
+               -1 : the routine fell back to full precision for
+                    implementation- or machine-specific reasons
+               -2 : narrowing the precision induced an overflow,
+                    the routine fell back to full precision
+               -3 : failure of CGETRF
+               -31: stop the iterative refinement after the 30th
+                    iterations
+          &gt; 0: iterative refinement has been sucessfully used.
+               Returns the number of iterations
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value
+          &gt; 0:  if INFO = i, U(i,i) computed in COMPLEX*16 is exactly
+                zero.  The factorization has been completed, but the
+                factor U is exactly singular, so the solution
+                could not be computed.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 201 of file zcgesv.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine zcgesv (integerN, integerNRHS, complex*16, dimension( lda, * )A, integerLDA, integer, dimension( * )IPIV, complex*16, dimension( ldb, * )B, integerLDB, complex*16, dimension( ldx, * )X, integerLDX, complex*16, dimension( n, * )WORK, complex, dimension( * )SWORK, double precision, dimension( * )RWORK, integerITER, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:05 GMT, February 12, 2014
+</BODY>
+</HTML>

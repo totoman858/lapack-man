@@ -1,0 +1,474 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of slaqr5.f</TITLE>
+</HEAD><BODY>
+<H1>slaqr5.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+slaqr5.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>slaqr5</B> (WANTT, WANTZ, KACC22, N, KTOP, KBOT, NSHFTS, SR, SI, H, LDH, ILOZ, IHIZ, Z, LDZ, V, LDV, U, LDU, NV, WV, LDWV, NH, WH, LDWH)
+
+<BR>
+
+<I></I><B>SLAQR5</B> performs a single small-bulge multi-shift QR sweep. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine slaqr5 (logicalWANTT, logicalWANTZ, integerKACC22, integerN, integerKTOP, integerKBOT, integerNSHFTS, real, dimension( * )SR, real, dimension( * )SI, real, dimension( ldh, * )H, integerLDH, integerILOZ, integerIHIZ, real, dimension( ldz, * )Z, integerLDZ, real, dimension( ldv, * )V, integerLDV, real, dimension( ldu, * )U, integerLDU, integerNV, real, dimension( ldwv, * )WV, integerLDWV, integerNH, real, dimension( ldwh, * )WH, integerLDWH)</H3>
+
+<P>
+<P>
+
+<B>SLAQR5</B> performs a single small-bulge multi-shift QR sweep.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+    SLAQR5, called by SLAQR0, performs a
+    single small-bulge multi-shift QR sweep.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>WANTT</I> 
+<P>
+
+<PRE>
+          WANTT is logical scalar
+             WANTT = .true. if the quasi-triangular Schur factor
+             is being computed.  WANTT is set to .false. otherwise.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WANTZ</I> 
+<P>
+
+<PRE>
+          WANTZ is logical scalar
+             WANTZ = .true. if the orthogonal Schur factor is being
+             computed.  WANTZ is set to .false. otherwise.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>KACC22</I> 
+<P>
+
+<PRE>
+          KACC22 is integer with value 0, 1, or 2.
+             Specifies the computation mode of far-from-diagonal
+             orthogonal updates.
+        = 0: SLAQR5 does not accumulate reflections and does not
+             use matrix-matrix multiply to update far-from-diagonal
+             matrix entries.
+        = 1: SLAQR5 accumulates reflections and uses matrix-matrix
+             multiply to update the far-from-diagonal matrix entries.
+        = 2: SLAQR5 accumulates reflections, uses matrix-matrix
+             multiply to update the far-from-diagonal matrix entries,
+             and takes advantage of 2-by-2 block structure during
+             matrix multiplies.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is integer scalar
+             N is the order of the Hessenberg matrix H upon which this
+             subroutine operates.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>KTOP</I> 
+<P>
+
+<PRE>
+          KTOP is integer scalar
+</PRE>
+
+<P>
+
+<BR>
+
+<I>KBOT</I> 
+<P>
+
+<PRE>
+          KBOT is integer scalar
+             These are the first and last rows and columns of an
+             isolated diagonal block upon which the QR sweep is to be
+             applied. It is assumed without a check that
+                       either KTOP = 1  or   H(KTOP,KTOP-1) = 0
+             and
+                       either KBOT = N  or   H(KBOT+1,KBOT) = 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NSHFTS</I> 
+<P>
+
+<PRE>
+          NSHFTS is integer scalar
+             NSHFTS gives the number of simultaneous shifts.  NSHFTS
+             must be positive and even.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SR</I> 
+<P>
+
+<PRE>
+          SR is REAL array of size (NSHFTS)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SI</I> 
+<P>
+
+<PRE>
+          SI is REAL array of size (NSHFTS)
+             SR contains the real parts and SI contains the imaginary
+             parts of the NSHFTS shifts of origin that define the
+             multi-shift QR sweep.  On output SR and SI may be
+             reordered.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>H</I> 
+<P>
+
+<PRE>
+          H is REAL array of size (LDH,N)
+             On input H contains a Hessenberg matrix.  On output a
+             multi-shift QR sweep with shifts SR(J)+i*SI(J) is applied
+             to the isolated diagonal block in rows and columns KTOP
+             through KBOT.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDH</I> 
+<P>
+
+<PRE>
+          LDH is integer scalar
+             LDH is the leading dimension of H just as declared in the
+             calling procedure.  LDH.GE.MAX(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ILOZ</I> 
+<P>
+
+<PRE>
+          ILOZ is INTEGER
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IHIZ</I> 
+<P>
+
+<PRE>
+          IHIZ is INTEGER
+             Specify the rows of Z to which transformations must be
+             applied if WANTZ is .TRUE.. 1 .LE. ILOZ .LE. IHIZ .LE. N
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is REAL array of size (LDZ,IHI)
+             If WANTZ = .TRUE., then the QR Sweep orthogonal
+             similarity transformation is accumulated into
+             Z(ILOZ:IHIZ,ILO:IHI) from the right.
+             If WANTZ = .FALSE., then Z is unreferenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDZ</I> 
+<P>
+
+<PRE>
+          LDZ is integer scalar
+             LDA is the leading dimension of Z just as declared in
+             the calling procedure. LDZ.GE.N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>V</I> 
+<P>
+
+<PRE>
+          V is REAL array of size (LDV,NSHFTS/2)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDV</I> 
+<P>
+
+<PRE>
+          LDV is integer scalar
+             LDV is the leading dimension of V as declared in the
+             calling procedure.  LDV.GE.3.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>U</I> 
+<P>
+
+<PRE>
+          U is REAL array of size
+             (LDU,3*NSHFTS-3)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDU</I> 
+<P>
+
+<PRE>
+          LDU is integer scalar
+             LDU is the leading dimension of U just as declared in the
+             in the calling subroutine.  LDU.GE.3*NSHFTS-3.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NH</I> 
+<P>
+
+<PRE>
+          NH is integer scalar
+             NH is the number of columns in array WH available for
+             workspace. NH.GE.1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WH</I> 
+<P>
+
+<PRE>
+          WH is REAL array of size (LDWH,NH)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDWH</I> 
+<P>
+
+<PRE>
+          LDWH is integer scalar
+             Leading dimension of WH just as declared in the
+             calling procedure.  LDWH.GE.3*NSHFTS-3.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NV</I> 
+<P>
+
+<PRE>
+          NV is integer scalar
+             NV is the number of rows in WV agailable for workspace.
+             NV.GE.1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WV</I> 
+<P>
+
+<PRE>
+          WV is REAL array of size
+             (LDWV,3*NSHFTS-3)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDWV</I> 
+<P>
+
+<PRE>
+          LDWV is integer scalar
+             LDWV is the leading dimension of WV as declared in the
+             in the calling subroutine.  LDWV.GE.NV.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Karen Braman and Ralph Byers, Department of Mathematics, University of Kansas, USA 
+</DL>
+
+<P>
+
+<B>References: </B>
+<DL COMPACT><DT><DD>
+K. Braman, R. Byers and R. Mathias, The Multi-Shift QR Algorithm Part I: Maintaining Well Focused Shifts, and Level 3 Performance, SIAM Journal of Matrix Analysis, volume 23, pages 929--947, 2002. 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 258 of file slaqr5.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine slaqr5 (logicalWANTT, logicalWANTZ, integerKACC22, integerN, integerKTOP, integerKBOT, integerNSHFTS, real, dimension( * )SR, real, dimension( * )SI, real, dimension( ldh, * )H, integerLDH, integerILOZ, integerIHIZ, real, dimension( ldz, * )Z, integerLDZ, real, dimension( ldv, * )V, integerLDV, real, dimension( ldu, * )U, integerLDU, integerNV, real, dimension( ldwv, * )WV, integerLDWV, integerNH, real, dimension( ldwh, * )WH, integerLDWH)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:42 GMT, February 12, 2014
+</BODY>
+</HTML>

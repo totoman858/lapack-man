@@ -1,0 +1,450 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of zstegr.f</TITLE>
+</HEAD><BODY>
+<H1>zstegr.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+zstegr.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>zstegr</B> (JOBZ, RANGE, N, D, E, VL, VU, IL, IU, ABSTOL, M, W, Z, LDZ, ISUPPZ, WORK, LWORK, IWORK, LIWORK, INFO)
+
+<BR>
+
+<I></I><B>ZSTEGR</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine zstegr (characterJOBZ, characterRANGE, integerN, double precision, dimension( * )D, double precision, dimension( * )E, double precisionVL, double precisionVU, integerIL, integerIU, double precisionABSTOL, integerM, double precision, dimension( * )W, complex*16, dimension( ldz, * )Z, integerLDZ, integer, dimension( * )ISUPPZ, double precision, dimension( * )WORK, integerLWORK, integer, dimension( * )IWORK, integerLIWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>ZSTEGR</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZSTEGR computes selected eigenvalues and, optionally, eigenvectors
+ of a real symmetric tridiagonal matrix T. Any such unreduced matrix has
+ a well defined set of pairwise different real eigenvalues, the corresponding
+ real eigenvectors are pairwise orthogonal.
+
+ The spectrum may be computed either completely or partially by specifying
+ either an interval (VL,VU] or a range of indices IL:IU for the desired
+ eigenvalues.
+
+ ZSTEGR is a compatability wrapper around the improved ZSTEMR routine.
+ See DSTEMR for further details.
+
+ One important change is that the ABSTOL parameter no longer provides any
+ benefit and hence is no longer used.
+
+ Note : ZSTEGR and ZSTEMR work only on machines which follow
+ IEEE-754 floating-point standard in their handling of infinities and
+ NaNs.  Normal execution may create these exceptiona values and hence
+ may abort due to a floating point exception in environments which
+ do not conform to the IEEE-754 standard.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>JOBZ</I> 
+<P>
+
+<PRE>
+          JOBZ is CHARACTER*1
+          = 'N':  Compute eigenvalues only;
+          = 'V':  Compute eigenvalues and eigenvectors.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RANGE</I> 
+<P>
+
+<PRE>
+          RANGE is CHARACTER*1
+          = 'A': all eigenvalues will be found.
+          = 'V': all eigenvalues in the half-open interval (VL,VU]
+                 will be found.
+          = 'I': the IL-th through IU-th eigenvalues will be found.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrix.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is DOUBLE PRECISION array, dimension (N)
+          On entry, the N diagonal elements of the tridiagonal matrix
+          T. On exit, D is overwritten.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>E</I> 
+<P>
+
+<PRE>
+          E is DOUBLE PRECISION array, dimension (N)
+          On entry, the (N-1) subdiagonal elements of the tridiagonal
+          matrix T in elements 1 to N-1 of E. E(N) need not be set on
+          input, but is used internally as workspace.
+          On exit, E is overwritten.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VL</I> 
+<P>
+
+<PRE>
+          VL is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VU</I> 
+<P>
+
+<PRE>
+          VU is DOUBLE PRECISION
+
+          If RANGE='V', the lower and upper bounds of the interval to
+          be searched for eigenvalues. VL &lt; VU.
+          Not referenced if RANGE = 'A' or 'I'.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IL</I> 
+<P>
+
+<PRE>
+          IL is INTEGER
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IU</I> 
+<P>
+
+<PRE>
+          IU is INTEGER
+
+          If RANGE='I', the indices (in ascending order) of the
+          smallest and largest eigenvalues to be returned.
+          1 &lt;= IL &lt;= IU &lt;= N, if N &gt; 0.
+          Not referenced if RANGE = 'A' or 'V'.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ABSTOL</I> 
+<P>
+
+<PRE>
+          ABSTOL is DOUBLE PRECISION
+          Unused.  Was the absolute error tolerance for the
+          eigenvalues/eigenvectors in previous versions.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The total number of eigenvalues found.  0 &lt;= M &lt;= N.
+          If RANGE = 'A', M = N, and if RANGE = 'I', M = IU-IL+1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>W</I> 
+<P>
+
+<PRE>
+          W is DOUBLE PRECISION array, dimension (N)
+          The first M elements contain the selected eigenvalues in
+          ascending order.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is COMPLEX*16 array, dimension (LDZ, max(1,M) )
+          If JOBZ = 'V', and if INFO = 0, then the first M columns of Z
+          contain the orthonormal eigenvectors of the matrix T
+          corresponding to the selected eigenvalues, with the i-th
+          column of Z holding the eigenvector associated with W(i).
+          If JOBZ = 'N', then Z is not referenced.
+          Note: the user must ensure that at least max(1,M) columns are
+          supplied in the array Z; if RANGE = 'V', the exact value of M
+          is not known in advance and an upper bound must be used.
+          Supplying N columns is always safe.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDZ</I> 
+<P>
+
+<PRE>
+          LDZ is INTEGER
+          The leading dimension of the array Z.  LDZ &gt;= 1, and if
+          JOBZ = 'V', then LDZ &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ISUPPZ</I> 
+<P>
+
+<PRE>
+          ISUPPZ is INTEGER ARRAY, dimension ( 2*max(1,M) )
+          The support of the eigenvectors in Z, i.e., the indices
+          indicating the nonzero elements in Z. The i-th computed eigenvector
+          is nonzero only in elements ISUPPZ( 2*i-1 ) through
+          ISUPPZ( 2*i ). This is relevant in the case when the matrix
+          is split. ISUPPZ is only accessed when JOBZ is 'V' and N &gt; 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is DOUBLE PRECISION array, dimension (LWORK)
+          On exit, if INFO = 0, <A HREF="/cgi-bin/man/man2html?1+WORK">WORK</A>(1) returns the optimal
+          (and minimal) LWORK.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LWORK</I> 
+<P>
+
+<PRE>
+          LWORK is INTEGER
+          The dimension of the array WORK. LWORK &gt;= max(1,18*N)
+          if JOBZ = 'V', and LWORK &gt;= max(1,12*N) if JOBZ = 'N'.
+          If LWORK = -1, then a workspace query is assumed; the routine
+          only calculates the optimal size of the WORK array, returns
+          this value as the first entry of the WORK array, and no error
+          message related to LWORK is issued by XERBLA.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IWORK</I> 
+<P>
+
+<PRE>
+          IWORK is INTEGER array, dimension (LIWORK)
+          On exit, if INFO = 0, <A HREF="/cgi-bin/man/man2html?1+IWORK">IWORK</A>(1) returns the optimal LIWORK.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LIWORK</I> 
+<P>
+
+<PRE>
+          LIWORK is INTEGER
+          The dimension of the array IWORK.  LIWORK &gt;= max(1,10*N)
+          if the eigenvectors are desired, and LIWORK &gt;= max(1,8*N)
+          if only the eigenvalues are to be computed.
+          If LIWORK = -1, then a workspace query is assumed; the
+          routine only calculates the optimal size of the IWORK array,
+          returns this value as the first entry of the IWORK array, and
+          no error message related to LIWORK is issued by XERBLA.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          On exit, INFO
+          = 0:  successful exit
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value
+          &gt; 0:  if INFO = 1X, internal error in DLARRE,
+                if INFO = 2X, internal error in ZLARRV.
+                Here, the digit X = ABS( IINFO ) &lt; 10, where IINFO is
+                the nonzero error code returned by DLARRE or
+                ZLARRV, respectively.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Inderjit Dhillon, IBM Almaden, USA 
+<BR>
+
+<BR>&nbsp;Osni&nbsp;Marques,&nbsp;LBNL/NERSC,&nbsp;USA&nbsp;
+<BR>
+
+<BR>&nbsp;Christof&nbsp;Voemel,&nbsp;LBNL/NERSC,&nbsp;USA&nbsp;
+<BR>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 255 of file zstegr.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine zstegr (characterJOBZ, characterRANGE, integerN, double precision, dimension( * )D, double precision, dimension( * )E, double precisionVL, double precisionVU, integerIL, integerIU, double precisionABSTOL, integerM, double precision, dimension( * )W, complex*16, dimension( ldz, * )Z, integerLDZ, integer, dimension( * )ISUPPZ, double precision, dimension( * )WORK, integerLWORK, integer, dimension( * )IWORK, integerLIWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:04 GMT, February 12, 2014
+</BODY>
+</HTML>

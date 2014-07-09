@@ -1,0 +1,320 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of slaeda.f</TITLE>
+</HEAD><BODY>
+<H1>slaeda.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+slaeda.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>slaeda</B> (N, TLVLS, CURLVL, CURPBM, PRMPTR, PERM, GIVPTR, GIVCOL, GIVNUM, Q, QPTR, Z, ZTEMP, INFO)
+
+<BR>
+
+<I></I><B>SLAEDA</B> used by sstedc. Computes the Z vector determining the rank-one modification of the diagonal matrix. Used when the original matrix is dense. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine slaeda (integerN, integerTLVLS, integerCURLVL, integerCURPBM, integer, dimension( * )PRMPTR, integer, dimension( * )PERM, integer, dimension( * )GIVPTR, integer, dimension( 2, * )GIVCOL, real, dimension( 2, * )GIVNUM, real, dimension( * )Q, integer, dimension( * )QPTR, real, dimension( * )Z, real, dimension( * )ZTEMP, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>SLAEDA</B> used by sstedc. Computes the Z vector determining the rank-one modification of the diagonal matrix. Used when the original matrix is dense.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ SLAEDA computes the Z vector corresponding to the merge step in the
+ CURLVLth step of the merge process with TLVLS steps for the CURPBMth
+ problem.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+         The dimension of the symmetric tridiagonal matrix.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TLVLS</I> 
+<P>
+
+<PRE>
+          TLVLS is INTEGER
+         The total number of merging levels in the overall divide and
+         conquer tree.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>CURLVL</I> 
+<P>
+
+<PRE>
+          CURLVL is INTEGER
+         The current level in the overall merge routine,
+         0 &lt;= curlvl &lt;= tlvls.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>CURPBM</I> 
+<P>
+
+<PRE>
+          CURPBM is INTEGER
+         The current problem in the current level in the overall
+         merge routine (counting from upper left to lower right).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>PRMPTR</I> 
+<P>
+
+<PRE>
+          PRMPTR is INTEGER array, dimension (N lg N)
+         Contains a list of pointers which indicate where in PERM a
+         level's permutation is stored.  PRMPTR(i+1) - PRMPTR(i)
+         indicates the size of the permutation and incidentally the
+         size of the full, non-deflated problem.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>PERM</I> 
+<P>
+
+<PRE>
+          PERM is INTEGER array, dimension (N lg N)
+         Contains the permutations (from deflation and sorting) to be
+         applied to each eigenblock.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>GIVPTR</I> 
+<P>
+
+<PRE>
+          GIVPTR is INTEGER array, dimension (N lg N)
+         Contains a list of pointers which indicate where in GIVCOL a
+         level's Givens rotations are stored.  GIVPTR(i+1) - GIVPTR(i)
+         indicates the number of Givens rotations.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>GIVCOL</I> 
+<P>
+
+<PRE>
+          GIVCOL is INTEGER array, dimension (2, N lg N)
+         Each pair of numbers indicates a pair of columns to take place
+         in a Givens rotation.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>GIVNUM</I> 
+<P>
+
+<PRE>
+          GIVNUM is REAL array, dimension (2, N lg N)
+         Each number indicates the S value to be used in the
+         corresponding Givens rotation.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Q</I> 
+<P>
+
+<PRE>
+          Q is REAL array, dimension (N**2)
+         Contains the square eigenblocks from previous levels, the
+         starting positions for blocks are given by QPTR.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>QPTR</I> 
+<P>
+
+<PRE>
+          QPTR is INTEGER array, dimension (N+2)
+         Contains a list of pointers which indicate where in Q an
+         eigenblock is stored.  SQRT( QPTR(i+1) - QPTR(i) ) indicates
+         the size of the block.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is REAL array, dimension (N)
+         On output this vector contains the updating vector (the last
+         row of the first sub-eigenvector matrix and the first row of
+         the second sub-eigenvector matrix).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ZTEMP</I> 
+<P>
+
+<PRE>
+          ZTEMP is REAL array, dimension (N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit.
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Jeff Rutter, Computer Science Division, University of California at Berkeley, USA 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 166 of file slaeda.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine slaeda (integerN, integerTLVLS, integerCURLVL, integerCURPBM, integer, dimension( * )PRMPTR, integer, dimension( * )PERM, integer, dimension( * )GIVPTR, integer, dimension( 2, * )GIVCOL, real, dimension( 2, * )GIVNUM, real, dimension( * )Q, integer, dimension( * )QPTR, real, dimension( * )Z, real, dimension( * )ZTEMP, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:00 GMT, February 12, 2014
+</BODY>
+</HTML>

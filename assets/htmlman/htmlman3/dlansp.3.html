@@ -1,0 +1,225 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dlansp.f</TITLE>
+</HEAD><BODY>
+<H1>dlansp.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dlansp.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+DOUBLE PRECISION function <B>dlansp</B> (NORM, UPLO, N, AP, WORK)
+
+<BR>
+
+<I></I><B>DLANSP</B> returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a symmetric matrix supplied in packed form. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>DOUBLE PRECISION function dlansp (characterNORM, characterUPLO, integerN, double precision, dimension( * )AP, double precision, dimension( * )WORK)</H3>
+
+<P>
+<P>
+
+<B>DLANSP</B> returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the element of largest absolute value of a symmetric matrix supplied in packed form.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ DLANSP  returns the value of the one norm,  or the Frobenius norm, or
+ the  infinity norm,  or the  element of  largest absolute value  of a
+ real symmetric matrix A,  supplied in packed form.
+</PRE>
+
+<P>
+
+</DL>
+
+<P>
+
+<B>Returns:</B>
+<DL COMPACT><DT><DD>
+DLANSP 
+<P>
+
+<PRE>
+    DLANSP = ( max(abs(A(i,j))), NORM = 'M' or 'm'
+             (
+             ( norm1(A),         NORM = '1', 'O' or 'o'
+             (
+             ( normI(A),         NORM = 'I' or 'i'
+             (
+             ( normF(A),         NORM = 'F', 'f', 'E' or 'e'
+
+ where  norm1  denotes the  one norm of a matrix (maximum column sum),
+ normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
+ normF  denotes the  Frobenius norm of a matrix (square root of sum of
+ squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>NORM</I> 
+<P>
+
+<PRE>
+          NORM is CHARACTER*1
+          Specifies the value to be returned in DLANSP as described
+          above.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>UPLO</I> 
+<P>
+
+<PRE>
+          UPLO is CHARACTER*1
+          Specifies whether the upper or lower triangular part of the
+          symmetric matrix A is supplied.
+          = 'U':  Upper triangular part of A is supplied
+          = 'L':  Lower triangular part of A is supplied
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrix A.  N &gt;= 0.  When N = 0, DLANSP is
+          set to zero.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>AP</I> 
+<P>
+
+<PRE>
+          AP is DOUBLE PRECISION array, dimension (N*(N+1)/2)
+          The upper or lower triangle of the symmetric matrix A, packed
+          columnwise in a linear array.  The j-th column of A is stored
+          in the array AP as follows:
+          if UPLO = 'U', AP(i + (j-1)*j/2) = A(i,j) for 1&lt;=i&lt;=j;
+          if UPLO = 'L', AP(i + (j-1)*(2n-j)/2) = A(i,j) for j&lt;=i&lt;=n.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is DOUBLE PRECISION array, dimension (MAX(1,LWORK)),
+          where LWORK &gt;= N when NORM = 'I' or '1' or 'O'; otherwise,
+          WORK is not referenced.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 115 of file dlansp.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">DOUBLE PRECISION function dlansp (characterNORM, characterUPLO, integerN, double precision, dimension( * )AP, double precision, dimension( * )WORK)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:10 GMT, February 12, 2014
+</BODY>
+</HTML>

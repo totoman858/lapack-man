@@ -1,0 +1,504 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dlasd7.f</TITLE>
+</HEAD><BODY>
+<H1>dlasd7.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dlasd7.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>dlasd7</B> (ICOMPQ, NL, NR, SQRE, K, D, Z, ZW, VF, VFW, VL, VLW, ALPHA, BETA, DSIGMA, IDX, IDXP, IDXQ, PERM, GIVPTR, GIVCOL, LDGCOL, GIVNUM, LDGNUM, C, S, INFO)
+
+<BR>
+
+<I></I><B>DLASD7</B> merges the two sets of singular values together into a single sorted set. Then it tries to deflate the size of the problem. Used by sbdsdc. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dlasd7 (integerICOMPQ, integerNL, integerNR, integerSQRE, integerK, double precision, dimension( * )D, double precision, dimension( * )Z, double precision, dimension( * )ZW, double precision, dimension( * )VF, double precision, dimension( * )VFW, double precision, dimension( * )VL, double precision, dimension( * )VLW, double precisionALPHA, double precisionBETA, double precision, dimension( * )DSIGMA, integer, dimension( * )IDX, integer, dimension( * )IDXP, integer, dimension( * )IDXQ, integer, dimension( * )PERM, integerGIVPTR, integer, dimension( ldgcol, * )GIVCOL, integerLDGCOL, double precision, dimension( ldgnum, * )GIVNUM, integerLDGNUM, double precisionC, double precisionS, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>DLASD7</B> merges the two sets of singular values together into a single sorted set. Then it tries to deflate the size of the problem. Used by sbdsdc.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ DLASD7 merges the two sets of singular values together into a single
+ sorted set. Then it tries to deflate the size of the problem. There
+ are two ways in which deflation can occur:  when two or more singular
+ values are close together or if there is a tiny entry in the Z
+ vector. For each such occurrence the order of the related
+ secular equation problem is reduced by one.
+
+ DLASD7 is called from DLASD6.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>ICOMPQ</I> 
+<P>
+
+<PRE>
+          ICOMPQ is INTEGER
+          Specifies whether singular vectors are to be computed
+          in compact form, as follows:
+          = 0: Compute singular values only.
+          = 1: Compute singular vectors of upper
+               bidiagonal matrix in compact form.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NL</I> 
+<P>
+
+<PRE>
+          NL is INTEGER
+         The row dimension of the upper block. NL &gt;= 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NR</I> 
+<P>
+
+<PRE>
+          NR is INTEGER
+         The row dimension of the lower block. NR &gt;= 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SQRE</I> 
+<P>
+
+<PRE>
+          SQRE is INTEGER
+         = 0: the lower block is an NR-by-NR square matrix.
+         = 1: the lower block is an NR-by-(NR+1) rectangular matrix.
+
+         The bidiagonal matrix has
+         N = NL + NR + 1 rows and
+         M = N + SQRE &gt;= N columns.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>K</I> 
+<P>
+
+<PRE>
+          K is INTEGER
+         Contains the dimension of the non-deflated matrix, this is
+         the order of the related secular equation. 1 &lt;= K &lt;=N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is DOUBLE PRECISION array, dimension ( N )
+         On entry D contains the singular values of the two submatrices
+         to be combined. On exit D contains the trailing (N-K) updated
+         singular values (those which were deflated) sorted into
+         increasing order.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is DOUBLE PRECISION array, dimension ( M )
+         On exit Z contains the updating row vector in the secular
+         equation.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ZW</I> 
+<P>
+
+<PRE>
+          ZW is DOUBLE PRECISION array, dimension ( M )
+         Workspace for Z.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VF</I> 
+<P>
+
+<PRE>
+          VF is DOUBLE PRECISION array, dimension ( M )
+         On entry, VF(1:NL+1) contains the first components of all
+         right singular vectors of the upper block; and VF(NL+2:M)
+         contains the first components of all right singular vectors
+         of the lower block. On exit, VF contains the first components
+         of all right singular vectors of the bidiagonal matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VFW</I> 
+<P>
+
+<PRE>
+          VFW is DOUBLE PRECISION array, dimension ( M )
+         Workspace for VF.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VL</I> 
+<P>
+
+<PRE>
+          VL is DOUBLE PRECISION array, dimension ( M )
+         On entry, VL(1:NL+1) contains the  last components of all
+         right singular vectors of the upper block; and VL(NL+2:M)
+         contains the last components of all right singular vectors
+         of the lower block. On exit, VL contains the last components
+         of all right singular vectors of the bidiagonal matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VLW</I> 
+<P>
+
+<PRE>
+          VLW is DOUBLE PRECISION array, dimension ( M )
+         Workspace for VL.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ALPHA</I> 
+<P>
+
+<PRE>
+          ALPHA is DOUBLE PRECISION
+         Contains the diagonal element associated with the added row.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>BETA</I> 
+<P>
+
+<PRE>
+          BETA is DOUBLE PRECISION
+         Contains the off-diagonal element associated with the added
+         row.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DSIGMA</I> 
+<P>
+
+<PRE>
+          DSIGMA is DOUBLE PRECISION array, dimension ( N )
+         Contains a copy of the diagonal elements (K-1 singular values
+         and one zero) in the secular equation.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IDX</I> 
+<P>
+
+<PRE>
+          IDX is INTEGER array, dimension ( N )
+         This will contain the permutation used to sort the contents of
+         D into ascending order.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IDXP</I> 
+<P>
+
+<PRE>
+          IDXP is INTEGER array, dimension ( N )
+         This will contain the permutation used to place deflated
+         values of D at the end of the array. On output IDXP(2:K)
+         points to the nondeflated D-values and IDXP(K+1:N)
+         points to the deflated singular values.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IDXQ</I> 
+<P>
+
+<PRE>
+          IDXQ is INTEGER array, dimension ( N )
+         This contains the permutation which separately sorts the two
+         sub-problems in D into ascending order.  Note that entries in
+         the first half of this permutation must first be moved one
+         position backward; and entries in the second half
+         must first have NL+1 added to their values.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>PERM</I> 
+<P>
+
+<PRE>
+          PERM is INTEGER array, dimension ( N )
+         The permutations (from deflation and sorting) to be applied
+         to each singular block. Not referenced if ICOMPQ = 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>GIVPTR</I> 
+<P>
+
+<PRE>
+          GIVPTR is INTEGER
+         The number of Givens rotations which took place in this
+         subproblem. Not referenced if ICOMPQ = 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>GIVCOL</I> 
+<P>
+
+<PRE>
+          GIVCOL is INTEGER array, dimension ( LDGCOL, 2 )
+         Each pair of numbers indicates a pair of columns to take place
+         in a Givens rotation. Not referenced if ICOMPQ = 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDGCOL</I> 
+<P>
+
+<PRE>
+          LDGCOL is INTEGER
+         The leading dimension of GIVCOL, must be at least N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>GIVNUM</I> 
+<P>
+
+<PRE>
+          GIVNUM is DOUBLE PRECISION array, dimension ( LDGNUM, 2 )
+         Each number indicates the C or S value to be used in the
+         corresponding Givens rotation. Not referenced if ICOMPQ = 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDGNUM</I> 
+<P>
+
+<PRE>
+          LDGNUM is INTEGER
+         The leading dimension of GIVNUM, must be at least N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>C</I> 
+<P>
+
+<PRE>
+          C is DOUBLE PRECISION
+         C contains garbage if SQRE =0 and the C-value of a Givens
+         rotation related to the right null space if SQRE = 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>S</I> 
+<P>
+
+<PRE>
+          S is DOUBLE PRECISION
+         S contains garbage if SQRE =0 and the S-value of a Givens
+         rotation related to the right null space if SQRE = 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+         = 0:  successful exit.
+         &lt; 0:  if INFO = -i, the i-th argument had an illegal value.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Ming Gu and Huan Ren, Computer Science Division, University of California at Berkeley, USA 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 278 of file dlasd7.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dlasd7 (integerICOMPQ, integerNL, integerNR, integerSQRE, integerK, double precision, dimension( * )D, double precision, dimension( * )Z, double precision, dimension( * )ZW, double precision, dimension( * )VF, double precision, dimension( * )VFW, double precision, dimension( * )VL, double precision, dimension( * )VLW, double precisionALPHA, double precisionBETA, double precision, dimension( * )DSIGMA, integer, dimension( * )IDX, integer, dimension( * )IDXP, integer, dimension( * )IDXQ, integer, dimension( * )PERM, integerGIVPTR, integer, dimension( ldgcol, * )GIVCOL, integerLDGCOL, double precision, dimension( ldgnum, * )GIVNUM, integerLDGNUM, double precisionC, double precisionS, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:04 GMT, February 12, 2014
+</BODY>
+</HTML>

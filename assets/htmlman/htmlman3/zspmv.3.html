@@ -1,0 +1,276 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of zspmv.f</TITLE>
+</HEAD><BODY>
+<H1>zspmv.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+zspmv.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>zspmv</B> (UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY)
+
+<BR>
+
+<I></I><B>ZSPMV</B> computes a matrix-vector product for complex vectors using a complex symmetric packed matrix 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine zspmv (characterUPLO, integerN, complex*16ALPHA, complex*16, dimension( * )AP, complex*16, dimension( * )X, integerINCX, complex*16BETA, complex*16, dimension( * )Y, integerINCY)</H3>
+
+<P>
+<P>
+
+<B>ZSPMV</B> computes a matrix-vector product for complex vectors using a complex symmetric packed matrix  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZSPMV  performs the matrix-vector operation
+
+    y := alpha*A*x + beta*y,
+
+ where alpha and beta are scalars, x and y are n element vectors and
+ A is an n by n symmetric matrix, supplied in packed form.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>UPLO</I> 
+<P>
+
+<PRE>
+          UPLO is CHARACTER*1
+           On entry, UPLO specifies whether the upper or lower
+           triangular part of the matrix A is supplied in the packed
+           array AP as follows:
+
+              UPLO = 'U' or 'u'   The upper triangular part of A is
+                                  supplied in AP.
+
+              UPLO = 'L' or 'l'   The lower triangular part of A is
+                                  supplied in AP.
+
+           Unchanged on exit.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+           On entry, N specifies the order of the matrix A.
+           N must be at least zero.
+           Unchanged on exit.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ALPHA</I> 
+<P>
+
+<PRE>
+          ALPHA is COMPLEX*16
+           On entry, ALPHA specifies the scalar alpha.
+           Unchanged on exit.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>AP</I> 
+<P>
+
+<PRE>
+          AP is COMPLEX*16 array, dimension at least
+           ( ( N*( N + 1 ) )/2 ).
+           Before entry, with UPLO = 'U' or 'u', the array AP must
+           contain the upper triangular part of the symmetric matrix
+           packed sequentially, column by column, so that AP( 1 )
+           contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 1, 2 )
+           and a( 2, 2 ) respectively, and so on.
+           Before entry, with UPLO = 'L' or 'l', the array AP must
+           contain the lower triangular part of the symmetric matrix
+           packed sequentially, column by column, so that AP( 1 )
+           contains a( 1, 1 ), AP( 2 ) and AP( 3 ) contain a( 2, 1 )
+           and a( 3, 1 ) respectively, and so on.
+           Unchanged on exit.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X</I> 
+<P>
+
+<PRE>
+          X is COMPLEX*16 array, dimension at least
+           ( 1 + ( N - 1 )*abs( INCX ) ).
+           Before entry, the incremented array X must contain the N-
+           element vector x.
+           Unchanged on exit.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INCX</I> 
+<P>
+
+<PRE>
+          INCX is INTEGER
+           On entry, INCX specifies the increment for the elements of
+           X. INCX must not be zero.
+           Unchanged on exit.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>BETA</I> 
+<P>
+
+<PRE>
+          BETA is COMPLEX*16
+           On entry, BETA specifies the scalar beta. When BETA is
+           supplied as zero then Y need not be set on input.
+           Unchanged on exit.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Y</I> 
+<P>
+
+<PRE>
+          Y is COMPLEX*16 array, dimension at least
+           ( 1 + ( N - 1 )*abs( INCY ) ).
+           Before entry, the incremented array Y must contain the n
+           element vector y. On exit, Y is overwritten by the updated
+           vector y.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INCY</I> 
+<P>
+
+<PRE>
+          INCY is INTEGER
+           On entry, INCY specifies the increment for the elements of
+           Y. INCY must not be zero.
+           Unchanged on exit.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 152 of file zspmv.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine zspmv (characterUPLO, integerN, complex*16ALPHA, complex*16, dimension( * )AP, complex*16, dimension( * )X, integerINCX, complex*16BETA, complex*16, dimension( * )Y, integerINCY)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:04 GMT, February 12, 2014
+</BODY>
+</HTML>

@@ -1,0 +1,411 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of slasd3.f</TITLE>
+</HEAD><BODY>
+<H1>slasd3.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+slasd3.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>slasd3</B> (NL, NR, SQRE, K, D, Q, LDQ, DSIGMA, U, LDU, U2, LDU2, VT, LDVT, VT2, LDVT2, IDXC, CTOT, Z, INFO)
+
+<BR>
+
+<I></I><B>SLASD3</B> finds all square roots of the roots of the secular equation, as defined by the values in D and Z, and then updates the singular vectors by matrix multiplication. Used by sbdsdc. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine slasd3 (integerNL, integerNR, integerSQRE, integerK, real, dimension( * )D, real, dimension( ldq, * )Q, integerLDQ, real, dimension( * )DSIGMA, real, dimension( ldu, * )U, integerLDU, real, dimension( ldu2, * )U2, integerLDU2, real, dimension( ldvt, * )VT, integerLDVT, real, dimension( ldvt2, * )VT2, integerLDVT2, integer, dimension( * )IDXC, integer, dimension( * )CTOT, real, dimension( * )Z, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>SLASD3</B> finds all square roots of the roots of the secular equation, as defined by the values in D and Z, and then updates the singular vectors by matrix multiplication. Used by sbdsdc.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ SLASD3 finds all the square roots of the roots of the secular
+ equation, as defined by the values in D and Z.  It makes the
+ appropriate calls to SLASD4 and then updates the singular
+ vectors by matrix multiplication.
+
+ This code makes very mild assumptions about floating point
+ arithmetic. It will work on machines with a guard digit in
+ add/subtract, or on those binary machines without guard digits
+ which subtract like the Cray XMP, Cray YMP, Cray C 90, or Cray 2.
+ It could conceivably fail on hexadecimal or decimal machines
+ without guard digits, but we know of none.
+
+ SLASD3 is called from SLASD1.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>NL</I> 
+<P>
+
+<PRE>
+          NL is INTEGER
+         The row dimension of the upper block.  NL &gt;= 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NR</I> 
+<P>
+
+<PRE>
+          NR is INTEGER
+         The row dimension of the lower block.  NR &gt;= 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SQRE</I> 
+<P>
+
+<PRE>
+          SQRE is INTEGER
+         = 0: the lower block is an NR-by-NR square matrix.
+         = 1: the lower block is an NR-by-(NR+1) rectangular matrix.
+
+         The bidiagonal matrix has N = NL + NR + 1 rows and
+         M = N + SQRE &gt;= N columns.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>K</I> 
+<P>
+
+<PRE>
+          K is INTEGER
+         The size of the secular equation, 1 =&lt; K = &lt; N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is REAL array, dimension(K)
+         On exit the square roots of the roots of the secular equation,
+         in ascending order.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Q</I> 
+<P>
+
+<PRE>
+          Q is REAL array,
+                     dimension at least (LDQ,K).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDQ</I> 
+<P>
+
+<PRE>
+          LDQ is INTEGER
+         The leading dimension of the array Q.  LDQ &gt;= K.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DSIGMA</I> 
+<P>
+
+<PRE>
+          DSIGMA is REAL array, dimension(K)
+         The first K elements of this array contain the old roots
+         of the deflated updating problem.  These are the poles
+         of the secular equation.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>U</I> 
+<P>
+
+<PRE>
+          U is REAL array, dimension (LDU, N)
+         The last N - K columns of this matrix contain the deflated
+         left singular vectors.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDU</I> 
+<P>
+
+<PRE>
+          LDU is INTEGER
+         The leading dimension of the array U.  LDU &gt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>U2</I> 
+<P>
+
+<PRE>
+          U2 is REAL array, dimension (LDU2, N)
+         The first K columns of this matrix contain the non-deflated
+         left singular vectors for the split problem.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDU2</I> 
+<P>
+
+<PRE>
+          LDU2 is INTEGER
+         The leading dimension of the array U2.  LDU2 &gt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VT</I> 
+<P>
+
+<PRE>
+          VT is REAL array, dimension (LDVT, M)
+         The last M - K columns of VT**T contain the deflated
+         right singular vectors.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDVT</I> 
+<P>
+
+<PRE>
+          LDVT is INTEGER
+         The leading dimension of the array VT.  LDVT &gt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VT2</I> 
+<P>
+
+<PRE>
+          VT2 is REAL array, dimension (LDVT2, N)
+         The first K columns of VT2**T contain the non-deflated
+         right singular vectors for the split problem.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDVT2</I> 
+<P>
+
+<PRE>
+          LDVT2 is INTEGER
+         The leading dimension of the array VT2.  LDVT2 &gt;= N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IDXC</I> 
+<P>
+
+<PRE>
+          IDXC is INTEGER array, dimension (N)
+         The permutation used to arrange the columns of U (and rows of
+         VT) into three groups:  the first group contains non-zero
+         entries only at and above (or before) NL +1; the second
+         contains non-zero entries only at and below (or after) NL+2;
+         and the third is dense. The first column of U and the row of
+         VT are treated separately, however.
+
+         The rows of the singular vectors found by SLASD4
+         must be likewise permuted before the matrix multiplies can
+         take place.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>CTOT</I> 
+<P>
+
+<PRE>
+          CTOT is INTEGER array, dimension (4)
+         A count of the total number of the various types of columns
+         in U (or rows in VT), as described in IDXC. The fourth column
+         type is any column which has been deflated.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is REAL array, dimension (K)
+         The first K elements of this array contain the components
+         of the deflation-adjusted updating row vector.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+         = 0:  successful exit.
+         &lt; 0:  if INFO = -i, the i-th argument had an illegal value.
+         &gt; 0:  if INFO = 1, a singular value did not converge
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Ming Gu and Huan Ren, Computer Science Division, University of California at Berkeley, USA 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 224 of file slasd3.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine slasd3 (integerNL, integerNR, integerSQRE, integerK, real, dimension( * )D, real, dimension( ldq, * )Q, integerLDQ, real, dimension( * )DSIGMA, real, dimension( ldu, * )U, integerLDU, real, dimension( ldu2, * )U2, integerLDU2, real, dimension( ldvt, * )VT, integerLDVT, real, dimension( ldvt2, * )VT2, integerLDVT2, integer, dimension( * )IDXC, integer, dimension( * )CTOT, real, dimension( * )Z, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:09 GMT, February 12, 2014
+</BODY>
+</HTML>

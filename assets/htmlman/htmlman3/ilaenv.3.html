@@ -1,0 +1,287 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of ilaenv.f</TITLE>
+</HEAD><BODY>
+<H1>ilaenv.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+ilaenv.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+INTEGER function <B>ilaenv</B> (ISPEC, NAME, OPTS, N1, N2, N3, N4)
+
+<BR>
+
+<I></I><B>ILAENV</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>INTEGER function ilaenv (integerISPEC, character*( * )NAME, character*( * )OPTS, integerN1, integerN2, integerN3, integerN4)</H3>
+
+<P>
+<P>
+
+<B>ILAENV</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ILAENV is called from the LAPACK routines to choose problem-dependent
+ parameters for the local environment.  See ISPEC for a description of
+ the parameters.
+
+ ILAENV returns an INTEGER
+ if ILAENV &gt;= 0: ILAENV returns the value of the parameter specified by ISPEC
+ if ILAENV &lt; 0:  if ILAENV = -k, the k-th argument had an illegal value.
+
+ This version provides a set of parameters which should give good,
+ but not optimal, performance on many of the currently available
+ computers.  Users are encouraged to modify this subroutine to set
+ the tuning parameters for their particular machine using the option
+ and problem size information in the arguments.
+
+ This routine will not function correctly if it is converted to all
+ lower case.  Converting it to all upper case is allowed.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>ISPEC</I> 
+<P>
+
+<PRE>
+          ISPEC is INTEGER
+          Specifies the parameter to be returned as the value of
+          ILAENV.
+          = 1: the optimal blocksize; if this value is 1, an unblocked
+               algorithm will give the best performance.
+          = 2: the minimum block size for which the block routine
+               should be used; if the usable block size is less than
+               this value, an unblocked routine should be used.
+          = 3: the crossover point (in a block routine, for N less
+               than this value, an unblocked routine should be used)
+          = 4: the number of shifts, used in the nonsymmetric
+               eigenvalue routines (DEPRECATED)
+          = 5: the minimum column dimension for blocking to be used;
+               rectangular blocks must have dimension at least k by m,
+               where k is given by ILAENV(2,...) and m by ILAENV(5,...)
+          = 6: the crossover point for the SVD (when reducing an m by n
+               matrix to bidiagonal form, if max(m,n)/min(m,n) exceeds
+               this value, a QR factorization is used first to reduce
+               the matrix to a triangular form.)
+          = 7: the number of processors
+          = 8: the crossover point for the multishift QR method
+               for nonsymmetric eigenvalue problems (DEPRECATED)
+          = 9: maximum size of the subproblems at the bottom of the
+               computation tree in the divide-and-conquer algorithm
+               (used by xGELSD and xGESDD)
+          =10: ieee NaN arithmetic can be trusted not to trap
+          =11: infinity arithmetic can be trusted not to trap
+          12 &lt;= ISPEC &lt;= 16:
+               xHSEQR or one of its subroutines,
+               see IPARMQ for detailed explanation
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NAME</I> 
+<P>
+
+<PRE>
+          NAME is CHARACTER*(*)
+          The name of the calling subroutine, in either upper case or
+          lower case.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>OPTS</I> 
+<P>
+
+<PRE>
+          OPTS is CHARACTER*(*)
+          The character options to the subroutine NAME, concatenated
+          into a single character string.  For example, UPLO = 'U',
+          TRANS = 'T', and DIAG = 'N' for a triangular routine would
+          be specified as OPTS = 'UTN'.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N1</I> 
+<P>
+
+<PRE>
+          N1 is INTEGER
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N2</I> 
+<P>
+
+<PRE>
+          N2 is INTEGER
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N3</I> 
+<P>
+
+<PRE>
+          N3 is INTEGER
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N4</I> 
+<P>
+
+<PRE>
+          N4 is INTEGER
+          Problem dimensions for the subroutine NAME; these may not all
+          be required.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  The following conventions have been used when calling ILAENV from the
+  LAPACK routines:
+  1)  OPTS is a concatenation of all of the character options to
+      subroutine NAME, in the same order that they appear in the
+      argument list for NAME, even if they are not used in determining
+      the value of the parameter specified by ISPEC.
+  2)  The problem dimensions N1, N2, N3, N4 are specified in the order
+      that they appear in the argument list for NAME.  N1 is used
+      first, N2 second, and so on, and unused problem dimensions are
+      passed a value of -1.
+  3)  The parameter value returned by ILAENV is checked for validity in
+      the calling subroutine.  For example, ILAENV is used to retrieve
+      the optimal blocksize for STRTRI as follows:
+
+      NB = ILAENV( 1, 'STRTRI', UPLO // DIAG, N, -1, -1, -1 )
+      IF( NB.LE.1 ) NB = MAX( 1, N )
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 163 of file ilaenv.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">INTEGER function ilaenv (integerISPEC, character*( * )NAME, character*( * )OPTS, integerN1, integerN2, integerN3, integerN4)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:43 GMT, February 12, 2014
+</BODY>
+</HTML>

@@ -1,0 +1,377 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dlasdq.f</TITLE>
+</HEAD><BODY>
+<H1>dlasdq.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dlasdq.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>dlasdq</B> (UPLO, SQRE, N, NCVT, NRU, NCC, D, E, VT, LDVT, U, LDU, C, LDC, WORK, INFO)
+
+<BR>
+
+<I></I><B>DLASDQ</B> computes the SVD of a real bidiagonal matrix with diagonal d and off-diagonal e. Used by sbdsdc. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dlasdq (characterUPLO, integerSQRE, integerN, integerNCVT, integerNRU, integerNCC, double precision, dimension( * )D, double precision, dimension( * )E, double precision, dimension( ldvt, * )VT, integerLDVT, double precision, dimension( ldu, * )U, integerLDU, double precision, dimension( ldc, * )C, integerLDC, double precision, dimension( * )WORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>DLASDQ</B> computes the SVD of a real bidiagonal matrix with diagonal d and off-diagonal e. Used by sbdsdc.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ DLASDQ computes the singular value decomposition (SVD) of a real
+ (upper or lower) bidiagonal matrix with diagonal D and offdiagonal
+ E, accumulating the transformations if desired. Letting B denote
+ the input bidiagonal matrix, the algorithm computes orthogonal
+ matrices Q and P such that B = Q * S * P**T (P**T denotes the transpose
+ of P). The singular values S are overwritten on D.
+
+ The input matrix U  is changed to U  * Q  if desired.
+ The input matrix VT is changed to P**T * VT if desired.
+ The input matrix C  is changed to Q**T * C  if desired.
+
+ See &quot;Computing  Small Singular Values of Bidiagonal Matrices With
+ Guaranteed High Relative Accuracy,&quot; by J. Demmel and W. Kahan,
+ LAPACK Working Note #3, for a detailed description of the algorithm.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>UPLO</I> 
+<P>
+
+<PRE>
+          UPLO is CHARACTER*1
+        On entry, UPLO specifies whether the input bidiagonal matrix
+        is upper or lower bidiagonal, and wether it is square are
+        not.
+           UPLO = 'U' or 'u'   B is upper bidiagonal.
+           UPLO = 'L' or 'l'   B is lower bidiagonal.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SQRE</I> 
+<P>
+
+<PRE>
+          SQRE is INTEGER
+        = 0: then the input matrix is N-by-N.
+        = 1: then the input matrix is N-by-(N+1) if UPLU = 'U' and
+             (N+1)-by-N if UPLU = 'L'.
+
+        The bidiagonal matrix has
+        N = NL + NR + 1 rows and
+        M = N + SQRE &gt;= N columns.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+        On entry, N specifies the number of rows and columns
+        in the matrix. N must be at least 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NCVT</I> 
+<P>
+
+<PRE>
+          NCVT is INTEGER
+        On entry, NCVT specifies the number of columns of
+        the matrix VT. NCVT must be at least 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NRU</I> 
+<P>
+
+<PRE>
+          NRU is INTEGER
+        On entry, NRU specifies the number of rows of
+        the matrix U. NRU must be at least 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NCC</I> 
+<P>
+
+<PRE>
+          NCC is INTEGER
+        On entry, NCC specifies the number of columns of
+        the matrix C. NCC must be at least 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is DOUBLE PRECISION array, dimension (N)
+        On entry, D contains the diagonal entries of the
+        bidiagonal matrix whose SVD is desired. On normal exit,
+        D contains the singular values in ascending order.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>E</I> 
+<P>
+
+<PRE>
+          E is DOUBLE PRECISION array.
+        dimension is (N-1) if SQRE = 0 and N if SQRE = 1.
+        On entry, the entries of E contain the offdiagonal entries
+        of the bidiagonal matrix whose SVD is desired. On normal
+        exit, E will contain 0. If the algorithm does not converge,
+        D and E will contain the diagonal and superdiagonal entries
+        of a bidiagonal matrix orthogonally equivalent to the one
+        given as input.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VT</I> 
+<P>
+
+<PRE>
+          VT is DOUBLE PRECISION array, dimension (LDVT, NCVT)
+        On entry, contains a matrix which on exit has been
+        premultiplied by P**T, dimension N-by-NCVT if SQRE = 0
+        and (N+1)-by-NCVT if SQRE = 1 (not referenced if NCVT=0).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDVT</I> 
+<P>
+
+<PRE>
+          LDVT is INTEGER
+        On entry, LDVT specifies the leading dimension of VT as
+        declared in the calling (sub) program. LDVT must be at
+        least 1. If NCVT is nonzero LDVT must also be at least N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>U</I> 
+<P>
+
+<PRE>
+          U is DOUBLE PRECISION array, dimension (LDU, N)
+        On entry, contains a  matrix which on exit has been
+        postmultiplied by Q, dimension NRU-by-N if SQRE = 0
+        and NRU-by-(N+1) if SQRE = 1 (not referenced if NRU=0).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDU</I> 
+<P>
+
+<PRE>
+          LDU is INTEGER
+        On entry, LDU  specifies the leading dimension of U as
+        declared in the calling (sub) program. LDU must be at
+        least max( 1, NRU ) .
+</PRE>
+
+<P>
+
+<BR>
+
+<I>C</I> 
+<P>
+
+<PRE>
+          C is DOUBLE PRECISION array, dimension (LDC, NCC)
+        On entry, contains an N-by-NCC matrix which on exit
+        has been premultiplied by Q**T  dimension N-by-NCC if SQRE = 0
+        and (N+1)-by-NCC if SQRE = 1 (not referenced if NCC=0).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDC</I> 
+<P>
+
+<PRE>
+          LDC is INTEGER
+        On entry, LDC  specifies the leading dimension of C as
+        declared in the calling (sub) program. LDC must be at
+        least 1. If NCC is nonzero, LDC must also be at least N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is DOUBLE PRECISION array, dimension (4*N)
+        Workspace. Only referenced if one of NCVT, NRU, or NCC is
+        nonzero, and if N is at least 2.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+        On exit, a value of 0 indicates a successful exit.
+        If INFO &lt; 0, argument number -INFO is illegal.
+        If INFO &gt; 0, the algorithm did not converge, and INFO
+        specifies how many superdiagonals did not converge.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Ming Gu and Huan Ren, Computer Science Division, University of California at Berkeley, USA 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 211 of file dlasdq.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dlasdq (characterUPLO, integerSQRE, integerN, integerNCVT, integerNRU, integerNCC, double precision, dimension( * )D, double precision, dimension( * )E, double precision, dimension( ldvt, * )VT, integerLDVT, double precision, dimension( ldu, * )U, integerLDU, double precision, dimension( ldc, * )C, integerLDC, double precision, dimension( * )WORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:53 GMT, February 12, 2014
+</BODY>
+</HTML>

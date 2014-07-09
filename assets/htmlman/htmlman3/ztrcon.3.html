@@ -1,0 +1,265 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of ztrcon.f</TITLE>
+</HEAD><BODY>
+<H1>ztrcon.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+ztrcon.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>ztrcon</B> (NORM, UPLO, DIAG, N, A, LDA, RCOND, WORK, RWORK, INFO)
+
+<BR>
+
+<I></I><B>ZTRCON</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine ztrcon (characterNORM, characterUPLO, characterDIAG, integerN, complex*16, dimension( lda, * )A, integerLDA, double precisionRCOND, complex*16, dimension( * )WORK, double precision, dimension( * )RWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>ZTRCON</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZTRCON estimates the reciprocal of the condition number of a
+ triangular matrix A, in either the 1-norm or the infinity-norm.
+
+ The norm of A is computed and an estimate is obtained for
+ norm(inv(A)), then the reciprocal of the condition number is
+ computed as
+    RCOND = 1 / ( norm(A) * norm(inv(A)) ).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>NORM</I> 
+<P>
+
+<PRE>
+          NORM is CHARACTER*1
+          Specifies whether the 1-norm condition number or the
+          infinity-norm condition number is required:
+          = '1' or 'O':  1-norm;
+          = 'I':         Infinity-norm.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>UPLO</I> 
+<P>
+
+<PRE>
+          UPLO is CHARACTER*1
+          = 'U':  A is upper triangular;
+          = 'L':  A is lower triangular.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DIAG</I> 
+<P>
+
+<PRE>
+          DIAG is CHARACTER*1
+          = 'N':  A is non-unit triangular;
+          = 'U':  A is unit triangular.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrix A.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is COMPLEX*16 array, dimension (LDA,N)
+          The triangular matrix A.  If UPLO = 'U', the leading N-by-N
+          upper triangular part of the array A contains the upper
+          triangular matrix, and the strictly lower triangular part of
+          A is not referenced.  If UPLO = 'L', the leading N-by-N lower
+          triangular part of the array A contains the lower triangular
+          matrix, and the strictly upper triangular part of A is not
+          referenced.  If DIAG = 'U', the diagonal elements of A are
+          also not referenced and are assumed to be 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A.  LDA &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RCOND</I> 
+<P>
+
+<PRE>
+          RCOND is DOUBLE PRECISION
+          The reciprocal of the condition number of the matrix A,
+          computed as RCOND = 1/(norm(A) * norm(inv(A))).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is COMPLEX*16 array, dimension (2*N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RWORK</I> 
+<P>
+
+<PRE>
+          RWORK is DOUBLE PRECISION array, dimension (N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 137 of file ztrcon.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine ztrcon (characterNORM, characterUPLO, characterDIAG, integerN, complex*16, dimension( lda, * )A, integerLDA, double precisionRCOND, complex*16, dimension( * )WORK, double precision, dimension( * )RWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:33 GMT, February 12, 2014
+</BODY>
+</HTML>

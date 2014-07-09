@@ -1,0 +1,391 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of zbdsqr.f</TITLE>
+</HEAD><BODY>
+<H1>zbdsqr.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+zbdsqr.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>zbdsqr</B> (UPLO, N, NCVT, NRU, NCC, D, E, VT, LDVT, U, LDU, C, LDC, RWORK, INFO)
+
+<BR>
+
+<I></I><B>ZBDSQR</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine zbdsqr (characterUPLO, integerN, integerNCVT, integerNRU, integerNCC, double precision, dimension( * )D, double precision, dimension( * )E, complex*16, dimension( ldvt, * )VT, integerLDVT, complex*16, dimension( ldu, * )U, integerLDU, complex*16, dimension( ldc, * )C, integerLDC, double precision, dimension( * )RWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>ZBDSQR</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZBDSQR computes the singular values and, optionally, the right and/or
+ left singular vectors from the singular value decomposition (SVD) of
+ a real N-by-N (upper or lower) bidiagonal matrix B using the implicit
+ zero-shift QR algorithm.  The SVD of B has the form
+ 
+    B = Q * S * P**H
+ 
+ where S is the diagonal matrix of singular values, Q is an orthogonal
+ matrix of left singular vectors, and P is an orthogonal matrix of
+ right singular vectors.  If left singular vectors are requested, this
+ subroutine actually returns U*Q instead of Q, and, if right singular
+ vectors are requested, this subroutine returns P**H*VT instead of
+ P**H, for given complex input matrices U and VT.  When U and VT are
+ the unitary matrices that reduce a general matrix A to bidiagonal
+ form: A = U*B*VT, as computed by ZGEBRD, then
+ 
+    A = (U*Q) * S * (P**H*VT)
+ 
+ is the SVD of A.  Optionally, the subroutine may also compute Q**H*C
+ for a given complex input matrix C.
+
+ See &quot;Computing  Small Singular Values of Bidiagonal Matrices With
+ Guaranteed High Relative Accuracy,&quot; by J. Demmel and W. Kahan,
+ LAPACK Working Note #3 (or SIAM J. Sci. Statist. Comput. vol. 11,
+ no. 5, pp. 873-912, Sept 1990) and
+ &quot;Accurate singular values and differential qd algorithms,&quot; by
+ B. Parlett and V. Fernando, Technical Report CPAM-554, Mathematics
+ Department, University of California at Berkeley, July 1992
+ for a detailed description of the algorithm.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>UPLO</I> 
+<P>
+
+<PRE>
+          UPLO is CHARACTER*1
+          = 'U':  B is upper bidiagonal;
+          = 'L':  B is lower bidiagonal.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrix B.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NCVT</I> 
+<P>
+
+<PRE>
+          NCVT is INTEGER
+          The number of columns of the matrix VT. NCVT &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NRU</I> 
+<P>
+
+<PRE>
+          NRU is INTEGER
+          The number of rows of the matrix U. NRU &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NCC</I> 
+<P>
+
+<PRE>
+          NCC is INTEGER
+          The number of columns of the matrix C. NCC &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is DOUBLE PRECISION array, dimension (N)
+          On entry, the n diagonal elements of the bidiagonal matrix B.
+          On exit, if INFO=0, the singular values of B in decreasing
+          order.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>E</I> 
+<P>
+
+<PRE>
+          E is DOUBLE PRECISION array, dimension (N-1)
+          On entry, the N-1 offdiagonal elements of the bidiagonal
+          matrix B.
+          On exit, if INFO = 0, E is destroyed; if INFO &gt; 0, D and E
+          will contain the diagonal and superdiagonal elements of a
+          bidiagonal matrix orthogonally equivalent to the one given
+          as input.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VT</I> 
+<P>
+
+<PRE>
+          VT is COMPLEX*16 array, dimension (LDVT, NCVT)
+          On entry, an N-by-NCVT matrix VT.
+          On exit, VT is overwritten by P**H * VT.
+          Not referenced if NCVT = 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDVT</I> 
+<P>
+
+<PRE>
+          LDVT is INTEGER
+          The leading dimension of the array VT.
+          LDVT &gt;= max(1,N) if NCVT &gt; 0; LDVT &gt;= 1 if NCVT = 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>U</I> 
+<P>
+
+<PRE>
+          U is COMPLEX*16 array, dimension (LDU, N)
+          On entry, an NRU-by-N matrix U.
+          On exit, U is overwritten by U * Q.
+          Not referenced if NRU = 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDU</I> 
+<P>
+
+<PRE>
+          LDU is INTEGER
+          The leading dimension of the array U.  LDU &gt;= max(1,NRU).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>C</I> 
+<P>
+
+<PRE>
+          C is COMPLEX*16 array, dimension (LDC, NCC)
+          On entry, an N-by-NCC matrix C.
+          On exit, C is overwritten by Q**H * C.
+          Not referenced if NCC = 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDC</I> 
+<P>
+
+<PRE>
+          LDC is INTEGER
+          The leading dimension of the array C.
+          LDC &gt;= max(1,N) if NCC &gt; 0; LDC &gt;=1 if NCC = 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RWORK</I> 
+<P>
+
+<PRE>
+          RWORK is DOUBLE PRECISION array, dimension (2*N)
+          if NCVT = NRU = NCC = 0, (max(1, 4*N-4)) otherwise
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit
+          &lt; 0:  If INFO = -i, the i-th argument had an illegal value
+          &gt; 0:  the algorithm did not converge; D and E contain the
+                elements of a bidiagonal matrix which is orthogonally
+                similar to the input matrix B;  if INFO = i, i
+                elements of E have not converged to zero.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Internal Parameters: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  TOLMUL  DOUBLE PRECISION, default = max(10,min(100,EPS**(-1/8)))
+          TOLMUL controls the convergence criterion of the QR loop.
+          If it is positive, TOLMUL*EPS is the desired relative
+             precision in the computed singular values.
+          If it is negative, abs(TOLMUL*EPS*sigma_max) is the
+             desired absolute accuracy in the computed singular
+             values (corresponds to relative accuracy
+             abs(TOLMUL*EPS) in the largest singular value.
+          abs(TOLMUL) should be between 1 and 1/EPS, and preferably
+             between 10 (for fast convergence) and .1/EPS
+             (for there to be some accuracy in the results).
+          Default is to lose at either one eighth or 2 of the
+             available decimal digits in each computed singular value
+             (whichever is smaller).
+
+  MAXITR  INTEGER, default = 6
+          MAXITR controls the maximum number of passes of the
+          algorithm through its inner loop. The algorithms stops
+          (and so fails to converge) if the number of passes
+          through the inner loop exceeds MAXITR*N**2.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 223 of file zbdsqr.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine zbdsqr (characterUPLO, integerN, integerNCVT, integerNRU, integerNCC, double precision, dimension( * )D, double precision, dimension( * )E, complex*16, dimension( ldvt, * )VT, integerLDVT, complex*16, dimension( ldu, * )U, integerLDU, complex*16, dimension( ldc, * )C, integerLDC, double precision, dimension( * )RWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:55 GMT, February 12, 2014
+</BODY>
+</HTML>

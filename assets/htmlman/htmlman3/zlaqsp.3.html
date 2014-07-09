@@ -1,0 +1,247 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of zlaqsp.f</TITLE>
+</HEAD><BODY>
+<H1>zlaqsp.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+zlaqsp.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>zlaqsp</B> (UPLO, N, AP, S, SCOND, AMAX, EQUED)
+
+<BR>
+
+<I></I><B>ZLAQSP</B> scales a symmetric/Hermitian matrix in packed storage, using scaling factors computed by sppequ. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine zlaqsp (characterUPLO, integerN, complex*16, dimension( * )AP, double precision, dimension( * )S, double precisionSCOND, double precisionAMAX, characterEQUED)</H3>
+
+<P>
+<P>
+
+<B>ZLAQSP</B> scales a symmetric/Hermitian matrix in packed storage, using scaling factors computed by sppequ.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ ZLAQSP equilibrates a symmetric matrix A using the scaling factors
+ in the vector S.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>UPLO</I> 
+<P>
+
+<PRE>
+          UPLO is CHARACTER*1
+          Specifies whether the upper or lower triangular part of the
+          symmetric matrix A is stored.
+          = 'U':  Upper triangular
+          = 'L':  Lower triangular
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrix A.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>AP</I> 
+<P>
+
+<PRE>
+          AP is COMPLEX*16 array, dimension (N*(N+1)/2)
+          On entry, the upper or lower triangle of the symmetric matrix
+          A, packed columnwise in a linear array.  The j-th column of A
+          is stored in the array AP as follows:
+          if UPLO = 'U', AP(i + (j-1)*j/2) = A(i,j) for 1&lt;=i&lt;=j;
+          if UPLO = 'L', AP(i + (j-1)*(2n-j)/2) = A(i,j) for j&lt;=i&lt;=n.
+
+          On exit, the equilibrated matrix:  diag(S) * A * diag(S), in
+          the same storage format as A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>S</I> 
+<P>
+
+<PRE>
+          S is DOUBLE PRECISION array, dimension (N)
+          The scale factors for A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SCOND</I> 
+<P>
+
+<PRE>
+          SCOND is DOUBLE PRECISION
+          Ratio of the smallest S(i) to the largest S(i).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>AMAX</I> 
+<P>
+
+<PRE>
+          AMAX is DOUBLE PRECISION
+          Absolute value of largest matrix entry.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>EQUED</I> 
+<P>
+
+<PRE>
+          EQUED is CHARACTER*1
+          Specifies whether or not equilibration was done.
+          = 'N':  No equilibration.
+          = 'Y':  Equilibration was done, i.e., A has been replaced by
+                  diag(S) * A * diag(S).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Internal Parameters: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  THRESH is a threshold value used to decide if scaling should be done
+  based on the ratio of the scaling factors.  If SCOND &lt; THRESH,
+  scaling is done.
+
+  LARGE and SMALL are threshold values used to decide if scaling should
+  be done based on the absolute size of the largest matrix element.
+  If AMAX &gt; LARGE or AMAX &lt; SMALL, scaling is done.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 127 of file zlaqsp.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine zlaqsp (characterUPLO, integerN, complex*16, dimension( * )AP, double precision, dimension( * )S, double precisionSCOND, double precisionAMAX, characterEQUED)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:58 GMT, February 12, 2014
+</BODY>
+</HTML>

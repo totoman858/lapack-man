@@ -1,0 +1,242 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dlaqr1.f</TITLE>
+</HEAD><BODY>
+<H1>dlaqr1.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dlaqr1.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>dlaqr1</B> (N, H, LDH, SR1, SI1, SR2, SI2, V)
+
+<BR>
+
+<I></I><B>DLAQR1</B> sets a scalar multiple of the first column of the product of 2-by-2 or 3-by-3 matrix H and specified shifts. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dlaqr1 (integerN, double precision, dimension( ldh, * )H, integerLDH, double precisionSR1, double precisionSI1, double precisionSR2, double precisionSI2, double precision, dimension( * )V)</H3>
+
+<P>
+<P>
+
+<B>DLAQR1</B> sets a scalar multiple of the first column of the product of 2-by-2 or 3-by-3 matrix H and specified shifts.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+      Given a 2-by-2 or 3-by-3 matrix H, DLAQR1 sets v to a
+      scalar multiple of the first column of the product
+
+      (*)  K = (H - (sr1 + i*si1)*I)*(H - (sr2 + i*si2)*I)
+
+      scaling to avoid overflows and most underflows. It
+      is assumed that either
+
+              1) sr1 = sr2 and si1 = -si2
+          or
+              2) si1 = si2 = 0.
+
+      This is useful for starting double implicit shift bulges
+      in the QR algorithm.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>N</I> 
+<P>
+
+<PRE>
+          N is integer
+              Order of the matrix H. N must be either 2 or 3.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>H</I> 
+<P>
+
+<PRE>
+          H is DOUBLE PRECISION array of dimension (LDH,N)
+              The 2-by-2 or 3-by-3 matrix H in (*).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDH</I> 
+<P>
+
+<PRE>
+          LDH is integer
+              The leading dimension of H as declared in
+              the calling procedure.  LDH.GE.N
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SR1</I> 
+<P>
+
+<PRE>
+          SR1 is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SI1</I> 
+<P>
+
+<PRE>
+          SI1 is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SR2</I> 
+<P>
+
+<PRE>
+          SR2 is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SI2</I> 
+<P>
+
+<PRE>
+          SI2 is DOUBLE PRECISION
+              The shifts in (*).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>V</I> 
+<P>
+
+<PRE>
+          V is DOUBLE PRECISION array of dimension N
+              A scalar multiple of the first column of the
+              matrix K in (*).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Karen Braman and Ralph Byers, Department of Mathematics, University of Kansas, USA 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 122 of file dlaqr1.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dlaqr1 (integerN, double precision, dimension( ldh, * )H, integerLDH, double precisionSR1, double precisionSI1, double precisionSR2, double precisionSI2, double precision, dimension( * )V)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:34 GMT, February 12, 2014
+</BODY>
+</HTML>

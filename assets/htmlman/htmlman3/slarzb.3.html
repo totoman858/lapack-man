@@ -1,0 +1,360 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of slarzb.f</TITLE>
+</HEAD><BODY>
+<H1>slarzb.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+slarzb.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>slarzb</B> (SIDE, TRANS, DIRECT, STOREV, M, N, K, L, V, LDV, T, LDT, C, LDC, WORK, LDWORK)
+
+<BR>
+
+<I></I><B>SLARZB</B> applies a block reflector or its transpose to a general matrix. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine slarzb (characterSIDE, characterTRANS, characterDIRECT, characterSTOREV, integerM, integerN, integerK, integerL, real, dimension( ldv, * )V, integerLDV, real, dimension( ldt, * )T, integerLDT, real, dimension( ldc, * )C, integerLDC, real, dimension( ldwork, * )WORK, integerLDWORK)</H3>
+
+<P>
+<P>
+
+<B>SLARZB</B> applies a block reflector or its transpose to a general matrix.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ SLARZB applies a real block reflector H or its transpose H**T to
+ a real distributed M-by-N  C from the left or the right.
+
+ Currently, only STOREV = 'R' and DIRECT = 'B' are supported.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>SIDE</I> 
+<P>
+
+<PRE>
+          SIDE is CHARACTER*1
+          = 'L': apply H or H**T from the Left
+          = 'R': apply H or H**T from the Right
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TRANS</I> 
+<P>
+
+<PRE>
+          TRANS is CHARACTER*1
+          = 'N': apply H (No transpose)
+          = 'C': apply H**T (Transpose)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DIRECT</I> 
+<P>
+
+<PRE>
+          DIRECT is CHARACTER*1
+          Indicates how H is formed from a product of elementary
+          reflectors
+          = 'F': H = <A HREF="/cgi-bin/man/man2html?1+H">H</A>(1) <A HREF="/cgi-bin/man/man2html?2+H">H</A>(2) . . . H(k) (Forward, not supported yet)
+          = 'B': H = H(k) . . . <A HREF="/cgi-bin/man/man2html?2+H">H</A>(2) <A HREF="/cgi-bin/man/man2html?1+H">H</A>(1) (Backward)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>STOREV</I> 
+<P>
+
+<PRE>
+          STOREV is CHARACTER*1
+          Indicates how the vectors which define the elementary
+          reflectors are stored:
+          = 'C': Columnwise                        (not supported yet)
+          = 'R': Rowwise
+</PRE>
+
+<P>
+
+<BR>
+
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The number of rows of the matrix C.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of columns of the matrix C.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>K</I> 
+<P>
+
+<PRE>
+          K is INTEGER
+          The order of the matrix T (= the number of elementary
+          reflectors whose product defines the block reflector).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>L</I> 
+<P>
+
+<PRE>
+          L is INTEGER
+          The number of columns of the matrix V containing the
+          meaningful part of the Householder reflectors.
+          If SIDE = 'L', M &gt;= L &gt;= 0, if SIDE = 'R', N &gt;= L &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>V</I> 
+<P>
+
+<PRE>
+          V is REAL array, dimension (LDV,NV).
+          If STOREV = 'C', NV = K; if STOREV = 'R', NV = L.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDV</I> 
+<P>
+
+<PRE>
+          LDV is INTEGER
+          The leading dimension of the array V.
+          If STOREV = 'C', LDV &gt;= L; if STOREV = 'R', LDV &gt;= K.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>T</I> 
+<P>
+
+<PRE>
+          T is REAL array, dimension (LDT,K)
+          The triangular K-by-K matrix T in the representation of the
+          block reflector.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDT</I> 
+<P>
+
+<PRE>
+          LDT is INTEGER
+          The leading dimension of the array T. LDT &gt;= K.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>C</I> 
+<P>
+
+<PRE>
+          C is REAL array, dimension (LDC,N)
+          On entry, the M-by-N matrix C.
+          On exit, C is overwritten by H*C or H**T*C or C*H or C*H**T.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDC</I> 
+<P>
+
+<PRE>
+          LDC is INTEGER
+          The leading dimension of the array C. LDC &gt;= max(1,M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is REAL array, dimension (LDWORK,K)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDWORK</I> 
+<P>
+
+<PRE>
+          LDWORK is INTEGER
+          The leading dimension of the array WORK.
+          If SIDE = 'L', LDWORK &gt;= max(1,N);
+          if SIDE = 'R', LDWORK &gt;= max(1,M).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+A. Petitet, Computer Science Dept., Univ. of Tenn., Knoxville, USA 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ 
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 183 of file slarzb.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine slarzb (characterSIDE, characterTRANS, characterDIRECT, characterSTOREV, integerM, integerN, integerK, integerL, real, dimension( ldv, * )V, integerLDV, real, dimension( ldt, * )T, integerLDT, real, dimension( ldc, * )C, integerLDC, real, dimension( ldwork, * )WORK, integerLDWORK)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:46 GMT, February 12, 2014
+</BODY>
+</HTML>

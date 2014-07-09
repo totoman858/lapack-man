@@ -1,0 +1,219 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of clacrt.f</TITLE>
+</HEAD><BODY>
+<H1>clacrt.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+clacrt.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>clacrt</B> (N, CX, INCX, CY, INCY, C, S)
+
+<BR>
+
+<I></I><B>CLACRT</B> performs a linear transformation of a pair of complex vectors. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine clacrt (integerN, complex, dimension( * )CX, integerINCX, complex, dimension( * )CY, integerINCY, complexC, complexS)</H3>
+
+<P>
+<P>
+
+<B>CLACRT</B> performs a linear transformation of a pair of complex vectors.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ CLACRT performs the operation
+
+    (  c  s )( x )  ==&gt; ( x )
+    ( -s  c )( y )      ( y )
+
+ where c and s are complex and the vectors x and y are complex.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of elements in the vectors CX and CY.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>CX</I> 
+<P>
+
+<PRE>
+          CX is COMPLEX array, dimension (N)
+          On input, the vector x.
+          On output, CX is overwritten with c*x + s*y.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INCX</I> 
+<P>
+
+<PRE>
+          INCX is INTEGER
+          The increment between successive values of CX.  INCX &lt;&gt; 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>CY</I> 
+<P>
+
+<PRE>
+          CY is COMPLEX array, dimension (N)
+          On input, the vector y.
+          On output, CY is overwritten with -s*x + c*y.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INCY</I> 
+<P>
+
+<PRE>
+          INCY is INTEGER
+          The increment between successive values of CY.  INCY &lt;&gt; 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>C</I> 
+<P>
+
+<PRE>
+          C is COMPLEX
+</PRE>
+
+<P>
+
+<BR>
+
+<I>S</I> 
+<P>
+
+<PRE>
+          S is COMPLEX
+          C and S define the matrix
+             [  C   S  ].
+             [ -S   C  ]
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 106 of file clacrt.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine clacrt (integerN, complex, dimension( * )CX, integerINCX, complex, dimension( * )CY, integerINCY, complexC, complexS)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:53 GMT, February 12, 2014
+</BODY>
+</HTML>

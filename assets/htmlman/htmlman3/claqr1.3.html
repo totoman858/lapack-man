@@ -1,0 +1,216 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of claqr1.f</TITLE>
+</HEAD><BODY>
+<H1>claqr1.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+claqr1.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>claqr1</B> (N, H, LDH, S1, S2, V)
+
+<BR>
+
+<I></I><B>CLAQR1</B> sets a scalar multiple of the first column of the product of 2-by-2 or 3-by-3 matrix H and specified shifts. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine claqr1 (integerN, complex, dimension( ldh, * )H, integerLDH, complexS1, complexS2, complex, dimension( * )V)</H3>
+
+<P>
+<P>
+
+<B>CLAQR1</B> sets a scalar multiple of the first column of the product of 2-by-2 or 3-by-3 matrix H and specified shifts.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+      Given a 2-by-2 or 3-by-3 matrix H, CLAQR1 sets v to a
+      scalar multiple of the first column of the product
+
+      (*)  K = (H - s1*I)*(H - s2*I)
+
+      scaling to avoid overflows and most underflows.
+
+      This is useful for starting double implicit shift bulges
+      in the QR algorithm.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>N</I> 
+<P>
+
+<PRE>
+          N is integer
+              Order of the matrix H. N must be either 2 or 3.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>H</I> 
+<P>
+
+<PRE>
+          H is COMPLEX array of dimension (LDH,N)
+              The 2-by-2 or 3-by-3 matrix H in (*).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDH</I> 
+<P>
+
+<PRE>
+          LDH is integer
+              The leading dimension of H as declared in
+              the calling procedure.  LDH.GE.N
+</PRE>
+
+<P>
+
+<BR>
+
+<I>S1</I> 
+<P>
+
+<PRE>
+          S1 is COMPLEX
+</PRE>
+
+<P>
+
+<BR>
+
+<I>S2</I> 
+<P>
+
+<PRE>
+          S2 is COMPLEX
+
+          S1 and S2 are the shifts defining K in (*) above.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>V</I> 
+<P>
+
+<PRE>
+          V is COMPLEX array of dimension N
+              A scalar multiple of the first column of the
+              matrix K in (*).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Karen Braman and Ralph Byers, Department of Mathematics, University of Kansas, USA 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 108 of file claqr1.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine claqr1 (integerN, complex, dimension( ldh, * )H, integerLDH, complexS1, complexS2, complex, dimension( * )V)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:37 GMT, February 12, 2014
+</BODY>
+</HTML>

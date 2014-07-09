@@ -1,0 +1,249 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of slasq6.f</TITLE>
+</HEAD><BODY>
+<H1>slasq6.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+slasq6.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>slasq6</B> (I0, N0, Z, PP, DMIN, DMIN1, DMIN2, DN, DNM1, DNM2)
+
+<BR>
+
+<I></I><B>SLASQ6</B> computes one dqd transform in ping-pong form. Used by sbdsqr and sstegr. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine slasq6 (integerI0, integerN0, real, dimension( * )Z, integerPP, realDMIN, realDMIN1, realDMIN2, realDN, realDNM1, realDNM2)</H3>
+
+<P>
+<P>
+
+<B>SLASQ6</B> computes one dqd transform in ping-pong form. Used by sbdsqr and sstegr.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ SLASQ6 computes one dqd (shift equal to zero) transform in
+ ping-pong form, with protection against underflow and overflow.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>I0</I> 
+<P>
+
+<PRE>
+          I0 is INTEGER
+        First index.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N0</I> 
+<P>
+
+<PRE>
+          N0 is INTEGER
+        Last index.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is REAL array, dimension ( 4*N )
+        Z holds the qd array. EMIN is stored in Z(4*N0) to avoid
+        an extra argument.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>PP</I> 
+<P>
+
+<PRE>
+          PP is INTEGER
+        PP=0 for ping, PP=1 for pong.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DMIN</I> 
+<P>
+
+<PRE>
+          DMIN is REAL
+        Minimum value of d.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DMIN1</I> 
+<P>
+
+<PRE>
+          DMIN1 is REAL
+        Minimum value of d, excluding D( N0 ).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DMIN2</I> 
+<P>
+
+<PRE>
+          DMIN2 is REAL
+        Minimum value of d, excluding D( N0 ) and D( N0-1 ).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DN</I> 
+<P>
+
+<PRE>
+          DN is REAL
+        d(N0), the last value of d.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DNM1</I> 
+<P>
+
+<PRE>
+          DNM1 is REAL
+        d(N0-1).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DNM2</I> 
+<P>
+
+<PRE>
+          DNM2 is REAL
+        d(N0-2).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 119 of file slasq6.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine slasq6 (integerI0, integerN0, real, dimension( * )Z, integerPP, realDMIN, realDMIN1, realDMIN2, realDN, realDNM1, realDNM2)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:10 GMT, February 12, 2014
+</BODY>
+</HTML>

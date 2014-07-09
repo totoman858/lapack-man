@@ -1,0 +1,322 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of cgemqrt.f</TITLE>
+</HEAD><BODY>
+<H1>cgemqrt.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+cgemqrt.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>cgemqrt</B> (SIDE, TRANS, M, N, K, NB, V, LDV, T, LDT, C, LDC, WORK, INFO)
+
+<BR>
+
+<I></I><B>CGEMQRT</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine cgemqrt (characterSIDE, characterTRANS, integerM, integerN, integerK, integerNB, complex, dimension( ldv, * )V, integerLDV, complex, dimension( ldt, * )T, integerLDT, complex, dimension( ldc, * )C, integerLDC, complex, dimension( * )WORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>CGEMQRT</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ CGEMQRT overwrites the general complex M-by-N matrix C with
+
+                 SIDE = 'L'     SIDE = 'R'
+ TRANS = 'N':      Q C            C Q
+ TRANS = 'C':    Q**H C            C Q**H
+
+ where Q is a complex orthogonal matrix defined as the product of K
+ elementary reflectors:
+
+       Q = <A HREF="/cgi-bin/man/man2html?1+H">H</A>(1) <A HREF="/cgi-bin/man/man2html?2+H">H</A>(2) . . . H(K) = I - V T V**H
+
+ generated using the compact WY representation as returned by CGEQRT. 
+
+ Q is of order M if SIDE = 'L' and of order N  if SIDE = 'R'.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>SIDE</I> 
+<P>
+
+<PRE>
+          SIDE is CHARACTER*1
+          = 'L': apply Q or Q**H from the Left;
+          = 'R': apply Q or Q**H from the Right.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TRANS</I> 
+<P>
+
+<PRE>
+          TRANS is CHARACTER*1
+          = 'N':  No transpose, apply Q;
+          = 'C':  Transpose, apply Q**H.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The number of rows of the matrix C. M &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of columns of the matrix C. N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>K</I> 
+<P>
+
+<PRE>
+          K is INTEGER
+          The number of elementary reflectors whose product defines
+          the matrix Q.
+          If SIDE = 'L', M &gt;= K &gt;= 0;
+          if SIDE = 'R', N &gt;= K &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NB</I> 
+<P>
+
+<PRE>
+          NB is INTEGER
+          The block size used for the storage of T.  K &gt;= NB &gt;= 1.
+          This must be the same value of NB used to generate T
+          in CGEQRT.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>V</I> 
+<P>
+
+<PRE>
+          V is COMPLEX array, dimension (LDV,K)
+          The i-th column must contain the vector which defines the
+          elementary reflector H(i), for i = 1,2,...,k, as returned by
+          CGEQRT in the first K columns of its array argument A.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDV</I> 
+<P>
+
+<PRE>
+          LDV is INTEGER
+          The leading dimension of the array V.
+          If SIDE = 'L', LDA &gt;= max(1,M);
+          if SIDE = 'R', LDA &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>T</I> 
+<P>
+
+<PRE>
+          T is COMPLEX array, dimension (LDT,K)
+          The upper triangular factors of the block reflectors
+          as returned by CGEQRT, stored as a NB-by-N matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDT</I> 
+<P>
+
+<PRE>
+          LDT is INTEGER
+          The leading dimension of the array T.  LDT &gt;= NB.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>C</I> 
+<P>
+
+<PRE>
+          C is COMPLEX array, dimension (LDC,N)
+          On entry, the M-by-N matrix C.
+          On exit, C is overwritten by Q C, Q**H C, C Q**H or C Q.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDC</I> 
+<P>
+
+<PRE>
+          LDC is INTEGER
+          The leading dimension of the array C. LDC &gt;= max(1,M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is COMPLEX array. The dimension of WORK is
+           N*NB if SIDE = 'L', or  M*NB if SIDE = 'R'.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2013 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 168 of file cgemqrt.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine cgemqrt (characterSIDE, characterTRANS, integerM, integerN, integerK, integerNB, complex, dimension( ldv, * )V, integerLDV, complex, dimension( ldt, * )T, integerLDT, complex, dimension( ldc, * )C, integerLDC, complex, dimension( * )WORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:40 GMT, February 12, 2014
+</BODY>
+</HTML>

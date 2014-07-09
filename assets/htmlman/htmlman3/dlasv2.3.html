@@ -1,0 +1,276 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dlasv2.f</TITLE>
+</HEAD><BODY>
+<H1>dlasv2.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dlasv2.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>dlasv2</B> (F, G, H, SSMIN, SSMAX, SNR, CSR, SNL, CSL)
+
+<BR>
+
+<I></I><B>DLASV2</B> computes the singular value decomposition of a 2-by-2 triangular matrix. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dlasv2 (double precisionF, double precisionG, double precisionH, double precisionSSMIN, double precisionSSMAX, double precisionSNR, double precisionCSR, double precisionSNL, double precisionCSL)</H3>
+
+<P>
+<P>
+
+<B>DLASV2</B> computes the singular value decomposition of a 2-by-2 triangular matrix.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ DLASV2 computes the singular value decomposition of a 2-by-2
+ triangular matrix
+    [  F   G  ]
+    [  0   H  ].
+ On return, abs(SSMAX) is the larger singular value, abs(SSMIN) is the
+ smaller singular value, and (CSL,SNL) and (CSR,SNR) are the left and
+ right singular vectors for abs(SSMAX), giving the decomposition
+
+    [ CSL  SNL ] [  F   G  ] [ CSR -SNR ]  =  [ SSMAX   0   ]
+    [-SNL  CSL ] [  0   H  ] [ SNR  CSR ]     [  0    SSMIN ].
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>F</I> 
+<P>
+
+<PRE>
+          F is DOUBLE PRECISION
+          The (1,1) element of the 2-by-2 matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>G</I> 
+<P>
+
+<PRE>
+          G is DOUBLE PRECISION
+          The (1,2) element of the 2-by-2 matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>H</I> 
+<P>
+
+<PRE>
+          H is DOUBLE PRECISION
+          The (2,2) element of the 2-by-2 matrix.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SSMIN</I> 
+<P>
+
+<PRE>
+          SSMIN is DOUBLE PRECISION
+          abs(SSMIN) is the smaller singular value.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SSMAX</I> 
+<P>
+
+<PRE>
+          SSMAX is DOUBLE PRECISION
+          abs(SSMAX) is the larger singular value.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SNL</I> 
+<P>
+
+<PRE>
+          SNL is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>CSL</I> 
+<P>
+
+<PRE>
+          CSL is DOUBLE PRECISION
+          The vector (CSL, SNL) is a unit left singular vector for the
+          singular value abs(SSMAX).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SNR</I> 
+<P>
+
+<PRE>
+          SNR is DOUBLE PRECISION
+</PRE>
+
+<P>
+
+<BR>
+
+<I>CSR</I> 
+<P>
+
+<PRE>
+          CSR is DOUBLE PRECISION
+          The vector (CSR, SNR) is a unit right singular vector for the
+          singular value abs(SSMAX).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  Any input parameter may be aliased with any output parameter.
+
+  Barring over/underflow and assuming a guard digit in subtraction, all
+  output quantities are correct to within a few units in the last
+  place (ulps).
+
+  In IEEE arithmetic, the code works correctly if one matrix element is
+  infinite.
+
+  Overflow will not occur unless the largest singular value itself
+  overflows or is within a few ulps of overflow. (On machines with
+  partial overflow, like the Cray, overflow may occur if the largest
+  singular value is within a factor of 2 of overflow.)
+
+  Underflow is harmless if underflow is gradual. Otherwise, results
+  may correspond to a matrix modified by perturbations of size near
+  the underflow threshold.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 139 of file dlasv2.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dlasv2 (double precisionF, double precisionG, double precisionH, double precisionSSMIN, double precisionSSMAX, double precisionSNR, double precisionCSR, double precisionSNL, double precisionCSL)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:38 GMT, February 12, 2014
+</BODY>
+</HTML>

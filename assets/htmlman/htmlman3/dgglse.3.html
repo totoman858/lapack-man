@@ -1,0 +1,328 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dgglse.f</TITLE>
+</HEAD><BODY>
+<H1>dgglse.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dgglse.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>dgglse</B> (M, N, P, A, LDA, B, LDB, C, D, X, WORK, LWORK, INFO)
+
+<BR>
+
+<I></I><B> DGGLSE solves overdetermined or underdetermined systems for OTHER matrices</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dgglse (integerM, integerN, integerP, double precision, dimension( lda, * )A, integerLDA, double precision, dimension( ldb, * )B, integerLDB, double precision, dimension( * )C, double precision, dimension( * )D, double precision, dimension( * )X, double precision, dimension( * )WORK, integerLWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B> DGGLSE solves overdetermined or underdetermined systems for OTHER matrices</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ DGGLSE solves the linear equality-constrained least squares (LSE)
+ problem:
+
+         minimize || c - A*x ||_2   subject to   B*x = d
+
+ where A is an M-by-N matrix, B is a P-by-N matrix, c is a given
+ M-vector, and d is a given P-vector. It is assumed that
+ P &lt;= N &lt;= M+P, and
+
+          rank(B) = P and  rank( (A) ) = N.
+                               ( (B) )
+
+ These conditions ensure that the LSE problem has a unique solution,
+ which is obtained using a generalized RQ factorization of the
+ matrices (B, A) given by
+
+    B = (0 R)*Q,   A = Z*T*Q.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The number of rows of the matrix A.  M &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of columns of the matrices A and B. N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>P</I> 
+<P>
+
+<PRE>
+          P is INTEGER
+          The number of rows of the matrix B. 0 &lt;= P &lt;= N &lt;= M+P.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is DOUBLE PRECISION array, dimension (LDA,N)
+          On entry, the M-by-N matrix A.
+          On exit, the elements on and above the diagonal of the array
+          contain the min(M,N)-by-N upper trapezoidal matrix T.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A. LDA &gt;= max(1,M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is DOUBLE PRECISION array, dimension (LDB,N)
+          On entry, the P-by-N matrix B.
+          On exit, the upper triangle of the subarray B(1:P,N-P+1:N)
+          contains the P-by-P upper triangular matrix R.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDB</I> 
+<P>
+
+<PRE>
+          LDB is INTEGER
+          The leading dimension of the array B. LDB &gt;= max(1,P).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>C</I> 
+<P>
+
+<PRE>
+          C is DOUBLE PRECISION array, dimension (M)
+          On entry, C contains the right hand side vector for the
+          least squares part of the LSE problem.
+          On exit, the residual sum of squares for the solution
+          is given by the sum of squares of elements N-P+1 to M of
+          vector C.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is DOUBLE PRECISION array, dimension (P)
+          On entry, D contains the right hand side vector for the
+          constrained equation.
+          On exit, D is destroyed.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X</I> 
+<P>
+
+<PRE>
+          X is DOUBLE PRECISION array, dimension (N)
+          On exit, X is the solution of the LSE problem.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is DOUBLE PRECISION array, dimension (MAX(1,LWORK))
+          On exit, if INFO = 0, <A HREF="/cgi-bin/man/man2html?1+WORK">WORK</A>(1) returns the optimal LWORK.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LWORK</I> 
+<P>
+
+<PRE>
+          LWORK is INTEGER
+          The dimension of the array WORK. LWORK &gt;= max(1,M+N+P).
+          For optimum performance LWORK &gt;= P+min(M,N)+max(M,N)*NB,
+          where NB is an upper bound for the optimal blocksizes for
+          DGEQRF, SGERQF, DORMQR and SORMRQ.
+
+          If LWORK = -1, then a workspace query is assumed; the routine
+          only calculates the optimal size of the WORK array, returns
+          this value as the first entry of the WORK array, and no error
+          message related to LWORK is issued by XERBLA.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit.
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value.
+          = 1:  the upper triangular factor R associated with B in the
+                generalized RQ factorization of the pair (B, A) is
+                singular, so that rank(B) &lt; P; the least squares
+                solution could not be computed.
+          = 2:  the (N-P) by (N-P) part of the upper trapezoidal factor
+                T associated with A in the generalized RQ factorization
+                of the pair (B, A) is singular, so that
+                rank( (A) ) &lt; N; the least squares solution could not
+                    ( (B) )
+                be computed.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 180 of file dgglse.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dgglse (integerM, integerN, integerP, double precision, dimension( lda, * )A, integerLDA, double precision, dimension( ldb, * )B, integerLDB, double precision, dimension( * )C, double precision, dimension( * )D, double precision, dimension( * )X, double precision, dimension( * )WORK, integerLWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:45 GMT, February 12, 2014
+</BODY>
+</HTML>

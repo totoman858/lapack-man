@@ -1,0 +1,329 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of sgebd2.f</TITLE>
+</HEAD><BODY>
+<H1>sgebd2.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+sgebd2.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>sgebd2</B> (M, N, A, LDA, D, E, TAUQ, TAUP, WORK, INFO)
+
+<BR>
+
+<I></I><B>SGEBD2</B> reduces a general matrix to bidiagonal form using an unblocked algorithm. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine sgebd2 (integerM, integerN, real, dimension( lda, * )A, integerLDA, real, dimension( * )D, real, dimension( * )E, real, dimension( * )TAUQ, real, dimension( * )TAUP, real, dimension( * )WORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>SGEBD2</B> reduces a general matrix to bidiagonal form using an unblocked algorithm.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ SGEBD2 reduces a real general m by n matrix A to upper or lower
+ bidiagonal form B by an orthogonal transformation: Q**T * A * P = B.
+
+ If m &gt;= n, B is upper bidiagonal; if m &lt; n, B is lower bidiagonal.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+          The number of rows in the matrix A.  M &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The number of columns in the matrix A.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is REAL array, dimension (LDA,N)
+          On entry, the m by n general matrix to be reduced.
+          On exit,
+          if m &gt;= n, the diagonal and the first superdiagonal are
+            overwritten with the upper bidiagonal matrix B; the
+            elements below the diagonal, with the array TAUQ, represent
+            the orthogonal matrix Q as a product of elementary
+            reflectors, and the elements above the first superdiagonal,
+            with the array TAUP, represent the orthogonal matrix P as
+            a product of elementary reflectors;
+          if m &lt; n, the diagonal and the first subdiagonal are
+            overwritten with the lower bidiagonal matrix B; the
+            elements below the first subdiagonal, with the array TAUQ,
+            represent the orthogonal matrix Q as a product of
+            elementary reflectors, and the elements above the diagonal,
+            with the array TAUP, represent the orthogonal matrix P as
+            a product of elementary reflectors.
+          See Further Details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A.  LDA &gt;= max(1,M).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is REAL array, dimension (min(M,N))
+          The diagonal elements of the bidiagonal matrix B:
+          D(i) = A(i,i).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>E</I> 
+<P>
+
+<PRE>
+          E is REAL array, dimension (min(M,N)-1)
+          The off-diagonal elements of the bidiagonal matrix B:
+          if m &gt;= n, E(i) = A(i,i+1) for i = 1,2,...,n-1;
+          if m &lt; n, E(i) = A(i+1,i) for i = 1,2,...,m-1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TAUQ</I> 
+<P>
+
+<PRE>
+          TAUQ is REAL array dimension (min(M,N))
+          The scalar factors of the elementary reflectors which
+          represent the orthogonal matrix Q. See Further Details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>TAUP</I> 
+<P>
+
+<PRE>
+          TAUP is REAL array, dimension (min(M,N))
+          The scalar factors of the elementary reflectors which
+          represent the orthogonal matrix P. See Further Details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is REAL array, dimension (max(M,N))
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0: successful exit.
+          &lt; 0: if INFO = -i, the i-th argument had an illegal value.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  The matrices Q and P are represented as products of elementary
+  reflectors:
+
+  If m &gt;= n,
+
+     Q = <A HREF="/cgi-bin/man/man2html?1+H">H</A>(1) <A HREF="/cgi-bin/man/man2html?2+H">H</A>(2) . . . <A HREF="/cgi-bin/man/man2html?n+H">H</A>(n)  and  P = <A HREF="/cgi-bin/man/man2html?1+G">G</A>(1) <A HREF="/cgi-bin/man/man2html?2+G">G</A>(2) . . . G(n-1)
+
+  Each H(i) and G(i) has the form:
+
+     H(i) = I - tauq * v * v**T  and G(i) = I - taup * u * u**T
+
+  where tauq and taup are real scalars, and v and u are real vectors;
+  v(1:i-1) = 0, v(i) = 1, and v(i+1:m) is stored on exit in A(i+1:m,i);
+  u(1:i) = 0, u(i+1) = 1, and u(i+2:n) is stored on exit in A(i,i+2:n);
+  tauq is stored in TAUQ(i) and taup in TAUP(i).
+
+  If m &lt; n,
+
+     Q = <A HREF="/cgi-bin/man/man2html?1+H">H</A>(1) <A HREF="/cgi-bin/man/man2html?2+H">H</A>(2) . . . H(m-1)  and  P = <A HREF="/cgi-bin/man/man2html?1+G">G</A>(1) <A HREF="/cgi-bin/man/man2html?2+G">G</A>(2) . . . G(m)
+
+  Each H(i) and G(i) has the form:
+
+     H(i) = I - tauq * v * v**T  and G(i) = I - taup * u * u**T
+
+  where tauq and taup are real scalars, and v and u are real vectors;
+  v(1:i) = 0, v(i+1) = 1, and v(i+2:m) is stored on exit in A(i+2:m,i);
+  u(1:i-1) = 0, u(i) = 1, and u(i+1:n) is stored on exit in A(i,i+1:n);
+  tauq is stored in TAUQ(i) and taup in TAUP(i).
+
+  The contents of A on exit are illustrated by the following examples:
+
+  m = 6 and n = 5 (m &gt; n):          m = 5 and n = 6 (m &lt; n):
+
+    (  d   e   u1  u1  u1 )           (  d   u1  u1  u1  u1  u1 )
+    (  v1  d   e   u2  u2 )           (  e   d   u2  u2  u2  u2 )
+    (  v1  v2  d   e   u3 )           (  v1  e   d   u3  u3  u3 )
+    (  v1  v2  v3  d   e  )           (  v1  v2  e   d   u4  u4 )
+    (  v1  v2  v3  v4  d  )           (  v1  v2  v3  e   d   u5 )
+    (  v1  v2  v3  v4  v5 )
+
+  where d and e denote diagonal and off-diagonal elements of B, vi
+  denotes an element of the vector defining H(i), and ui an element of
+  the vector defining G(i).
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 190 of file sgebd2.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine sgebd2 (integerM, integerN, real, dimension( lda, * )A, integerLDA, real, dimension( * )D, real, dimension( * )E, real, dimension( * )TAUQ, real, dimension( * )TAUP, real, dimension( * )WORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:45 GMT, February 12, 2014
+</BODY>
+</HTML>

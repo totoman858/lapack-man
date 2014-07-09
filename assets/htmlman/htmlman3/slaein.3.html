@@ -1,0 +1,336 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of slaein.f</TITLE>
+</HEAD><BODY>
+<H1>slaein.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+slaein.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>slaein</B> (RIGHTV, NOINIT, N, H, LDH, WR, WI, VR, VI, B, LDB, WORK, EPS3, SMLNUM, BIGNUM, INFO)
+
+<BR>
+
+<I></I><B>SLAEIN</B> computes a specified right or left eigenvector of an upper Hessenberg matrix by inverse iteration. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine slaein (logicalRIGHTV, logicalNOINIT, integerN, real, dimension( ldh, * )H, integerLDH, realWR, realWI, real, dimension( * )VR, real, dimension( * )VI, real, dimension( ldb, * )B, integerLDB, real, dimension( * )WORK, realEPS3, realSMLNUM, realBIGNUM, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>SLAEIN</B> computes a specified right or left eigenvector of an upper Hessenberg matrix by inverse iteration.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ SLAEIN uses inverse iteration to find a right or left eigenvector
+ corresponding to the eigenvalue (WR,WI) of a real upper Hessenberg
+ matrix H.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>RIGHTV</I> 
+<P>
+
+<PRE>
+          RIGHTV is LOGICAL
+          = .TRUE. : compute right eigenvector;
+          = .FALSE.: compute left eigenvector.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NOINIT</I> 
+<P>
+
+<PRE>
+          NOINIT is LOGICAL
+          = .TRUE. : no initial vector supplied in (VR,VI).
+          = .FALSE.: initial vector supplied in (VR,VI).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrix H.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>H</I> 
+<P>
+
+<PRE>
+          H is REAL array, dimension (LDH,N)
+          The upper Hessenberg matrix H.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDH</I> 
+<P>
+
+<PRE>
+          LDH is INTEGER
+          The leading dimension of the array H.  LDH &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WR</I> 
+<P>
+
+<PRE>
+          WR is REAL
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WI</I> 
+<P>
+
+<PRE>
+          WI is REAL
+          The real and imaginary parts of the eigenvalue of H whose
+          corresponding right or left eigenvector is to be computed.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VR</I> 
+<P>
+
+<PRE>
+          VR is REAL array, dimension (N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VI</I> 
+<P>
+
+<PRE>
+          VI is REAL array, dimension (N)
+          On entry, if NOINIT = .FALSE. and WI = 0.0, VR must contain
+          a real starting vector for inverse iteration using the real
+          eigenvalue WR; if NOINIT = .FALSE. and WI.ne.0.0, VR and VI
+          must contain the real and imaginary parts of a complex
+          starting vector for inverse iteration using the complex
+          eigenvalue (WR,WI); otherwise VR and VI need not be set.
+          On exit, if WI = 0.0 (real eigenvalue), VR contains the
+          computed real eigenvector; if WI.ne.0.0 (complex eigenvalue),
+          VR and VI contain the real and imaginary parts of the
+          computed complex eigenvector. The eigenvector is normalized
+          so that the component of largest magnitude has magnitude 1;
+          here the magnitude of a complex number (x,y) is taken to be
+          |x| + |y|.
+          VI is not referenced if WI = 0.0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is REAL array, dimension (LDB,N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDB</I> 
+<P>
+
+<PRE>
+          LDB is INTEGER
+          The leading dimension of the array B.  LDB &gt;= N+1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is REAL array, dimension (N)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>EPS3</I> 
+<P>
+
+<PRE>
+          EPS3 is REAL
+          A small machine-dependent value which is used to perturb
+          close eigenvalues, and to replace zero pivots.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SMLNUM</I> 
+<P>
+
+<PRE>
+          SMLNUM is REAL
+          A machine-dependent value close to the underflow threshold.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>BIGNUM</I> 
+<P>
+
+<PRE>
+          BIGNUM is REAL
+          A machine-dependent value close to the overflow threshold.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit
+          = 1:  inverse iteration did not converge; VR is set to the
+                last iterate, and so is VI if WI.ne.0.0.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 172 of file slaein.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine slaein (logicalRIGHTV, logicalNOINIT, integerN, real, dimension( ldh, * )H, integerLDH, realWR, realWI, real, dimension( * )VR, real, dimension( * )VI, real, dimension( ldb, * )B, integerLDB, real, dimension( * )WORK, realEPS3, realSMLNUM, realBIGNUM, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:36 GMT, February 12, 2014
+</BODY>
+</HTML>

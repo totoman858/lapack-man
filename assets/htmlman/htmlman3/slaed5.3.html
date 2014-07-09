@@ -1,0 +1,217 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of slaed5.f</TITLE>
+</HEAD><BODY>
+<H1>slaed5.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+slaed5.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>slaed5</B> (I, D, Z, DELTA, RHO, DLAM)
+
+<BR>
+
+<I></I><B>SLAED5</B> used by sstedc. Solves the 2-by-2 secular equation. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine slaed5 (integerI, real, dimension( 2 )D, real, dimension( 2 )Z, real, dimension( 2 )DELTA, realRHO, realDLAM)</H3>
+
+<P>
+<P>
+
+<B>SLAED5</B> used by sstedc. Solves the 2-by-2 secular equation.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ This subroutine computes the I-th eigenvalue of a symmetric rank-one
+ modification of a 2-by-2 diagonal matrix
+
+            diag( D )  +  RHO * Z * transpose(Z) .
+
+ The diagonal elements in the array D are assumed to satisfy
+
+            D(i) &lt; D(j)  for  i &lt; j .
+
+ We also assume RHO &gt; 0 and that the Euclidean norm of the vector
+ Z is one.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>I</I> 
+<P>
+
+<PRE>
+          I is INTEGER
+         The index of the eigenvalue to be computed.  I = 1 or I = 2.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is REAL array, dimension (2)
+         The original eigenvalues.  We assume <A HREF="/cgi-bin/man/man2html?1+D">D</A>(1) &lt; <A HREF="/cgi-bin/man/man2html?2+D">D</A>(2).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is REAL array, dimension (2)
+         The components of the updating vector.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DELTA</I> 
+<P>
+
+<PRE>
+          DELTA is REAL array, dimension (2)
+         The vector DELTA contains the information necessary
+         to construct the eigenvectors.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RHO</I> 
+<P>
+
+<PRE>
+          RHO is REAL
+         The scalar in the symmetric updating formula.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DLAM</I> 
+<P>
+
+<PRE>
+          DLAM is REAL
+         The computed lambda_I, the I-th updated eigenvalue.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Ren-Cang Li, Computer Science Division, University of California at Berkeley, USA 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 109 of file slaed5.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine slaed5 (integerI, real, dimension( 2 )D, real, dimension( 2 )Z, real, dimension( 2 )DELTA, realRHO, realDLAM)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:06 GMT, February 12, 2014
+</BODY>
+</HTML>

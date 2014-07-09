@@ -1,0 +1,319 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of clahef_rook.f</TITLE>
+</HEAD><BODY>
+<H1>clahef_rook.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+clahef_rook.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>clahef_rook</B> (UPLO, N, NB, KB, A, LDA, IPIV, W, LDW, INFO)
+
+<BR>
+
+<I> </I>
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine clahef_rook (characterUPLO, integerN, integerNB, integerKB, complex, dimension( lda, * )A, integerLDA, integer, dimension( * )IPIV, complex, dimension( ldw, * )W, integerLDW, integerINFO)</H3>
+
+<P>
+<P>
+
+<BR>&nbsp;<B>Purpose:&nbsp;</B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ CLAHEF_ROOK computes a partial factorization of a complex Hermitian
+ matrix A using the bounded Bunch-Kaufman (&quot;rook&quot;) diagonal pivoting
+ method. The partial factorization has the form:
+
+ A  =  ( I  U12 ) ( A11  0  ) (  I      0     )  if UPLO = 'U', or:
+       ( 0  U22 ) (  0   D  ) ( U12**H U22**H )
+
+ A  =  ( L11  0 ) (  D   0  ) ( L11**H L21**H )  if UPLO = 'L'
+       ( L21  I ) (  0  A22 ) (  0      I     )
+
+ where the order of D is at most NB. The actual order is returned in
+ the argument KB, and is either NB or NB-1, or N if N &lt;= NB.
+ Note that U**H denotes the conjugate transpose of U.
+
+ CLAHEF_ROOK is an auxiliary routine called by CHETRF_ROOK. It uses
+ blocked code (calling Level 3 BLAS) to update the submatrix
+ A11 (if UPLO = 'U') or A22 (if UPLO = 'L').
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>UPLO</I> 
+<P>
+
+<PRE>
+          UPLO is CHARACTER*1
+          Specifies whether the upper or lower triangular part of the
+          Hermitian matrix A is stored:
+          = 'U':  Upper triangular
+          = 'L':  Lower triangular
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrix A.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>NB</I> 
+<P>
+
+<PRE>
+          NB is INTEGER
+          The maximum number of columns of the matrix A that should be
+          factored.  NB should be at least 2 to allow for 2-by-2 pivot
+          blocks.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>KB</I> 
+<P>
+
+<PRE>
+          KB is INTEGER
+          The number of columns of A that were actually factored.
+          KB is either NB-1 or NB, or N if N &lt;= NB.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is COMPLEX array, dimension (LDA,N)
+          On entry, the Hermitian matrix A.  If UPLO = 'U', the leading
+          n-by-n upper triangular part of A contains the upper
+          triangular part of the matrix A, and the strictly lower
+          triangular part of A is not referenced.  If UPLO = 'L', the
+          leading n-by-n lower triangular part of A contains the lower
+          triangular part of the matrix A, and the strictly upper
+          triangular part of A is not referenced.
+          On exit, A contains details of the partial factorization.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A.  LDA &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IPIV</I> 
+<P>
+
+<PRE>
+          IPIV is INTEGER array, dimension (N)
+          Details of the interchanges and the block structure of D.
+
+          If UPLO = 'U':
+             Only the last KB elements of IPIV are set.
+
+             If IPIV(k) &gt; 0, then rows and columns k and IPIV(k) were
+             interchanged and D(k,k) is a 1-by-1 diagonal block.
+
+             If IPIV(k) &lt; 0 and IPIV(k-1) &lt; 0, then rows and
+             columns k and -IPIV(k) were interchanged and rows and
+             columns k-1 and -IPIV(k-1) were inerchaged,
+             D(k-1:k,k-1:k) is a 2-by-2 diagonal block.
+
+          If UPLO = 'L':
+             Only the first KB elements of IPIV are set.
+
+             If IPIV(k) &gt; 0, then rows and columns k and IPIV(k)
+             were interchanged and D(k,k) is a 1-by-1 diagonal block.
+
+             If IPIV(k) &lt; 0 and IPIV(k+1) &lt; 0, then rows and
+             columns k and -IPIV(k) were interchanged and rows and
+             columns k+1 and -IPIV(k+1) were inerchaged,
+             D(k:k+1,k:k+1) is a 2-by-2 diagonal block.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>W</I> 
+<P>
+
+<PRE>
+          W is COMPLEX array, dimension (LDW,NB)
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDW</I> 
+<P>
+
+<PRE>
+          LDW is INTEGER
+          The leading dimension of the array W.  LDW &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0: successful exit
+          &gt; 0: if INFO = k, D(k,k) is exactly zero.  The factorization
+               has been completed, but the block diagonal matrix D is
+               exactly singular.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2013 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  November 2013, Igor Kozachenko,
+                  Computer Science Division,
+                  University of California, Berkeley
+
+  September 2007, Sven Hammarling, Nicholas J. Higham, Craig Lucas,
+                  School of Mathematics,
+                  University of Manchester
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 184 of file clahef_rook.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine clahef_rook (characterUPLO, integerN, integerNB, integerKB, complex, dimension( lda, * )A, integerLDA, integer, dimension( * )IPIV, complex, dimension( ldw, * )W, integerLDW, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:35 GMT, February 12, 2014
+</BODY>
+</HTML>

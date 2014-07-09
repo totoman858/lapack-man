@@ -1,0 +1,231 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dlasd5.f</TITLE>
+</HEAD><BODY>
+<H1>dlasd5.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dlasd5.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>dlasd5</B> (I, D, Z, DELTA, RHO, DSIGMA, WORK)
+
+<BR>
+
+<I></I><B>DLASD5</B> computes the square root of the i-th eigenvalue of a positive symmetric rank-one modification of a 2-by-2 diagonal matrix. Used by sbdsdc. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dlasd5 (integerI, double precision, dimension( 2 )D, double precision, dimension( 2 )Z, double precision, dimension( 2 )DELTA, double precisionRHO, double precisionDSIGMA, double precision, dimension( 2 )WORK)</H3>
+
+<P>
+<P>
+
+<B>DLASD5</B> computes the square root of the i-th eigenvalue of a positive symmetric rank-one modification of a 2-by-2 diagonal matrix. Used by sbdsdc.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ This subroutine computes the square root of the I-th eigenvalue
+ of a positive symmetric rank-one modification of a 2-by-2 diagonal
+ matrix
+
+            diag( D ) * diag( D ) +  RHO * Z * transpose(Z) .
+
+ The diagonal entries in the array D are assumed to satisfy
+
+            0 &lt;= D(i) &lt; D(j)  for  i &lt; j .
+
+ We also assume RHO &gt; 0 and that the Euclidean norm of the vector
+ Z is one.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>I</I> 
+<P>
+
+<PRE>
+          I is INTEGER
+         The index of the eigenvalue to be computed.  I = 1 or I = 2.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is DOUBLE PRECISION array, dimension ( 2 )
+         The original eigenvalues.  We assume 0 &lt;= <A HREF="/cgi-bin/man/man2html?1+D">D</A>(1) &lt; <A HREF="/cgi-bin/man/man2html?2+D">D</A>(2).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is DOUBLE PRECISION array, dimension ( 2 )
+         The components of the updating vector.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DELTA</I> 
+<P>
+
+<PRE>
+          DELTA is DOUBLE PRECISION array, dimension ( 2 )
+         Contains (D(j) - sigma_I) in its  j-th component.
+         The vector DELTA contains the information necessary
+         to construct the eigenvectors.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RHO</I> 
+<P>
+
+<PRE>
+          RHO is DOUBLE PRECISION
+         The scalar in the symmetric updating formula.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DSIGMA</I> 
+<P>
+
+<PRE>
+          DSIGMA is DOUBLE PRECISION
+         The computed sigma_I, the I-th updated eigenvalue.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is DOUBLE PRECISION array, dimension ( 2 )
+         WORK contains (D(j) + sigma_I) in its  j-th component.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Ren-Cang Li, Computer Science Division, University of California at Berkeley, USA 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 117 of file dlasd5.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dlasd5 (integerI, double precision, dimension( 2 )D, double precision, dimension( 2 )Z, double precision, dimension( 2 )DELTA, double precisionRHO, double precisionDSIGMA, double precision, dimension( 2 )WORK)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:57:03 GMT, February 12, 2014
+</BODY>
+</HTML>

@@ -1,0 +1,482 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of slasda.f</TITLE>
+</HEAD><BODY>
+<H1>slasda.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+slasda.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>slasda</B> (ICOMPQ, SMLSIZ, N, SQRE, D, E, U, LDU, VT, K, DIFL, DIFR, Z, POLES, GIVPTR, GIVCOL, LDGCOL, PERM, GIVNUM, C, S, WORK, IWORK, INFO)
+
+<BR>
+
+<I></I><B>SLASDA</B> computes the singular value decomposition (SVD) of a real upper bidiagonal matrix with diagonal d and off-diagonal e. Used by sbdsdc. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine slasda (integerICOMPQ, integerSMLSIZ, integerN, integerSQRE, real, dimension( * )D, real, dimension( * )E, real, dimension( ldu, * )U, integerLDU, real, dimension( ldu, * )VT, integer, dimension( * )K, real, dimension( ldu, * )DIFL, real, dimension( ldu, * )DIFR, real, dimension( ldu, * )Z, real, dimension( ldu, * )POLES, integer, dimension( * )GIVPTR, integer, dimension( ldgcol, * )GIVCOL, integerLDGCOL, integer, dimension( ldgcol, * )PERM, real, dimension( ldu, * )GIVNUM, real, dimension( * )C, real, dimension( * )S, real, dimension( * )WORK, integer, dimension( * )IWORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>SLASDA</B> computes the singular value decomposition (SVD) of a real upper bidiagonal matrix with diagonal d and off-diagonal e. Used by sbdsdc.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ Using a divide and conquer approach, SLASDA computes the singular
+ value decomposition (SVD) of a real upper bidiagonal N-by-M matrix
+ B with diagonal D and offdiagonal E, where M = N + SQRE. The
+ algorithm computes the singular values in the SVD B = U * S * VT.
+ The orthogonal matrices U and VT are optionally computed in
+ compact form.
+
+ A related subroutine, SLASD0, computes the singular values and
+ the singular vectors in explicit form.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>ICOMPQ</I> 
+<P>
+
+<PRE>
+          ICOMPQ is INTEGER
+         Specifies whether singular vectors are to be computed
+         in compact form, as follows
+         = 0: Compute singular values only.
+         = 1: Compute singular vectors of upper bidiagonal
+              matrix in compact form.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SMLSIZ</I> 
+<P>
+
+<PRE>
+          SMLSIZ is INTEGER
+         The maximum size of the subproblems at the bottom of the
+         computation tree.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+         The row dimension of the upper bidiagonal matrix. This is
+         also the dimension of the main diagonal array D.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>SQRE</I> 
+<P>
+
+<PRE>
+          SQRE is INTEGER
+         Specifies the column dimension of the bidiagonal matrix.
+         = 0: The bidiagonal matrix has column dimension M = N;
+         = 1: The bidiagonal matrix has column dimension M = N + 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>D</I> 
+<P>
+
+<PRE>
+          D is REAL array, dimension ( N )
+         On entry D contains the main diagonal of the bidiagonal
+         matrix. On exit D, if INFO = 0, contains its singular values.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>E</I> 
+<P>
+
+<PRE>
+          E is REAL array, dimension ( M-1 )
+         Contains the subdiagonal entries of the bidiagonal matrix.
+         On exit, E has been destroyed.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>U</I> 
+<P>
+
+<PRE>
+          U is REAL array,
+         dimension ( LDU, SMLSIZ ) if ICOMPQ = 1, and not referenced
+         if ICOMPQ = 0. If ICOMPQ = 1, on exit, U contains the left
+         singular vector matrices of all subproblems at the bottom
+         level.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDU</I> 
+<P>
+
+<PRE>
+          LDU is INTEGER, LDU = &gt; N.
+         The leading dimension of arrays U, VT, DIFL, DIFR, POLES,
+         GIVNUM, and Z.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>VT</I> 
+<P>
+
+<PRE>
+          VT is REAL array,
+         dimension ( LDU, SMLSIZ+1 ) if ICOMPQ = 1, and not referenced
+         if ICOMPQ = 0. If ICOMPQ = 1, on exit, VT**T contains the right
+         singular vector matrices of all subproblems at the bottom
+         level.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>K</I> 
+<P>
+
+<PRE>
+          K is INTEGER array, dimension ( N )
+         if ICOMPQ = 1 and dimension 1 if ICOMPQ = 0.
+         If ICOMPQ = 1, on exit, K(I) is the dimension of the I-th
+         secular equation on the computation tree.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DIFL</I> 
+<P>
+
+<PRE>
+          DIFL is REAL array, dimension ( LDU, NLVL ),
+         where NLVL = floor(log_2 (N/SMLSIZ))).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>DIFR</I> 
+<P>
+
+<PRE>
+          DIFR is REAL array,
+                  dimension ( LDU, 2 * NLVL ) if ICOMPQ = 1 and
+                  dimension ( N ) if ICOMPQ = 0.
+         If ICOMPQ = 1, on exit, DIFL(1:N, I) and DIFR(1:N, 2 * I - 1)
+         record distances between singular values on the I-th
+         level and singular values on the (I -1)-th level, and
+         DIFR(1:N, 2 * I ) contains the normalizing factors for
+         the right singular vector matrix. See SLASD8 for details.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Z</I> 
+<P>
+
+<PRE>
+          Z is REAL array,
+                  dimension ( LDU, NLVL ) if ICOMPQ = 1 and
+                  dimension ( N ) if ICOMPQ = 0.
+         The first K elements of Z(1, I) contain the components of
+         the deflation-adjusted updating row vector for subproblems
+         on the I-th level.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>POLES</I> 
+<P>
+
+<PRE>
+          POLES is REAL array,
+         dimension ( LDU, 2 * NLVL ) if ICOMPQ = 1, and not referenced
+         if ICOMPQ = 0. If ICOMPQ = 1, on exit, POLES(1, 2*I - 1) and
+         POLES(1, 2*I) contain  the new and old singular values
+         involved in the secular equations on the I-th level.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>GIVPTR</I> 
+<P>
+
+<PRE>
+          GIVPTR is INTEGER array,
+         dimension ( N ) if ICOMPQ = 1, and not referenced if
+         ICOMPQ = 0. If ICOMPQ = 1, on exit, GIVPTR( I ) records
+         the number of Givens rotations performed on the I-th
+         problem on the computation tree.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>GIVCOL</I> 
+<P>
+
+<PRE>
+          GIVCOL is INTEGER array,
+         dimension ( LDGCOL, 2 * NLVL ) if ICOMPQ = 1, and not
+         referenced if ICOMPQ = 0. If ICOMPQ = 1, on exit, for each I,
+         GIVCOL(1, 2 *I - 1) and GIVCOL(1, 2 *I) record the locations
+         of Givens rotations performed on the I-th level on the
+         computation tree.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDGCOL</I> 
+<P>
+
+<PRE>
+          LDGCOL is INTEGER, LDGCOL = &gt; N.
+         The leading dimension of arrays GIVCOL and PERM.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>PERM</I> 
+<P>
+
+<PRE>
+          PERM is INTEGER array, dimension ( LDGCOL, NLVL )
+         if ICOMPQ = 1, and not referenced
+         if ICOMPQ = 0. If ICOMPQ = 1, on exit, PERM(1, I) records
+         permutations done on the I-th level of the computation tree.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>GIVNUM</I> 
+<P>
+
+<PRE>
+          GIVNUM is REAL array,
+         dimension ( LDU,  2 * NLVL ) if ICOMPQ = 1, and not
+         referenced if ICOMPQ = 0. If ICOMPQ = 1, on exit, for each I,
+         GIVNUM(1, 2 *I - 1) and GIVNUM(1, 2 *I) record the C- and S-
+         values of Givens rotations performed on the I-th level on
+         the computation tree.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>C</I> 
+<P>
+
+<PRE>
+          C is REAL array,
+         dimension ( N ) if ICOMPQ = 1, and dimension 1 if ICOMPQ = 0.
+         If ICOMPQ = 1 and the I-th subproblem is not square, on exit,
+         C( I ) contains the C-value of a Givens rotation related to
+         the right null space of the I-th subproblem.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>S</I> 
+<P>
+
+<PRE>
+          S is REAL array, dimension ( N ) if
+         ICOMPQ = 1, and dimension 1 if ICOMPQ = 0. If ICOMPQ = 1
+         and the I-th subproblem is not square, on exit, S( I )
+         contains the S-value of a Givens rotation related to
+         the right null space of the I-th subproblem.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is REAL array, dimension
+         (6 * N + (SMLSIZ + 1)*(SMLSIZ + 1)).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IWORK</I> 
+<P>
+
+<PRE>
+          IWORK is INTEGER array, dimension (7*N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit.
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value.
+          &gt; 0:  if INFO = 1, a singular value did not converge
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Ming Gu and Huan Ren, Computer Science Division, University of California at Berkeley, USA 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 272 of file slasda.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine slasda (integerICOMPQ, integerSMLSIZ, integerN, integerSQRE, real, dimension( * )D, real, dimension( * )E, real, dimension( ldu, * )U, integerLDU, real, dimension( ldu, * )VT, integer, dimension( * )K, real, dimension( ldu, * )DIFL, real, dimension( ldu, * )DIFR, real, dimension( ldu, * )Z, real, dimension( ldu, * )POLES, integer, dimension( * )GIVPTR, integer, dimension( ldgcol, * )GIVCOL, integerLDGCOL, integer, dimension( ldgcol, * )PERM, real, dimension( ldu, * )GIVNUM, real, dimension( * )C, real, dimension( * )S, real, dimension( * )WORK, integer, dimension( * )IWORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:50 GMT, February 12, 2014
+</BODY>
+</HTML>

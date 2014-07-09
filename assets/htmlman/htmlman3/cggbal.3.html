@@ -1,0 +1,326 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of cggbal.f</TITLE>
+</HEAD><BODY>
+<H1>cggbal.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+cggbal.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>cggbal</B> (JOB, N, A, LDA, B, LDB, ILO, IHI, LSCALE, RSCALE, WORK, INFO)
+
+<BR>
+
+<I></I><B>CGGBAL</B> 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine cggbal (characterJOB, integerN, complex, dimension( lda, * )A, integerLDA, complex, dimension( ldb, * )B, integerLDB, integerILO, integerIHI, real, dimension( * )LSCALE, real, dimension( * )RSCALE, real, dimension( * )WORK, integerINFO)</H3>
+
+<P>
+<P>
+
+<B>CGGBAL</B>  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ CGGBAL balances a pair of general complex matrices (A,B).  This
+ involves, first, permuting A and B by similarity transformations to
+ isolate eigenvalues in the first 1 to ILO$-$1 and last IHI+1 to N
+ elements on the diagonal; and second, applying a diagonal similarity
+ transformation to rows and columns ILO to IHI to make the rows
+ and columns as close in norm as possible. Both steps are optional.
+
+ Balancing may reduce the 1-norm of the matrices, and improve the
+ accuracy of the computed eigenvalues and/or eigenvectors in the
+ generalized eigenvalue problem A*x = lambda*B*x.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>JOB</I> 
+<P>
+
+<PRE>
+          JOB is CHARACTER*1
+          Specifies the operations to be performed on A and B:
+          = 'N':  none:  simply set ILO = 1, IHI = N, LSCALE(I) = 1.0
+                  and RSCALE(I) = 1.0 for i=1,...,N;
+          = 'P':  permute only;
+          = 'S':  scale only;
+          = 'B':  both permute and scale.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+          The order of the matrices A and B.  N &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>A</I> 
+<P>
+
+<PRE>
+          A is COMPLEX array, dimension (LDA,N)
+          On entry, the input matrix A.
+          On exit, A is overwritten by the balanced matrix.
+          If JOB = 'N', A is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDA</I> 
+<P>
+
+<PRE>
+          LDA is INTEGER
+          The leading dimension of the array A. LDA &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>B</I> 
+<P>
+
+<PRE>
+          B is COMPLEX array, dimension (LDB,N)
+          On entry, the input matrix B.
+          On exit, B is overwritten by the balanced matrix.
+          If JOB = 'N', B is not referenced.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDB</I> 
+<P>
+
+<PRE>
+          LDB is INTEGER
+          The leading dimension of the array B. LDB &gt;= max(1,N).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ILO</I> 
+<P>
+
+<PRE>
+          ILO is INTEGER
+</PRE>
+
+<P>
+
+<BR>
+
+<I>IHI</I> 
+<P>
+
+<PRE>
+          IHI is INTEGER
+          ILO and IHI are set to integers such that on exit
+          A(i,j) = 0 and B(i,j) = 0 if i &gt; j and
+          j = 1,...,ILO-1 or i = IHI+1,...,N.
+          If JOB = 'N' or 'S', ILO = 1 and IHI = N.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LSCALE</I> 
+<P>
+
+<PRE>
+          LSCALE is REAL array, dimension (N)
+          Details of the permutations and scaling factors applied
+          to the left side of A and B.  If P(j) is the index of the
+          row interchanged with row j, and D(j) is the scaling factor
+          applied to row j, then
+            LSCALE(j) = P(j)    for J = 1,...,ILO-1
+                      = D(j)    for J = ILO,...,IHI
+                      = P(j)    for J = IHI+1,...,N.
+          The order in which the interchanges are made is N to IHI+1,
+          then 1 to ILO-1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>RSCALE</I> 
+<P>
+
+<PRE>
+          RSCALE is REAL array, dimension (N)
+          Details of the permutations and scaling factors applied
+          to the right side of A and B.  If P(j) is the index of the
+          column interchanged with column j, and D(j) is the scaling
+          factor applied to column j, then
+            RSCALE(j) = P(j)    for J = 1,...,ILO-1
+                      = D(j)    for J = ILO,...,IHI
+                      = P(j)    for J = IHI+1,...,N.
+          The order in which the interchanges are made is N to IHI+1,
+          then 1 to ILO-1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>WORK</I> 
+<P>
+
+<PRE>
+          WORK is REAL array, dimension (lwork)
+          lwork must be at least max(1,6*N) when JOB = 'S' or 'B', and
+          at least 1 when JOB = 'N' or 'P'.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INFO</I> 
+<P>
+
+<PRE>
+          INFO is INTEGER
+          = 0:  successful exit
+          &lt; 0:  if INFO = -i, the i-th argument had an illegal value.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+November 2011 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  See R.C. WARD, Balancing the generalized eigenvalue problem,
+                 SIAM J. Sci. Stat. Comp. 2 (1981), 141-152.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 177 of file cggbal.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine cggbal (characterJOB, integerN, complex, dimension( lda, * )A, integerLDA, complex, dimension( ldb, * )B, integerLDB, integerILO, integerIHI, real, dimension( * )LSCALE, real, dimension( * )RSCALE, real, dimension( * )WORK, integerINFO)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:40 GMT, February 12, 2014
+</BODY>
+</HTML>

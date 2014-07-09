@@ -1,0 +1,333 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of dla_gbamv.f</TITLE>
+</HEAD><BODY>
+<H1>dla_gbamv.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+dla_gbamv.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>dla_gbamv</B> (TRANS, M, N, KL, KU, ALPHA, AB, LDAB, X, INCX, BETA, Y, INCY)
+
+<BR>
+
+<I></I><B>DLA_GBAMV</B> performs a matrix-vector operation to calculate error bounds. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine dla_gbamv (integerTRANS, integerM, integerN, integerKL, integerKU, double precisionALPHA, double precision, dimension( ldab, * )AB, integerLDAB, double precision, dimension( * )X, integerINCX, double precisionBETA, double precision, dimension( * )Y, integerINCY)</H3>
+
+<P>
+<P>
+
+<B>DLA_GBAMV</B> performs a matrix-vector operation to calculate error bounds.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ DLA_GBAMV  performs one of the matrix-vector operations
+
+         y := alpha*abs(A)*abs(x) + beta*abs(y),
+    or   y := alpha*abs(A)**T*abs(x) + beta*abs(y),
+
+ where alpha and beta are scalars, x and y are vectors and A is an
+ m by n matrix.
+
+ This function is primarily used in calculating error bounds.
+ To protect against underflow during evaluation, components in
+ the resulting vector are perturbed away from zero by (N+1)
+ times the underflow threshold.  To prevent unnecessarily large
+ errors for block-structure embedded in general matrices,
+ &quot;symbolically&quot; zero components are not perturbed.  A zero
+ entry is considered &quot;symbolic&quot; if all multiplications involved
+ in computing that entry have at least one zero multiplicand.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>TRANS</I> 
+<P>
+
+<PRE>
+          TRANS is INTEGER
+           On entry, TRANS specifies the operation to be performed as
+           follows:
+
+             BLAS_NO_TRANS      y := alpha*abs(A)*abs(x) + beta*abs(y)
+             BLAS_TRANS         y := alpha*abs(A**T)*abs(x) + beta*abs(y)
+             BLAS_CONJ_TRANS    y := alpha*abs(A**T)*abs(x) + beta*abs(y)
+
+           Unchanged on exit.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>M</I> 
+<P>
+
+<PRE>
+          M is INTEGER
+           On entry, M specifies the number of rows of the matrix A.
+           M must be at least zero.
+           Unchanged on exit.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+           On entry, N specifies the number of columns of the matrix A.
+           N must be at least zero.
+           Unchanged on exit.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>KL</I> 
+<P>
+
+<PRE>
+          KL is INTEGER
+           The number of subdiagonals within the band of A.  KL &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>KU</I> 
+<P>
+
+<PRE>
+          KU is INTEGER
+           The number of superdiagonals within the band of A.  KU &gt;= 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ALPHA</I> 
+<P>
+
+<PRE>
+          ALPHA is DOUBLE PRECISION
+           On entry, ALPHA specifies the scalar alpha.
+           Unchanged on exit.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>AB</I> 
+<P>
+
+<PRE>
+          AB is DOUBLE PRECISION array of DIMENSION ( LDAB, n )
+           Before entry, the leading m by n part of the array AB must
+           contain the matrix of coefficients.
+           Unchanged on exit.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>LDAB</I> 
+<P>
+
+<PRE>
+          LDAB is INTEGER
+           On entry, LDA specifies the first dimension of AB as declared
+           in the calling (sub) program. LDAB must be at least
+           max( 1, m ).
+           Unchanged on exit.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X</I> 
+<P>
+
+<PRE>
+          X is DOUBLE PRECISION array, dimension
+           ( 1 + ( n - 1 )*abs( INCX ) ) when TRANS = 'N' or 'n'
+           and at least
+           ( 1 + ( m - 1 )*abs( INCX ) ) otherwise.
+           Before entry, the incremented array X must contain the
+           vector x.
+           Unchanged on exit.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INCX</I> 
+<P>
+
+<PRE>
+          INCX is INTEGER
+           On entry, INCX specifies the increment for the elements of
+           X. INCX must not be zero.
+           Unchanged on exit.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>BETA</I> 
+<P>
+
+<PRE>
+          BETA is DOUBLE PRECISION
+           On entry, BETA specifies the scalar beta. When BETA is
+           supplied as zero then Y need not be set on input.
+           Unchanged on exit.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>Y</I> 
+<P>
+
+<PRE>
+          Y is DOUBLE PRECISION array, dimension
+           ( 1 + ( m - 1 )*abs( INCY ) ) when TRANS = 'N' or 'n'
+           and at least
+           ( 1 + ( n - 1 )*abs( INCY ) ) otherwise.
+           Before entry with BETA non-zero, the incremented array Y
+           must contain the vector y. On exit, Y is overwritten by the
+           updated vector y.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>INCY</I> 
+<P>
+
+<PRE>
+          INCY is INTEGER
+           On entry, INCY specifies the increment for the elements of
+           Y. INCY must not be zero.
+           Unchanged on exit.
+
+  Level 2 Blas routine.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 185 of file dla_gbamv.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine dla_gbamv (integerTRANS, integerM, integerN, integerKL, integerKU, double precisionALPHA, double precision, dimension( ldab, * )AB, integerLDAB, double precision, dimension( * )X, integerINCX, double precisionBETA, double precision, dimension( * )Y, integerINCY)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:37 GMT, February 12, 2014
+</BODY>
+</HTML>

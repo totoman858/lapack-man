@@ -1,0 +1,251 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of clacn2.f</TITLE>
+</HEAD><BODY>
+<H1>clacn2.f</H1>
+Section: LAPACK (3)<BR>Updated: Sat Nov 16 2013<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+clacn2.f - 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<BR>
+
+<P>
+
+<A NAME="lbAD">&nbsp;</A>
+<H3>Functions/Subroutines</H3>
+
+<P>
+
+<BR>
+
+subroutine <B>clacn2</B> (N, V, X, EST, KASE, ISAVE)
+
+<BR>
+
+<I></I><B>CLACN2</B> estimates the 1-norm of a square matrix, using reverse communication for evaluating matrix-vector products. 
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>Function/Subroutine Documentation</H2>
+
+<P>
+
+<A NAME="lbAF">&nbsp;</A>
+<H3>subroutine clacn2 (integerN, complex, dimension( * )V, complex, dimension( * )X, realEST, integerKASE, integer, dimension( 3 )ISAVE)</H3>
+
+<P>
+<P>
+
+<B>CLACN2</B> estimates the 1-norm of a square matrix, using reverse communication for evaluating matrix-vector products.  
+<P>
+
+<B>Purpose: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+ CLACN2 estimates the 1-norm of a square, complex matrix A.
+ Reverse communication is used for evaluating matrix-vector products.
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Parameters:</B>
+<DL COMPACT><DT><DD>
+<I>N</I> 
+<P>
+
+<PRE>
+          N is INTEGER
+         The order of the matrix.  N &gt;= 1.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>V</I> 
+<P>
+
+<PRE>
+          V is COMPLEX array, dimension (N)
+         On the final return, V = A*W,  where  EST = norm(V)/norm(W)
+         (W is not returned).
+</PRE>
+
+<P>
+
+<BR>
+
+<I>X</I> 
+<P>
+
+<PRE>
+          X is COMPLEX array, dimension (N)
+         On an intermediate return, X should be overwritten by
+               A * X,   if KASE=1,
+               A**H * X,  if KASE=2,
+         where A**H is the conjugate transpose of A, and CLACN2 must be
+         re-called with all the other parameters unchanged.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>EST</I> 
+<P>
+
+<PRE>
+          EST is REAL
+         On entry with KASE = 1 or 2 and <A HREF="/cgi-bin/man/man2html?1+ISAVE">ISAVE</A>(1) = 3, EST should be
+         unchanged from the previous call to CLACN2.
+         On exit, EST is an estimate (a lower bound) for norm(A). 
+</PRE>
+
+<P>
+
+<BR>
+
+<I>KASE</I> 
+<P>
+
+<PRE>
+          KASE is INTEGER
+         On the initial call to CLACN2, KASE should be 0.
+         On an intermediate return, KASE will be 1 or 2, indicating
+         whether X should be overwritten by A * X  or A**H * X.
+         On the final return from CLACN2, KASE will again be 0.
+</PRE>
+
+<P>
+
+<BR>
+
+<I>ISAVE</I> 
+<P>
+
+<PRE>
+          ISAVE is INTEGER array, dimension (3)
+         ISAVE is used to save variables between calls to SLACN2
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Author:</B>
+<DL COMPACT><DT><DD>
+Univ. of Tennessee 
+<P>
+
+Univ. of California Berkeley 
+<P>
+
+Univ. of Colorado Denver 
+<P>
+
+NAG Ltd. 
+</DL>
+
+<P>
+
+<B>Date:</B>
+<DL COMPACT><DT><DD>
+September 2012 
+</DL>
+
+<P>
+
+<B>Further Details: </B>
+<DL COMPACT><DT><DD>
+<P>
+<P>
+
+<PRE>
+  Originally named CONEST, dated March 16, 1988.
+
+  Last modified:  April, 1999
+
+  This is a thread safe version of CLACON, which uses the array ISAVE
+  in place of a SAVE statement, as follows:
+
+     CLACON     CLACN2
+      JUMP     <A HREF="/cgi-bin/man/man2html?1+ISAVE">ISAVE</A>(1)
+      J        <A HREF="/cgi-bin/man/man2html?2+ISAVE">ISAVE</A>(2)
+      ITER     <A HREF="/cgi-bin/man/man2html?3+ISAVE">ISAVE</A>(3)
+</PRE>
+
+<P>
+
+<BR>&nbsp;
+</DL>
+
+<P>
+
+<B>Contributors: </B>
+<DL COMPACT><DT><DD>
+Nick Higham, University of Manchester 
+</DL>
+
+<P>
+
+<B>References: </B>
+<DL COMPACT><DT><DD>
+N.J. Higham, 'FORTRAN codes for estimating the one-norm of
+<BR>&nbsp;&nbsp;a&nbsp;real&nbsp;or&nbsp;complex&nbsp;matrix,&nbsp;with&nbsp;applications&nbsp;to&nbsp;condition&nbsp;estimation',&nbsp;ACM&nbsp;Trans.&nbsp;Math.&nbsp;Soft.,&nbsp;vol.&nbsp;14,&nbsp;no.&nbsp;4,&nbsp;pp.&nbsp;381-396,&nbsp;December&nbsp;1988.&nbsp;
+</DL>
+
+<P>
+
+<P>
+<P>
+
+Definition at line 134 of file clacn2.f.
+<A NAME="lbAG">&nbsp;</A>
+<H2>Author</H2>
+
+<P>
+
+Generated automatically by Doxygen for LAPACK from the source code.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DL>
+<DT><A HREF="#lbAD">Functions/Subroutines</A><DD>
+</DL>
+<DT><A HREF="#lbAE">Function/Subroutine Documentation</A><DD>
+<DL>
+<DT><A HREF="#lbAF">subroutine clacn2 (integerN, complex, dimension( * )V, complex, dimension( * )X, realEST, integerKASE, integer, dimension( 3 )ISAVE)</A><DD>
+</DL>
+<DT><A HREF="#lbAG">Author</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 13:56:59 GMT, February 12, 2014
+</BODY>
+</HTML>
